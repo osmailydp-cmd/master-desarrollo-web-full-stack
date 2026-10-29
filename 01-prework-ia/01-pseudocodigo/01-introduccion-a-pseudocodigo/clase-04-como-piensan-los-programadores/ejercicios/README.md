@@ -6,7 +6,8 @@
 
 ## Ejercicio 01 — Semáforo
 
-**Archivo:** `Seudocodigo_Día3_semaforo.psc`
+**Archivo:** [Seudocodigo_Día3_semaforo.psc](./Seudocodigo_Día3_semaforo.psc)
+
 
 **Objetivo:** Determinar si un peatón puede cruzar una calle según el estado de un semáforo.
 
@@ -16,7 +17,7 @@
 
 ## Ejercicio 02 — Cajero automático
 
-**Archivo:** `Seudocodigo_Día3_cajeroAutomatico.psc`
+**Archivo:** [Seudocodigo_Día3_cajeroAutomatico.psc](./Seudocodigo_Día3_cajeroAutomatico.psc)
 
 **Objetivo:** Simular una operación de extracción de dinero mediante una tarjeta bancaria.
 

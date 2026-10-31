@@ -1,7 +1,7 @@
-//Semáforo
-//Dibuja cómo sería el diagrama de flujo para la decisión de
+//SemÃ¡foro
+//Dibuja cÃ³mo serÃ­a el diagrama de flujo para la decisiÃ³n de
 //cruzar una calle dependiendo del color de la luz de un
-//semáforo (solo rojo y verde)
+//semÃ¡foro (solo rojo y verde)
 
 Algoritmo semaforo
 	Definir estado Como Caracter

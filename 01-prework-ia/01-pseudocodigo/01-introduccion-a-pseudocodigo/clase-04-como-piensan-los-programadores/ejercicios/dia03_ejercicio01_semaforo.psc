@@ -3,7 +3,7 @@
 //cruzar una calle dependiendo del color de la luz de un
 //semáforo (solo rojo y verde)
 
-Algoritmo semaforo
+Algoritmo dia03_ejercicio01_semaforo
 	Definir estado Como Caracter
 	Escribir 'Introduce el color del semaforo'
 	Leer estado

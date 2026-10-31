@@ -1,8 +1,8 @@
-//Cajero autom醫ico
+//Cajero autom谩tico
 //Ahora intenta dibujar el diagrama
 //de flujo de lo que ocurre cuando
 //una persona va a sacar dinero en un
-//cajero autom醫ico con su tarjeta.
+//cajero autom谩tico con su tarjeta.
 
 Algoritmo cajeroAutomatico
 	Definir deslizarTarjeta Como Logico
@@ -25,13 +25,13 @@ Algoritmo cajeroAutomatico
 			Escribir 'Ingresa el monto'
 			Leer montoUsuario
 			Si montoUsuario <= dineroTargeta Entonces 
-				Escribir 'La operaci髇 se ha realizado con 閤ito.', ' Se ha extraido ', montoUsuario, ' de su tarjeta de ahorro'
+				Escribir 'La operaci贸n se ha realizado con 茅xito.', ' Se ha extraido ', montoUsuario, ' de su tarjeta de ahorro'
 			sino 
-				Escribir 'La operaci髇 fue rechazada, el monto ingresado supera su fondo disponible'
+				Escribir 'La operaci贸n fue rechazada, el monto ingresado supera su fondo disponible'
 			FinSi
 			
 		sino 
-			Escribir 'La operaci髇 fue rechazada. El c骴ogo ingresado no es correcto'
+			Escribir 'La operaci贸n fue rechazada. El c贸dogo ingresado no es correcto'
 		FinSi
 	sino 
 		Escribir 'Por favor intente nuevamente deslizar la tarjeta'

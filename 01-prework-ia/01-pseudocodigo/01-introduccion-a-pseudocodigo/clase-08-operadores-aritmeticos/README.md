@@ -7,7 +7,7 @@
 **Herramienta:** PSeInt  
 **Estado:** Finalizado
 
----
+----
 
 ## Ejercicio 01 — Suma y multiplicación
 

@@ -4,7 +4,7 @@
 //una persona va a sacar dinero en un
 //cajero automático con su tarjeta.
 
-Algoritmo cajeroAutomatico
+Algoritmo dia03_ejercicio02_cajero_automatico
 	Definir deslizarTarjeta Como Logico
 	Definir codigoTarjeta Como Entero
 	Definir codigoUsuario Como Entero

@@ -45,22 +45,40 @@ FinPara
 
 **Explicación:** Un array de cinco elementos tiene posiciones desde 0 hasta 4.
 
-### 03. ¿Qué resultado produce la instrucción Escribir letrero?
+### 03. ¿Qué devolvería por pantalla la instrucción `Escribir letrero`?
 
+**Código del ejercicio:**
+
+```pseudocode
 Algoritmo ejemplo
-	Definir letrero Como Texto
-	letrero = 'Bienvenido!'	
-	CrearLetrero(letrero)
-	Escribir letrero	
+    Definir letrero Como Texto
+    letrero = 'Bienvenido!'
+    CrearLetrero(letrero)
+    Escribir letrero
 FinAlgoritmo
 
 Funcion CrearLetrero(letrero)
-	letrero = 'Vamos!'	
+    letrero = 'Vamos!'
 FinFuncion
+```
 
-**Respuesta correcta:** `Bienvenido!`
+**Respuesta correcta:**
 
-**Explicación:** El resultado se relaciona con el alcance de las variables y el paso de parámetros a subprocesos. Cuando se pasa una variable por valor, los cambios realizados sobre el parámetro local no modifican la variable original.
+```text
+Bienvenido!
+```
+
+**Explicación:**
+
+La variable `letrero` se inicializa con el valor `"Bienvenido!"`.
+
+Al llamar a `CrearLetrero(letrero)`, se pasa el parámetro **por valor**, por lo que la modificación realizada dentro de la función no afecta a la variable original.
+
+Por eso, al ejecutar `Escribir letrero`, se muestra `Bienvenido!`.
+
+**Concepto aprendido:** Paso de parámetros por valor y alcance de variables.
+
+---
 
 ### 04. ¿Qué es un entorno de desarrollo?
 

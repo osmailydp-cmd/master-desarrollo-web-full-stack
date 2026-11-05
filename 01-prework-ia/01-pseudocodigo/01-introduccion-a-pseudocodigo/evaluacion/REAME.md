@@ -219,7 +219,17 @@ Trunc(-4.9)
 
 **Explicación:** Si la condición es verdadera, se ejecuta el bloque correspondiente. Puede utilizarse `SiNo` para definir instrucciones alternativas.
 
-### 14. ¿Cómo acceder a una posición específica de una matriz?
+### 14. Acceso a una posición de una matriz bidimensional
+
+**Pregunta de repaso:** ¿Cómo mostrar el valor almacenado en la segunda fila y cuarta columna de una matriz cuyos índices comienzan en cero?
+
+**Matriz de ejemplo:**
+
+| Fila / Columna | 0 | 1 | 2 | 3 |
+|---|---|---|---|---|
+| **0** | 12 | 25 | 38 | 14 |
+| **1** | 45 | 17 | 32 | **90** |
+| **2** | 21 | 56 | 43 | 67 |
 
 **Respuesta correcta:**
 
@@ -227,7 +237,26 @@ Trunc(-4.9)
 Escribir array[1,3]
 ```
 
-**Explicación:** En una matriz bidimensional, el primer índice identifica la fila y el segundo la columna. Con índices desde cero, corresponde a la segunda fila y cuarta columna.
+**Resultado en pantalla:**
+
+```text
+90
+```
+
+**Explicación:**
+
+En una matriz bidimensional, el primer índice representa la fila y el segundo la columna.
+
+Como los índices comienzan en cero:
+
+- `1` corresponde a la segunda fila.
+- `3` corresponde a la cuarta columna.
+
+Por tanto, `array[1,3]` contiene el valor **90**.
+
+**Concepto aprendido:** Acceso a elementos de matrices bidimensionales mediante índices de fila y columna.
+
+---
 
 ### 15. ¿Qué tipo de función se utiliza para calcular y mostrar el área de un círculo?
 

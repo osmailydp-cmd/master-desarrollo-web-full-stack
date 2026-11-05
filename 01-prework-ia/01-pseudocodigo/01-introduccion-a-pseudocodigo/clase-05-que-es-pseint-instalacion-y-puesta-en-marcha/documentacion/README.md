@@ -217,7 +217,7 @@ Configurar PSeInt utilizando el perfil proporcionado durante la formación.
 - Los operadores lógicos pueden representarse mediante palabras.
 - El objetivo principal es aprender programación, no depender de una herramienta específica.
 
-12. Conclusión
+## 12. Conclusión
 
 La clase presenta PSeInt como el entorno de trabajo que se utilizará para desarrollar los conocimientos de pseudocódigo.
 

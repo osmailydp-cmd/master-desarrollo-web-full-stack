@@ -154,9 +154,48 @@ Cuando `x` alcanza el valor 10, se cumple la condición `x >= 10` y termina el b
 
 ### 10. ¿Qué código se ejecuta cuando la variable X vale 10?
 
+**Código del ejercicio (reconstruido):**
+
+```pseudocode
+Algoritmo ejemplo
+    Definir x Como Entero
+    x = 10
+
+    Si x < 5 O x <= 10 Entonces
+        Escribir "Código A"
+    SiNo
+        Si x < 100 Entonces
+            Escribir "Código B"
+        FinSi
+    FinSi
+FinAlgoritmo
+```
+
 **Respuesta correcta:** Código A.
 
-**Explicación:** Las estructuras condicionales seleccionan qué bloque de instrucciones ejecutar según el resultado de una expresión lógica.
+**Explicación:**
+
+La variable `x` tiene el valor 10.
+
+La primera condición utiliza el operador lógico `O`, que requiere que al menos una de las condiciones sea verdadera.
+
+| Condición | Evaluación | Resultado |
+|---|---|---|
+| `x < 5` | `10 < 5` | Falso |
+| `x <= 10` | `10 <= 10` | Verdadero |
+| `Falso O Verdadero` | | Verdadero |
+
+Como la condición compuesta es verdadera, se ejecuta:
+
+```text
+Código A
+```
+
+El bloque `SiNo` no se ejecuta, por lo que no se evalúa la condición `x < 100`.
+
+**Concepto aprendido:** Condicionales anidados, operadores lógicos `O` y evaluación de condiciones compuestas.
+
+---
 
 ### 11. ¿Qué es un algoritmo?
 

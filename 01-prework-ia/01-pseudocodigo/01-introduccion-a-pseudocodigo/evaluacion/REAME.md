@@ -47,6 +47,17 @@ FinPara
 
 ### 03. ¿Qué resultado produce la instrucción Escribir letrero?
 
+Algoritmo ejemplo
+	Definir letrero Como Texto
+	letrero = 'Bienvenido!'	
+	CrearLetrero(letrero)
+	Escribir letrero	
+FinAlgoritmo
+
+Funcion CrearLetrero(letrero)
+	letrero = 'Vamos!'	
+FinFuncion
+
 **Respuesta correcta:** `Bienvenido!`
 
 **Explicación:** El resultado se relaciona con el alcance de las variables y el paso de parámetros a subprocesos. Cuando se pasa una variable por valor, los cambios realizados sobre el parámetro local no modifican la variable original.

@@ -215,4 +215,15 @@ Configurar PSeInt utilizando el perfil proporcionado durante la formación.
 - El perfil de Conquer Blocks establece reglas de programación más estrictas.
 - Los arrays se configurarán con índices desde cero.
 - Los operadores lógicos pueden representarse mediante palabras.
-- El objetivo principal es aprender programación
+- El objetivo principal es aprender programación, no depender de una herramienta específica.
+
+12. Conclusión
+
+La clase presenta PSeInt como el entorno de trabajo que se utilizará para desarrollar los conocimientos de pseudocódigo.
+
+Se estudian sus principales funcionalidades, los procedimientos de instalación y la configuración personalizada del curso.
+
+El aprendizaje más importante es comprender que PSeInt es una herramienta para desarrollar el pensamiento lógico y aprender los fundamentos de programación, conocimientos que posteriormente podrán aplicarse en otros lenguajes.
+
+Apuntes de estudio elaborados a partir del material de Conquer Blocks.
+Portafolio de aprendizaje — Máster en Desarrollo Web Full Stack.

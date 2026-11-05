@@ -117,11 +117,40 @@ Subcadena("Estoy progresando adecuadamente", 6, 16)
 
 **Explicación:** `Subcadena()` permite extraer caracteres entre dos posiciones. En este ejemplo se utiliza indexación desde cero.
 
-### 09. ¿Cuántas veces se ejecuta el bucle del cuestionario?
+### 09. ¿Cuántas veces se ejecuta el bucle?
+
+**Código del ejercicio:**
+
+```pseudocode
+Algoritmo ejemplo
+    Definir x Como Entero
+    x = 0
+
+    Repetir
+        x = x + 2
+    Hasta Que x >= 10
+FinAlgoritmo
+```
 
 **Respuesta correcta:** 5 veces.
 
-**Explicación:** Para calcular las iteraciones debemos comprobar el valor inicial del contador, la condición de continuación y el incremento o decremento.
+**Explicación:**
+
+La variable `x` comienza en 0 y aumenta de 2 en 2 en cada iteración.
+
+| Iteración | Valor inicial | Valor final |
+|---|---|---|
+| 1 | 0 | 2 |
+| 2 | 2 | 4 |
+| 3 | 4 | 6 |
+| 4 | 6 | 8 |
+| 5 | 8 | 10 |
+
+Cuando `x` alcanza el valor 10, se cumple la condición `x >= 10` y termina el bucle.
+
+**Concepto aprendido:** El bucle `Repetir...Hasta Que` ejecuta las instrucciones al menos una vez y comprueba la condición de finalización después de cada iteración.
+
+---
 
 ### 10. ¿Qué código se ejecuta cuando la variable X vale 10?
 

@@ -6,13 +6,11 @@
 **Tema:** Introducción a Pseudocódigo
 
 ## Contenido de la clase
-Bienvenido.
+
+Bienvenida e introducción al programa de aprendizaje de pseudocódigo.
 
 ## Documentación
-La carpeta `documentacion/` está reservada para apuntes personales y materiales que esté permitido publicar.
 
-## Ejercicios
-La carpeta `ejercicios/` está reservada para archivos `.psc` creados durante esta clase, cuando corresponda.
+En la carpeta `documentacion/` se encuentra el resumen de la clase, con sus principales conceptos y orientaciones para comenzar el aprendizaje.
 
-## Mis apuntes
-_Pendiente de completar._
+Esta documentación forma parte de los apuntes de estudio del portafolio.

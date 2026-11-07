@@ -552,4 +552,35 @@ Estos comandos permiten consultar información de la Shell, el kernel y la memor
 
 Al finalizar esta clase se deben comprender los siguientes conceptos:
 
-1. GNU/Linux es un sistema operativo basado
+1. GNU/Linux es un sistema operativo que combina el núcleo Linux con herramientas y componentes de software.
+2. El kernel administra los recursos del sistema y facilita la interacción con el hardware.
+3. La Shell interpreta los comandos introducidos por el usuario.
+4. La terminal proporciona una interfaz textual para interactuar con el sistema.
+5. Los sistemas de ficheros permiten organizar, almacenar y acceder a la información.
+6. Linux utiliza puntos de montaje dentro de una estructura de directorios.
+7. Existen diferentes distribuciones GNU/Linux y entornos gráficos.
+8. Las licencias de software establecen los derechos de uso, modificación y distribución.
+9. Linux puede instalarse directamente en una computadora o mediante una máquina virtual.
+10. Los comandos permiten consultar y administrar diferentes componentes del sistema operativo.
+
+## 20. Conclusión
+
+La primera clase proporciona una visión general de GNU/Linux, desde sus antecedentes históricos hasta su estructura interna y las diferentes formas de interactuar con el sistema.
+
+Los conceptos más importantes son:
+
+- La diferencia entre Linux y GNU/Linux.
+- El papel del kernel en la administración de recursos.
+- El funcionamiento de la Shell.
+- La utilidad de la terminal.
+- La organización de los sistemas de archivos.
+- Las distribuciones y las licencias de software.
+- Los procesos básicos de instalación y los entornos gráficos.
+
+Estos conocimientos constituyen la base para las siguientes clases del módulo, especialmente las relacionadas con VirtualBox, WSL y la utilización de comandos Linux.
+
+---
+
+**Nota sobre el material:** el documento contiene referencias históricas, capturas de versiones antiguas y procedimientos de instalación que pueden variar en sistemas modernos.
+
+**Portafolio de aprendizaje — Máster en Desarrollo Web Full Stack.**

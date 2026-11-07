@@ -1,4 +1,4 @@
-# Clase 02 - AP S21 - Día 1 - Reseteáte
+# Clase 02 - Resetéate: el mejor consejo de toda la informática
 
 **Curso:** Máster en Desarrollo Web Full Stack  
 **Categoría:** Prework + IA  
@@ -6,13 +6,11 @@
 **Tema:** Introducción a Pseudocódigo
 
 ## Contenido de la clase
-AP S21 - Día 1 - Reseteáte.
+
+Introducción a las técnicas de aprendizaje, organización del tiempo, hábitos de estudio y preparación de un entorno adecuado para aprender programación.
+
+Se aborda la importancia de la práctica, la constancia, la comprensión de los conceptos y el uso responsable de la inteligencia artificial como herramienta de apoyo.
 
 ## Documentación
-La carpeta `documentacion/` está reservada para apuntes personales y materiales que esté permitido publicar.
 
-## Ejercicios
-La carpeta `ejercicios/` está reservada para archivos `.psc` creados durante esta clase, cuando corresponda.
-
-## Mis apuntes
-_Pendiente de completar._
+En la carpeta [documentacion](documentacion/README.md) se encuentra el resumen teórico de la clase, que incluye técnicas de aprendizaje, recomendaciones de estudio y conceptos fundamentales para comenzar la formación.

@@ -27,8 +27,9 @@ Las carpetas de ejercicios se incluyen únicamente cuando existen actividades pr
 | Módulo | Descripción | Estado |
 |---|---|---|
 | [Pseudocódigo](01-prework-ia/01-pseudocodigo/01-introduccion-a-pseudocodigo/) | Fundamentos de programación, algoritmos, estructuras de control, arrays, matrices, funciones y procedimientos. | ✅ Finalizado |
+| [Linux y la Terminal](01-prework-ia/02-linux-y-la-terminal/) | Sistemas operativos, VirtualBox, WSL, comandos Linux, gestión de usuarios y permisos, Shell Script y SSH. | 🔄 En progreso |
 
-*Los siguientes módulos se incorporarán a medida que avance en la formación.*
+*Los siguientes módulos se incorporarán progresivamente a medida que avance en la formación.*
 
 ## Pseudocódigo — Módulo finalizado
 

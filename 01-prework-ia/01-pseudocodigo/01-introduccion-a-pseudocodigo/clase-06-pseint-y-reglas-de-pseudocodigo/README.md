@@ -1,4 +1,4 @@
-# Clase 06 - AP S21 - Día 5 - PSeInt y reglas de Pseudocódigo
+# Clase 06 - PSeInt y reglas de pseudocódigo
 
 **Curso:** Máster en Desarrollo Web Full Stack  
 **Categoría:** Prework + IA  
@@ -6,13 +6,15 @@
 **Tema:** Introducción a Pseudocódigo
 
 ## Contenido de la clase
-AP S21 - Día 5 - PSeInt y reglas de Pseudocódigo.
+
+Introducción a la interfaz de PSeInt, la estructura básica de los algoritmos y las buenas prácticas para escribir pseudocódigo.
+
+Se estudian las declaraciones de variables, las instrucciones de entrada y salida, las reglas de sintaxis y los errores habituales de programación.
+
+Durante la clase se realizan demostraciones para observar cómo PSeInt identifica errores y muestra mensajes durante la ejecución.
 
 ## Documentación
-La carpeta `documentacion/` está reservada para apuntes personales y materiales que esté permitido publicar.
 
-## Ejercicios
-La carpeta `ejercicios/` está reservada para archivos `.psc` creados durante esta clase, cuando corresponda.
+En la carpeta [documentacion](documentacion/README.md) se encuentra el resumen teórico de la clase, con explicaciones, ejemplos de código y los principales errores de programación estudiados.
 
-## Mis apuntes
-_Pendiente de completar._
+Las actividades demostrativas de la clase se recogen como material de estudio, por lo que no se incluyen ejercicios prácticos independientes en esta carpeta.

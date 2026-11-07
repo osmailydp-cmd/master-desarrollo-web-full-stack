@@ -1,4 +1,4 @@
-# Clase 20 - AP S21 - Día 19 - Ejemplos típicos con funciones y procedimientos
+# Clase 20 - Ejemplos típicos con funciones y procedimientos
 
 **Curso:** Máster en Desarrollo Web Full Stack  
 **Categoría:** Prework + IA  
@@ -6,13 +6,19 @@
 **Tema:** Introducción a Pseudocódigo
 
 ## Contenido de la clase
-AP S21 - Día 19 - Ejemplos típicos con funciones y procedimientos.
+
+Repaso práctico de funciones y procedimientos mediante siete tipos de ejemplos:
+
+- Procedimiento sin parámetros.
+- Procedimiento con parámetros.
+- Función que devuelve un valor.
+- Función booleana.
+- Función con varios parámetros.
+- Función que recorre un array.
+- Procedimiento que recibe un array.
+
+Se refuerzan los conceptos de programación modular, parámetros, valores de retorno y reutilización de código.
 
 ## Documentación
-La carpeta `documentacion/` está reservada para apuntes personales y materiales que esté permitido publicar.
 
-## Ejercicios
-La carpeta `ejercicios/` está reservada para archivos `.psc` creados durante esta clase, cuando corresponda.
-
-## Mis apuntes
-_Pendiente de completar._
+En la carpeta [documentacion](documentacion/README.md) se encuentra el resumen de la clase, con explicaciones y ejemplos de PSeInt para estudiar las diferencias entre funciones y procedimientos y sus aplicaciones.

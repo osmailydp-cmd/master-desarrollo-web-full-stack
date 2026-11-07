@@ -26,7 +26,7 @@ Las carpetas de ejercicios se incluyen únicamente cuando existen actividades pr
 
 | Módulo | Descripción | Estado |
 |---|---|---|
-| [Pseudocódigo](01-prework-ia/01-pseudocodigo/README.md) | Fundamentos de programación, algoritmos, estructuras de control, arrays, matrices, funciones y procedimientos. | ✅ Finalizado |
+| [Pseudocódigo](01-prework-ia/01-pseudocodigo/01-introduccion-a-pseudocodigo/) | Fundamentos de programación, algoritmos, estructuras de control, arrays, matrices, funciones y procedimientos. | ✅ Finalizado |
 
 *Los siguientes módulos se incorporarán a medida que avance en la formación.*
 

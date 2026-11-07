@@ -20,17 +20,15 @@ En la carpeta [documentacion](documentacion/README.md) se encuentra el resumen t
 
 ## Ejercicios prácticos
 
-Se desarrollaron tres ejercicios originalmente de forma manuscrita, incluyendo sus respectivos algoritmos y diagramas de flujo.
+Se realizaron tres ejercicios de programación, inicialmente de forma manuscrita, incluyendo sus algoritmos y diagramas de flujo. Posteriormente, se transcribieron a PSeInt y se publicaron como archivos `.psc`.
 
-Posteriormente, los algoritmos fueron transcritos a PSeInt y publicados como archivos `.psc`.
+Los ejercicios desarrollados son:
 
-| Nº | Ejercicio | Código |
-|---|---|---|
-| 01 | Acceso a un parque infantil | [Ver ejercicio](ejercicios/dia02_ejercicio01_parque_infantil.psc) |
-| 02 | Presentación personal | [Ver ejercicio](ejercicios/dia02_ejercicio02_presentacion_personal.psc) |
-| 03 | Derecho al voto | [Ver ejercicio](ejercicios/dia02_ejercicio03_derecho_al_voto.psc) |
+1. Acceso a un parque infantil.
+2. Presentación personal.
+3. Derecho al voto.
 
-Los enunciados, las explicaciones y los conceptos aplicados se encuentran en el [README de ejercicios](ejercicios/README.md).
+[Ver los ejercicios y sus códigos en PSeInt](ejercicios/README.md).
 
 ## Aprendizajes principales
 

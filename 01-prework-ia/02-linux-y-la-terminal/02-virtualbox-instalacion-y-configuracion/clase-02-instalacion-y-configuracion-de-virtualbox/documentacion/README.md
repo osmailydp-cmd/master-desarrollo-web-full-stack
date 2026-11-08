@@ -275,14 +275,14 @@ El PDF proporcionado contiene la portada, el índice y la despedida. Por tanto, 
 
 Las acciones de instalación y configuración descritas no representan actividades prácticas realizadas personalmente ni una transcripción literal de la explicación del profesor.
 
-# Guía — Crear una ISO de Windows 10 desde Windows 11
+## 12. Guía práctica — Obtener una ISO de Windows 10 desde Windows 11
 
 **Curso:** Máster en Desarrollo Web Full Stack  
 **Módulo:** Linux y la Terminal  
 **Tema:** VirtualBox, instalación y configuración  
 **Objetivo:** Obtener una imagen ISO oficial de Windows 10 para instalarlo en una máquina virtual de VirtualBox.
 
-## 1. Descargar la herramienta oficial
+### 1. Descargar la herramienta oficial
 
 1. Acceder a la página oficial de Microsoft:
 
@@ -293,7 +293,7 @@ Las acciones de instalación y configuración descritas no representan actividad
 4. Descargar y ejecutar `MediaCreationTool_22H2.exe`.
 5. Aceptar los términos de licencia.
 
-## 2. Configurar la descarga
+### 2. Configurar la descarga
 
 6. Seleccionar **Crear medios de instalación (unidad flash USB, DVD o archivo ISO) para otro PC**.
 7. Elegir las siguientes opciones:
@@ -304,7 +304,7 @@ Las acciones de instalación y configuración descritas no representan actividad
 
 8. Pulsar **Siguiente**.
 
-## 3. Crear el archivo ISO
+### 3. Crear el archivo ISO
 
 9. Seleccionar la opción **Archivo ISO**, no unidad flash USB.
 10. Elegir la carpeta donde se guardará el archivo:
@@ -314,7 +314,7 @@ Las acciones de instalación y configuración descritas no representan actividad
 11. Esperar a que la herramienta descargue Windows 10 y genere la imagen ISO.
 12. Comprobar que el archivo `.iso` se haya guardado correctamente.
 
-## 4. Utilizar la ISO en VirtualBox
+### 4. Utilizar la ISO en VirtualBox
 
 1. Abrir Oracle VirtualBox.
 2. Seleccionar **Nueva**.
@@ -323,7 +323,7 @@ Las acciones de instalación y configuración descritas no representan actividad
 5. Configurar la memoria RAM, los procesadores y el disco virtual.
 6. Iniciar la máquina y proceder con la instalación.
 
-## 5. Configuración recomendada para mi computadora
+### 5. Configuración recomendada para mi computadora
 
 | Recurso | Configuración |
 |---|---|
@@ -336,7 +336,7 @@ Las acciones de instalación y configuración descritas no representan actividad
 | Disco virtual | 64 GB dinámico |
 | Formato del disco | VDI |
 
-## Observaciones importantes
+### Observaciones importantes
 
 - La ISO se descarga desde Microsoft utilizando Windows 11; **no se genera una copia del Windows 11 instalado**.
 - No es necesario utilizar una memoria USB.

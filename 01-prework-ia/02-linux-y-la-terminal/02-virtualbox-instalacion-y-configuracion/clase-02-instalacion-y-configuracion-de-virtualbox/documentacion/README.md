@@ -80,39 +80,76 @@ Antes de instalar VirtualBox, conviene comprobar:
 
 Estas son recomendaciones generales complementarias; el PDF no especifica versiones ni requisitos mínimos concretos.
 
-## 4. Problemas habituales durante la instalación
+## 4. Problemas habituales durante la instalación de VirtualBox
 
-La página de la academia proporciona recursos adicionales para resolver determinados problemas de instalación.
+Durante la instalación de VirtualBox pueden aparecer errores relacionados con componentes de Windows o con la configuración de virtualización del equipo.
 
-### 4.1. Error relacionado con Visual C++
+La academia proporciona los siguientes recursos para identificar y solucionar algunos de estos problemas.
 
-En determinadas instalaciones de Windows pueden ser necesarios componentes de Microsoft Visual C++.
+### 4.1. Error relacionado con Microsoft Visual C++
 
-La academia comparte un video de apoyo para este problema.
+Algunas versiones de VirtualBox para Windows requieren componentes de Microsoft Visual C++.
 
-### 4.2. Virtualización deshabilitada en BIOS/UEFI
+Si durante la instalación aparece un mensaje indicando que falta alguno de estos componentes, puede ser necesario instalar el paquete correspondiente.
 
-La virtualización por hardware puede depender de funciones del procesador y de la configuración del firmware del equipo.
+**Video proporcionado por la academia:**
+
+[Instalar Visual C++ para solucionar errores de VirtualBox](https://youtu.be/hBhpsZ_ECAA?si=FoynB0zCjkhr05uV)
+
+### 4.2. Comprobar si la virtualización está habilitada en BIOS/UEFI
+
+VirtualBox puede necesitar que las funciones de virtualización por hardware estén habilitadas.
 
 Entre las tecnologías más conocidas se encuentran:
 
-- Intel VT-x.
-- AMD-V.
+- **Intel VT-x:** virtualización por hardware en procesadores Intel.
+- **AMD-V:** virtualización por hardware en procesadores AMD.
 
-La academia proporciona otro video para comprobar la activación de la virtualización desde BIOS/UEFI.
+Es importante comprobar que estas funciones estén disponibles y habilitadas en la configuración del equipo.
 
-### 4.3. Virtualización deshabilitada en Windows
+**Video proporcionado por la academia:**
 
-En algunos casos, la configuración del sistema anfitrión puede afectar a la utilización de las funciones de virtualización.
+[Comprobar si la virtualización está habilitada en BIOS/UEFI](https://youtu.be/dvVnwvz1W5Y?si=sjv4OOQaJyLo5sNu)
 
-La academia ofrece un recurso adicional sobre este tipo de problema.
+### 4.3. Habilitar la virtualización desde BIOS/UEFI
 
-### 4.4. Reinicio del equipo
+Si la virtualización está deshabilitada, puede ser necesario acceder a BIOS/UEFI y activar la opción correspondiente.
 
-Después de realizar cambios en la configuración o instalar determinados componentes, puede ser necesario reiniciar el equipo antes de ejecutar nuevamente VirtualBox.
+El procedimiento varía según el fabricante y el modelo de la computadora.
 
-**Observación:** los pasos concretos para resolver estos errores dependen del sistema operativo, la versión de VirtualBox y el equipo utilizado.
+De forma general:
 
+1. Acceder a la configuración BIOS/UEFI.
+2. Localizar las opciones relacionadas con el procesador o la virtualización.
+3. Identificar Intel Virtualization Technology, AMD-V o una opción equivalente.
+4. Habilitarla si está disponible.
+5. Guardar los cambios y reiniciar el equipo.
+
+**Video proporcionado por la academia:**
+
+[Habilitar la virtualización desde BIOS/UEFI](https://youtu.be/tgH4_jkiMbc?si=rKf_H4ULBj62k3Rp)
+
+### 4.4. Reiniciar el equipo y repetir la instalación
+
+Después de instalar los componentes necesarios o modificar la configuración de virtualización:
+
+1. Guardar los cambios realizados.
+2. Reiniciar la computadora.
+3. Ejecutar nuevamente el instalador de VirtualBox.
+4. Comprobar si el problema se ha solucionado.
+
+Si el error continúa, será necesario revisar el mensaje específico, la compatibilidad del sistema y la versión de VirtualBox.
+
+### Resumen de recursos de solución de problemas
+
+| Problema | Recurso |
+|---|---|
+| Error de Microsoft Visual C++ | [Ver video 1](https://youtu.be/hBhpsZ_ECAA?si=FoynB0zCjkhr05uV) |
+| Comprobar virtualización en BIOS/UEFI | [Ver video 2](https://youtu.be/dvVnwvz1W5Y?si=sjv4OOQaJyLo5sNu) |
+| Habilitar virtualización en BIOS/UEFI | [Ver video 3](https://youtu.be/tgH4_jkiMbc?si=rKf_H4ULBj62k3Rp) |
+| Aplicar cambios | Reiniciar el equipo y repetir la instalación |
+
+**Nota:** los enlaces anteriores fueron proporcionados como recursos complementarios por Conquer Blocks. Las opciones de configuración y los procedimientos pueden variar según el equipo y las versiones de software utilizadas.
 ## 5. Interfaz de usuario de VirtualBox
 
 El índice de la clase incluye un recorrido por la interfaz gráfica del programa.

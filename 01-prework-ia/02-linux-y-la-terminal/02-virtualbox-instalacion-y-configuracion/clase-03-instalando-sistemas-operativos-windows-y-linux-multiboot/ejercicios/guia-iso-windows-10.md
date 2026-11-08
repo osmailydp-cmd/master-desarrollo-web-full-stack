@@ -1,4 +1,4 @@
-## 12. Guía práctica — Obtener una ISO de Windows 10 desde Windows 11
+##  Guía práctica — Obtener una ISO de Windows 10 desde Windows 11
 
 **Curso:** Máster en Desarrollo Web Full Stack  
 **Módulo:** Linux y la Terminal  

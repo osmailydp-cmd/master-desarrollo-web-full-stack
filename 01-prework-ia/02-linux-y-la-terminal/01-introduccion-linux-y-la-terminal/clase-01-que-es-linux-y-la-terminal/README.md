@@ -588,6 +588,7 @@ Para complementar estos apuntes, la academia proporciona un repositorio con mate
 **[Repositorio oficial — Linux y la Terminal](https://github.com/ConquerBlocks/conquerblocks-linux-terminal)**
 
 Los apuntes de este portafolio están organizados con explicaciones y ejemplos de estudio propios. Los materiales originales pueden consultarse desde el repositorio oficial de la academia.
+
 ---
 
 **Nota sobre el material:** el documento contiene referencias históricas, capturas de versiones antiguas y procedimientos de instalación que pueden variar en sistemas modernos.

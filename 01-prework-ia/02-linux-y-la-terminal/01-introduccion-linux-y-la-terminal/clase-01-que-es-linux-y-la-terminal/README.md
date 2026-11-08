@@ -579,6 +579,15 @@ Los conceptos más importantes son:
 
 Estos conocimientos constituyen la base para las siguientes clases del módulo, especialmente las relacionadas con VirtualBox, WSL y la utilización de comandos Linux.
 
+## 21. Material de referencia
+
+Esta documentación ha sido elaborada como parte de mi aprendizaje en el Máster en Desarrollo Web Full Stack de Conquer Blocks.
+
+Para complementar estos apuntes, la academia proporciona un repositorio con materiales de las clases:
+
+**[Repositorio oficial — Linux y la Terminal](https://github.com/ConquerBlocks/conquerblocks-linux-terminal)**
+
+Los apuntes de este portafolio están organizados con explicaciones y ejemplos de estudio propios. Los materiales originales pueden consultarse desde el repositorio oficial de la academia.
 ---
 
 **Nota sobre el material:** el documento contiene referencias históricas, capturas de versiones antiguas y procedimientos de instalación que pueden variar en sistemas modernos.

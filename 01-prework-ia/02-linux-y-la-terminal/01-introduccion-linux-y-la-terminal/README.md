@@ -9,7 +9,7 @@
 
 | Clase del módulo | Título | Acceso |
 |---|---|---|
-| 01 | Qué es Linux y la Terminal | [Ver clase](documentacion/README.md) |
+| 01 | Qué es Linux y la Terminal | [Ver clase](documentacion/clase-01.md) |
 
 ## Seguimiento
 

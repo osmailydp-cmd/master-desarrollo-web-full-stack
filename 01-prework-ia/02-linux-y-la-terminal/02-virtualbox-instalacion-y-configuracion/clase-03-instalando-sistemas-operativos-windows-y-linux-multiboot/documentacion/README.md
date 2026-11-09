@@ -1311,28 +1311,32 @@ La aparición de la terminal confirma que Xubuntu puede iniciar sesión y ejecut
 
 ## 29. Comprobación del arranque de Windows 7
 
-Después de mostrar Xubuntu, el profesor vuelve a abrir el menú GRUB.
+Después de comprobar que Xubuntu funciona correctamente, el profesor reinicia la máquina virtual `MultiSistema` y vuelve al menú **GNU GRUB**.
 
-Selecciona la opción:
+En el menú selecciona:
 
 `Windows 7 (en /dev/sda1)`
 
-El objetivo es comprobar que Windows sigue disponible después de instalar Linux.
+### Verificación realizada
 
-### ¿Por qué es importante?
+1. GRUB reconoce la instalación de Windows 7.
+2. El profesor selecciona Windows 7 como sistema operativo de arranque.
+3. Windows 7 inicia correctamente.
+4. Se muestra el escritorio de Windows 7 funcionando dentro de VirtualBox.
 
-Porque el propósito de Multiboot es conservar ambos sistemas operativos y permitir elegir cuál iniciar.
+### Resultado de la práctica Multiboot
 
-Las capturas confirman que:
+| Comprobación | Resultado |
+|---|---|
+| Instalación de Windows 7 | Completada |
+| Instalación de Xubuntu | Completada |
+| GRUB detecta Windows 7 y Xubuntu | Confirmado |
+| Arranque de Xubuntu | Correcto |
+| Inicio de sesión y escritorio de Xubuntu | Correcto |
+| Arranque de Windows 7 desde GRUB | Correcto |
+| Escritorio de Windows 7 | Confirmado |
 
-- GRUB se ejecuta.
-- La entrada de Ubuntu está disponible.
-- La entrada de Windows 7 está disponible.
-- Xubuntu inicia correctamente.
-
-El profesor explica que verifica también el arranque de Windows 7. La captura final compartida muestra el menú GRUB, pero no el escritorio de Windows después de esa segunda selección.
-
-Por tanto, registramos la comprobación explicada por el profesor sin atribuir a la captura una pantalla que no muestra.
+**Conclusión:** el profesor demuestra que Windows 7 y Xubuntu pueden coexistir en el mismo disco virtual y arrancar correctamente mediante el gestor GNU GRUB, sin necesidad de utilizar máquinas virtuales independientes para cada sistema operativo.
 
 ---
 

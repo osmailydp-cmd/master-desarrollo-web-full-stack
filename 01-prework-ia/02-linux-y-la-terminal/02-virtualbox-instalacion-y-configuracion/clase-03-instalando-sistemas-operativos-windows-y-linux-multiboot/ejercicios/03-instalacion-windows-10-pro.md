@@ -352,16 +352,85 @@ Seleccionamos:
 
 Esta fue la distribución principal utilizada.
 
-### 5.3. Agregar una segunda distribución de teclado
+### 5.3. Agregar un segundo idioma y configurar su teclado
 
-Durante el asistente también configuramos una opción adicional.
+Durante la configuración inicial de Windows 10 agregamos:
 
-Seleccionamos:
+- **Idioma:** Inglés (Estados Unidos).
+- **Distribución del teclado:** Español.
 
-- Idioma: **Inglés (Estados Unidos)**.
-- Distribución del teclado: **Español**.
+Posteriormente identificamos que el idioma y la distribución del teclado son configuraciones independientes.
 
-**Importante:** aunque agregamos Inglés (Estados Unidos), la distribución seleccionada para ese idioma fue Español, no el teclado estadounidense.
+La distribución del teclado determina la ubicación de las teclas y los caracteres que se escriben, independientemente del idioma seleccionado.
+
+**Aprendizaje:** si queremos utilizar la distribución estadounidense, debemos seleccionar **Estados Unidos (US)**. Si nuestro teclado físico tiene distribución española, podemos mantener **Español**, aunque el idioma agregado sea Inglés (Estados Unidos).
+
+Esta configuración puede modificarse posteriormente desde:
+
+**Inicio → Configuración → Hora e idioma → Idioma → Inglés (Estados Unidos) → Opciones → Teclados**.
+
+### 5.3.1. Corrección de la distribución del teclado para Inglés (Estados Unidos)
+
+Durante la configuración inicial de Windows 10 agregamos el idioma **Inglés (Estados Unidos)**, pero seleccionamos la distribución de teclado **Español — QWERTY**.
+
+Posteriormente comprobamos que nuestro teclado físico ASUS no tiene la letra Ñ y que la distribución **Estados Unidos (US)** se adapta correctamente a sus teclas.
+
+#### Paso 1 — Acceder a la configuración del idioma
+
+1. Abrir **Inicio → Configuración**.
+2. Seleccionar **Hora e idioma**.
+3. Entrar en **Idioma**.
+4. En **Idiomas preferidos**, seleccionar **Inglés (Estados Unidos)**.
+5. Hacer clic en **Opciones**.
+
+#### Paso 2 — Agregar el teclado estadounidense
+
+1. Localizar la sección **Teclados**.
+2. Hacer clic en **Agregar un teclado**.
+3. Buscar y seleccionar **Estados Unidos**.
+4. Comprobar que aparecen las distribuciones:
+   - **Español — QWERTY**.
+   - **Estados Unidos — QWERTY**.
+
+#### Paso 3 — Seleccionar y comprobar la nueva distribución
+
+1. Presionar `Windows + Espacio` para abrir el selector de idioma y teclado.
+2. Seleccionar **ENG — Inglés (Estados Unidos), Teclado Estados Unidos**.
+3. Abrir el Bloc de notas.
+4. Probar las teclas de letras, números y signos de puntuación.
+5. Confirmar que los caracteres coinciden con los símbolos del teclado físico.
+
+**Resultado:** la distribución Estados Unidos funcionó correctamente.
+
+#### Paso 4 — Eliminar la distribución española asociada al inglés
+
+1. Regresar a **Configuración → Hora e idioma → Idioma**.
+2. Seleccionar **Inglés (Estados Unidos) → Opciones**.
+3. En **Teclados**, seleccionar **Español — QWERTY**.
+4. Hacer clic en **Quitar**.
+5. Comprobar que permanece **Estados Unidos — QWERTY**.
+
+#### Paso 5 — Verificar la configuración final
+
+Abrir nuevamente el selector con `Windows + Espacio`.
+
+Comprobamos que quedaron disponibles estas combinaciones:
+
+| Idioma | Distribución del teclado |
+|---|---|
+| Español (Uruguay) | Latinoamérica |
+| Español (España, internacional) | Español |
+| Inglés (Estados Unidos) | Estados Unidos |
+
+La distribución **ENG US** quedó seleccionada y funcionando correctamente.
+
+#### Aprendizaje
+
+El idioma y la distribución del teclado son configuraciones independientes.
+
+Por ejemplo, podemos tener Windows en español y utilizar una distribución estadounidense si corresponde a nuestro teclado físico.
+
+**Conclusión:** corregimos la distribución del idioma inglés sin eliminar los idiomas españoles ni cambiar el idioma de visualización de Windows 10.
 
 ### 5.4. Elegir el tipo de uso del equipo
 

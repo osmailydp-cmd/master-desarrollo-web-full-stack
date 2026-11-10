@@ -112,7 +112,7 @@ Utilizamos la herramienta oficial de Microsoft para crear el medio de instalaci�
 
 Ese procedimiento se encuentra documentado por separado en:
 
-[Guía para obtener una ISO de Windows 10](01-prework-ia/02-linux-y-la-terminal/02-virtualbox-instalacion-y-configuracion/clase-03-instalando-sistemas-operativos-windows-y-linux-multiboot/ejercicios/01-creacion-iso-windows-10.md)
+[Guía para obtener una ISO de Windows 10](01-creacion-iso-windows-10.md)
 
 **En esta práctica partimos de la ISO ya descargada.**
 

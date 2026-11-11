@@ -1,4 +1,4 @@
-# Práctica 01 — Creación y configuración de una máquina virtual para Windows 10 Pro
+# Práctica — Creación y configuración de una máquina virtual para Windows 10 Pro
 
 **Curso:** Máster en Desarrollo Web Full Stack  
 **Módulo:** Linux y la Terminal  

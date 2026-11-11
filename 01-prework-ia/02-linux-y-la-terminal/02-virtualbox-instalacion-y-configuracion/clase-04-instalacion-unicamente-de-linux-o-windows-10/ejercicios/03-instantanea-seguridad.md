@@ -637,6 +637,57 @@ Restaurar una instantánea no debe confundirse con reiniciar Windows.
 
 **Restaurar una instantánea:** regresa a un estado previamente guardado y puede descartar cambios posteriores.
 
+### 11.10. Prueba práctica — Verificación de una restauración
+
+Para comprobar que la restauración de instantáneas funciona correctamente, realizamos una prueba creando una carpeta dentro de Windows 10 después de haber guardado una instantánea.
+
+#### Paso 1 — Crear un cambio después de la instantánea
+
+1. Iniciamos la máquina virtual `PC-Windows10-Osmaily`.
+2. Accedimos al escritorio de Windows 10.
+3. Creamos una carpeta llamada `prueba`.
+4. Comprobamos que aparecía en el escritorio.
+
+#### Paso 2 — Apagar la máquina virtual
+
+1. Abrimos **Inicio → Inicio/Apagado**.
+2. Seleccionamos **Apagar**.
+3. Esperamos a que la máquina virtual quedara apagada.
+
+#### Paso 3 — Restaurar la instantánea
+
+1. Abrimos **Oracle VirtualBox Administrador** desde Windows 11.
+2. Seleccionamos `PC-Windows10-Osmaily`.
+3. Accedimos a **Instantáneas**.
+4. Seleccionamos la instantánea creada antes de la carpeta `prueba`.
+5. Hicimos clic en **Restaurar**.
+6. Confirmamos el mensaje de restauración.
+7. Esperamos a que VirtualBox terminara la operación.
+
+**Observación:** la restauración fue muy rápida y no observamos una barra de progreso.
+
+#### Paso 4 — Iniciar Windows después de restaurar
+
+1. Seleccionamos **Estado actual (modificado)**.
+2. Hicimos clic en **Iniciar**.
+3. Esperamos a que Windows 10 arrancara.
+4. Accedimos al escritorio.
+
+#### Paso 5 — Comprobar el resultado
+
+Buscamos la carpeta `prueba` que habíamos creado anteriormente.
+
+**Resultado:** la carpeta ya no aparecía en el escritorio.
+
+Esto confirmó que VirtualBox había recuperado el estado del disco virtual correspondiente a la instantánea anterior a su creación.
+
+#### Conclusión
+
+La prueba de restauración fue exitosa.
+
+Aprendimos que una instantánea permite recuperar un estado anterior de la máquina virtual y descartar cambios realizados posteriormente.
+
+También comprobamos que la restauración puede completarse rápidamente y que la verificación más importante consiste en iniciar el sistema y comprobar que recuperamos el estado esperado.
 ---
 
 ## 12. Cómo crear varias instantáneas

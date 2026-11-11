@@ -1,4 +1,4 @@
-# Práctica 03 — Instalación y configuración de Windows 10 Pro en VirtualBox
+# Práctica — Instalación y configuración de Windows 10 Pro en VirtualBox
 
 **Curso:** Máster en Desarrollo Web Full Stack  
 **Módulo:** Linux y la Terminal  

@@ -1,4 +1,4 @@
-# Práctica — Creación de una instantánea de seguridad en Oracle VirtualBox
+# Práctica — Creación y restauración de una instantánea de seguridad en Oracle VirtualBox
 
 **Curso:** Máster en Desarrollo Web Full Stack  
 **Módulo:** Linux y la Terminal  
@@ -7,38 +7,39 @@
 **Máquina virtual:** `PC-Windows10-Osmaily`  
 **Sistema anfitrión:** Windows 11 Home  
 **Sistema invitado:** Windows 10 Pro (64 bits)  
-**Versión de Windows:** 22H2
+**Versión de Windows:** 22H2  
+**Fecha de la práctica de restauración:** 11/11/2026  
+**Estado:** Completada y verificada
 
 ---
 
 ## 1. Objetivo de la práctica
 
-Aprender a crear, identificar, administrar y comprender el funcionamiento de una **instantánea (Snapshot)** de una máquina virtual en Oracle VirtualBox.
+Aprender a crear, administrar y restaurar una **instantánea (Snapshot)** de una máquina virtual en Oracle VirtualBox.
 
-La finalidad es conservar un punto de recuperación de Windows 10 Pro después de haber completado su instalación y comprobado el funcionamiento de Guest Additions.
+El propósito es conservar un punto de recuperación de Windows 10 Pro después de haber completado su instalación y configuración, para poder regresar a ese estado si realizamos cambios que afecten al sistema.
 
 Durante esta práctica aprenderemos a:
 
-1. Comprender qué es una instantánea.
+1. Comprender qué es una instantánea y para qué sirve.
 2. Diferenciar una instantánea de una copia de seguridad.
-3. Identificar cuándo conviene crearla.
-4. Preparar la máquina virtual.
-5. Apagar correctamente Windows 10.
-6. Acceder a la sección Instantáneas de VirtualBox.
-7. Crear una instantánea con nombre y descripción.
-8. Comprobar que aparece en el administrador.
-9. Comprender cómo funcionan los cambios posteriores.
-10. Conocer el procedimiento para restaurar una instantánea.
-11. Identificar los riesgos de restauración y eliminación.
-12. Conservar un punto de recuperación para futuras prácticas.
+3. Identificar cuándo conviene crear una instantánea.
+4. Preparar Windows 10 antes de guardar su estado.
+5. Crear una instantánea desde Oracle VirtualBox Administrador.
+6. Comprobar que la instantánea se creó correctamente.
+7. Identificar dónde almacena VirtualBox los archivos de las instantáneas.
+8. Crear un cambio de prueba después de guardar una instantánea.
+9. Restaurar la máquina virtual a un estado anterior.
+10. Comprobar que la restauración realmente funcionó.
+11. Comprender cómo administrar y eliminar instantáneas.
 
-**Alcance:** crear y verificar una instantánea de Windows 10 Pro. La restauración se explica como procedimiento de referencia; no es necesario ejecutarla durante la creación inicial.
+**Resultado obtenido:** creamos una instantánea, modificamos Windows 10 creando una carpeta llamada `prueba` y posteriormente restauramos el estado anterior. Al iniciar nuevamente Windows, comprobamos que la carpeta había desaparecido.
 
 ---
 
 ## 2. Requisitos previos
 
-Antes de comenzar debemos disponer de una máquina virtual de Windows 10 Pro instalada y funcionando.
+Antes de realizar esta práctica, habíamos completado la instalación de Windows 10 Pro y la configuración de VirtualBox Guest Additions.
 
 ### 2.1. Máquina virtual utilizada
 
@@ -48,6 +49,7 @@ Antes de comenzar debemos disponer de una máquina virtual de Windows 10 Pro ins
 | Sistema operativo | Windows 10 Pro |
 | Arquitectura | 64 bits |
 | Versión | 22H2 |
+| Compilación | 19045.3803 |
 | Memoria RAM | 4096 MB |
 | Procesadores virtuales | 2 |
 | Disco duro virtual | VDI dinámico de 64 GB |
@@ -55,649 +57,729 @@ Antes de comenzar debemos disponer de una máquina virtual de Windows 10 Pro ins
 | Usuario local | Osmaily |
 | Guest Additions | 7.2.22 |
 
-### 2.2. Estado previo de Windows 10
+### 2.2. Estado de Windows antes de la instantánea
 
-En las prácticas anteriores completamos:
+Las prácticas anteriores permitieron completar y verificar:
 
 - Instalación de Windows 10 Pro.
-- Configuración de la cuenta local.
+- Creación de la cuenta local.
 - Configuración regional y de teclado.
-- Comprobación de la edición y versión.
-- Instalación de VirtualBox Guest Additions.
-- Verificación del controlador gráfico.
-- Corrección del redimensionamiento de pantalla.
-- Comprobación del modo pantalla completa.
-- Comprobación de la integración del ratón.
+- Verificación de la edición y versión de Windows.
+- Instalación de Guest Additions 7.2.22.
+- Reconocimiento de `VirtualBox Graphics Adapter (WDDM)`.
+- Funcionamiento del redimensionamiento automático de pantalla.
+- Funcionamiento del modo pantalla completa.
+- Integración del ratón entre Windows 10 y Windows 11.
 
-Por tanto, este es un momento adecuado para conservar un punto de recuperación.
-
-### 2.3. Verificar el espacio disponible
-
-Las instantáneas utilizan espacio en el almacenamiento del sistema anfitrión.
-
-En nuestra máquina virtual los archivos se encuentran bajo:
-
-`E:\VirtualBox`
-
-Antes de crear una instantánea:
-
-1. Abrir el Explorador de archivos de Windows 11.
-2. Seleccionar **Este equipo**.
-3. Localizar la unidad `E:`.
-4. Comprobar que dispone de espacio libre suficiente.
-
-**Importante:** VirtualBox no reserva necesariamente una cantidad fija de almacenamiento para cada instantánea. Su uso puede crecer conforme se realizan cambios en la máquina virtual.
+Por tanto, disponíamos de una instalación estable que convenía conservar.
 
 ---
 
 ## 3. ¿Qué es una instantánea en VirtualBox?
 
-Una **instantánea**, también llamada *Snapshot*, es un punto de recuperación que registra el estado de una máquina virtual en un momento determinado.
+Una **instantánea**, también llamada *Snapshot*, permite guardar un punto de recuperación del estado de una máquina virtual.
 
-Permite regresar posteriormente a ese estado.
+Posteriormente podemos restaurar ese punto para regresar a la configuración y al contenido que existían cuando se creó.
 
 ### 3.1. Ejemplo práctico
 
-Imaginemos que tenemos Windows 10 Pro funcionando correctamente.
+Imaginemos que acabamos de instalar Windows 10 Pro y todo funciona correctamente.
 
-Creamos una instantánea llamada:
+Creamos una instantánea.
 
-`Windows 10 Pro - Instalacion limpia y Guest Additions`
+Después realizamos cambios como:
 
-Después realizamos nuevas pruebas:
+- Instalar programas.
+- Crear carpetas y documentos.
+- Modificar configuraciones.
+- Instalar controladores.
+- Probar nuevas herramientas.
 
-- Instalamos programas.
-- Modificamos configuraciones.
-- Cambiamos parámetros del sistema.
-- Probamos herramientas.
-- Cometemos algún error de configuración.
+Si necesitamos regresar a la instalación anterior, podemos restaurar la instantánea.
 
-Si necesitamos regresar al estado anterior, podemos restaurar la instantánea.
+Los cambios realizados después de crearla en los discos virtuales normales pueden descartarse al restaurar.
 
-VirtualBox revertirá los cambios de los discos virtuales normales y recuperará la configuración guardada en ese punto.
+### 3.2. ¿Qué conserva una instantánea?
 
-### 3.2. ¿Qué información conserva?
+Dependiendo del estado de la máquina, una instantánea conserva información relacionada con:
 
-Una instantánea puede conservar:
+**Configuración de hardware virtual**
 
-**Configuración de la máquina virtual**
-
-Por ejemplo:
-
-- Memoria RAM asignada.
+- Memoria asignada.
 - Procesadores virtuales.
-- Configuración del hardware.
-- Dispositivos virtuales.
+- Dispositivos.
+- Opciones de configuración de la máquina.
 
-**Estado de los discos virtuales**
+**Estado de los discos virtuales normales**
 
-Por ejemplo:
-
-- Archivos de Windows.
+- Archivos del sistema operativo.
 - Programas instalados.
 - Configuraciones guardadas.
-- Cambios realizados en el disco.
+- Archivos y carpetas almacenados.
 
-**Estado de memoria**
+**Estado de ejecución**
 
-Si la instantánea se crea mientras la máquina virtual está funcionando, VirtualBox también puede guardar su estado de memoria.
+Si una instantánea se crea mientras la máquina está funcionando, VirtualBox puede guardar también su estado de memoria.
 
-En esta práctica preferiremos crearla con Windows apagado correctamente.
+En nuestra práctica creamos un punto de recuperación con Windows apagado normalmente.
 
 ### 3.3. ¿Qué significa restaurar una instantánea?
 
-Significa regresar la máquina virtual al estado conservado cuando se creó esa instantánea.
+Significa regresar al estado que tenía la máquina virtual cuando se guardó ese punto de recuperación.
 
 Por ejemplo:
 
-**Estado A:** Windows 10 recién configurado.
+| Momento | Estado de la máquina |
+|---|---|
+| Estado inicial | Windows 10 instalado y configurado |
+| Creación de instantánea | Guardamos ese estado |
+| Cambios posteriores | Creamos una carpeta llamada `prueba` |
+| Restauración | Recuperamos el estado inicial |
+| Verificación | La carpeta `prueba` ya no existe |
 
-**Instantánea:** guardamos ese estado.
-
-**Estado B:** instalamos programas y modificamos configuraciones.
-
-**Restauración:** regresamos al Estado A.
-
-Los cambios realizados posteriormente en los discos normales pueden perderse al restaurar.
+Este fue precisamente el ejercicio que realizamos.
 
 ---
 
 ## 4. Diferencia entre instantánea y copia de seguridad
 
-Aunque se parecen, no son lo mismo.
+Aunque ambas sirven para recuperar información, **una instantánea no equivale a una copia de seguridad independiente**.
 
 ### 4.1. Instantánea
 
-Permite regresar rápidamente a un estado anterior de la misma máquina virtual.
+Una instantánea permite regresar a un estado anterior de la misma máquina virtual.
 
-Normalmente depende de los archivos originales y de los archivos diferenciales de esa máquina.
+Generalmente depende de los archivos originales y de archivos diferenciales utilizados por VirtualBox.
 
 ### 4.2. Copia de seguridad
 
-Consiste en conservar una copia independiente de los datos o de la máquina virtual.
+Una copia de seguridad consiste en conservar datos o archivos de la máquina virtual en otra ubicación.
 
-Puede almacenarse en otra unidad o ubicación para protegernos ante fallos del almacenamiento principal.
+Por ejemplo, podemos guardar una copia de la máquina en un disco externo.
+
+Esto permite protegerla frente a la pérdida o daño del almacenamiento original.
 
 ### 4.3. Comparación
 
 | Característica | Instantánea | Copia de seguridad independiente |
 |---|---|---|
-| Recuperar un estado anterior | Sí | Sí, si la copia lo incluye |
-| Permite deshacer cambios de pruebas | Sí | Sí, mediante recuperación |
-| Depende de archivos de la VM original | Normalmente sí | No necesariamente |
-| Protege ante pérdida de la unidad E: | No, si está en esa misma unidad | Sí, si está guardada en otro dispositivo |
-| Adecuada antes de experimentar | Sí | También, pero generalmente requiere otro procedimiento |
+| Recuperar un estado anterior | Sí | Sí, si contiene ese estado |
+| Deshacer cambios de una práctica | Sí | Sí, mediante recuperación |
+| Depende de archivos de la máquina original | Generalmente sí | No necesariamente |
+| Protege ante la pérdida del disco E: | No, si está almacenada allí | Sí, si está en otro dispositivo |
+| Útil antes de realizar pruebas | Sí | También |
 | Sustituye una estrategia de respaldo | No | Puede formar parte de ella |
 
-### Conclusión
+### Aprendizaje
 
-**Una instantánea no sustituye una copia de seguridad independiente.**
+**Las instantáneas son puntos de recuperación, pero no sustituyen una copia de seguridad independiente.**
 
-Si se daña o pierde el almacenamiento donde se encuentra toda la máquina virtual, también podemos perder sus instantáneas.
+Si perdemos todos los archivos de la máquina virtual, también podemos perder sus instantáneas.
 
 ---
 
 ## 5. ¿Cuándo conviene crear una instantánea?
 
-Es recomendable crear instantáneas antes de realizar operaciones importantes.
+Es recomendable crear una instantánea cuando tenemos un sistema estable y queremos conservarlo antes de realizar cambios importantes.
 
 Por ejemplo:
 
-- Antes de instalar software desconocido.
-- Antes de cambiar configuraciones críticas.
-- Antes de probar comandos que modifican el sistema.
-- Antes de realizar prácticas con permisos de administrador.
-- Antes de modificar servicios.
-- Antes de experimentar con configuraciones de red.
-- Después de completar una instalación estable.
+- Después de instalar un sistema operativo.
+- Después de configurar correctamente sus controladores.
+- Antes de instalar programas nuevos.
+- Antes de modificar servicios del sistema.
+- Antes de cambiar configuraciones de red.
+- Antes de realizar pruebas con permisos de administrador.
+- Antes de ejecutar procedimientos que puedan alterar Windows.
 
-### 5.1. ¿Por qué crearla ahora?
+### 5.1. ¿Por qué la creamos después de Guest Additions?
 
-Nuestra máquina virtual ya tiene Windows 10 Pro instalado y sus principales funciones verificadas.
+Porque ya habíamos comprobado que:
 
-Además:
+1. Windows 10 iniciaba correctamente.
+2. Guest Additions estaba instalado.
+3. El ratón funcionaba sin quedar capturado.
+4. El escritorio se adaptaba al maximizar VirtualBox.
+5. El modo pantalla completa funcionaba.
 
-- Guest Additions está instalado.
-- La pantalla se adapta correctamente.
-- El modo pantalla completa funciona.
-- El ratón se integra con Windows 11.
-
-Por eso queremos conservar este estado antes de continuar con nuevas prácticas.
+Esto nos permitió conservar un estado estable para futuras prácticas.
 
 ---
 
-## 6. Preparar Windows 10 antes de crear la instantánea
+## 6. Preparar la máquina virtual antes de crear la instantánea
 
-Este capítulo contiene las comprobaciones previas y el procedimiento de apagado.
+Antes de crear nuestro punto de recuperación, debemos comprobar el funcionamiento de Windows y apagarlo correctamente.
 
-### 6.1. Iniciar la máquina virtual
-
-Si la máquina está apagada:
+### 6.1. Iniciar Windows 10
 
 **Paso 1 — Abrir VirtualBox**
 
-1. Abrir Oracle VirtualBox Administrador desde Windows 11.
-2. Localizar `PC-Windows10-Osmaily`.
-3. Seleccionar la máquina.
+1. Desde Windows 11, abrir **Oracle VirtualBox Administrador**.
+2. Localizar la máquina `PC-Windows10-Osmaily`.
+3. Seleccionarla.
 
-**Paso 2 — Iniciar Windows**
+**Paso 2 — Iniciar la máquina**
 
 1. Hacer clic en **Iniciar**.
 2. Esperar a que Windows 10 arranque.
-3. Iniciar sesión con el usuario local.
+3. Iniciar sesión con el usuario local `Osmaily`.
 
-### 6.2. Comprobar que Windows funciona
+### 6.2. Comprobar el funcionamiento del sistema
 
-Antes de crear el punto de recuperación:
+Una vez dentro de Windows 10:
 
 1. Comprobar que aparece el escritorio.
-2. Abrir el menú Inicio.
+2. Abrir el menú **Inicio**.
 3. Abrir el Explorador de archivos.
-4. Comprobar que responde correctamente.
-5. Verificar que podemos utilizar el ratón.
-
-Podemos comprobar también que el redimensionamiento de pantalla funciona, como hicimos en la práctica anterior.
+4. Verificar que el ratón funciona.
+5. Comprobar que Windows responde correctamente.
 
 ### 6.3. Guardar los archivos abiertos
 
-Antes de apagar Windows:
+Antes de apagar el sistema:
 
 1. Revisar las aplicaciones abiertas.
-2. Guardar cualquier documento pendiente.
-3. Cerrar los programas que no necesitemos.
+2. Guardar los documentos pendientes.
+3. Cerrar los programas que ya no necesitamos.
 
 ### 6.4. Apagar Windows correctamente
 
-**Paso 1 — Abrir Inicio**
+**Paso 1**
 
-Dentro de Windows 10:
+Abrir el menú **Inicio**.
 
-1. Hacer clic en **Inicio**.
+**Paso 2**
 
-**Paso 2 — Abrir las opciones de energía**
+Seleccionar **Inicio/Apagado**.
 
-1. Buscar **Inicio/Apagado**.
-2. Hacer clic para desplegar las opciones.
+**Paso 3**
 
-**Paso 3 — Seleccionar Apagar**
+Hacer clic en **Apagar**.
 
-1. Hacer clic en **Apagar**.
-2. Esperar a que Windows termine de cerrarse.
+**Paso 4**
 
-**Paso 4 — Verificar el estado en VirtualBox**
+Esperar a que Windows termine de cerrarse.
 
-Volver a Oracle VirtualBox Administrador.
+**Paso 5**
 
-Buscar:
-
-`PC-Windows10-Osmaily`
-
-Comprobar que su estado es:
+Regresar a **Oracle VirtualBox Administrador** y comprobar que la máquina aparece como:
 
 **Apagada**
 
-### 6.5. ¿Por qué preferimos apagar Windows?
+### ¿Por qué apagamos Windows?
 
-VirtualBox permite crear instantáneas de máquinas encendidas o apagadas.
+Aunque VirtualBox permite crear instantáneas con la máquina encendida, para esta práctica preferimos conservar un estado de disco después de un apagado normal.
 
-Sin embargo, para conservar un punto de instalación estable, preferimos apagar Windows normalmente.
-
-Así evitamos depender de una sesión de ejecución que haya quedado abierta y conservamos un punto desde el cual Windows puede iniciar de nuevo.
-
-**Importante:** no debemos utilizar **Apagar la máquina** de forma forzada cuando Windows puede cerrarse normalmente.
+De esta manera, al restaurar la instantánea, Windows podrá arrancar nuevamente desde ese estado.
 
 ---
 
 ## 7. Crear una instantánea en Oracle VirtualBox
 
-Este capítulo contiene el procedimiento principal de la práctica.
+Este capítulo contiene el procedimiento principal para guardar el estado de la máquina virtual.
 
 ### 7.1. Seleccionar la máquina virtual
 
-Desde Oracle VirtualBox Administrador:
+Desde Windows 11:
 
-1. Localizar la lista de máquinas virtuales.
+1. Abrir **Oracle VirtualBox Administrador**.
 2. Buscar `PC-Windows10-Osmaily`.
-3. Hacer clic sobre su nombre.
-4. Comprobar que aparece seleccionada.
-5. Verificar que su estado es **Apagada**.
+3. Hacer clic sobre el nombre de la máquina.
+4. Comprobar que está seleccionada.
+5. Verificar que aparece con estado **Apagada**.
 
-### 7.2. Abrir Instantáneas
+### 7.2. Abrir la sección Instantáneas
 
-Con la máquina seleccionada:
+**Paso 1**
 
-1. Buscar la pestaña **Instantáneas** en la zona derecha o superior del Administrador.
-2. Hacer clic en **Instantáneas**.
-3. Esperar a que se muestre el árbol de instantáneas.
+En la ventana principal de VirtualBox, localizar la pestaña:
 
-### ¿Qué es el árbol de instantáneas?
+**Instantáneas**
 
-Es una representación de los puntos de recuperación que existen para una máquina virtual.
+**Paso 2**
 
-Permite consultar la secuencia de estados guardados.
+Hacer clic en **Instantáneas**.
+
+**Paso 3**
+
+Observar el árbol de estados de la máquina virtual.
 
 ### 7.3. Identificar Estado actual
 
-Si todavía no existen instantáneas, aparecerá un elemento llamado:
+Cuando una máquina todavía no tiene instantáneas guardadas, VirtualBox puede mostrar:
 
 **Estado actual**
 
 Este elemento representa la situación presente de la máquina virtual.
 
-No significa que ya exista una instantánea guardada.
-
-### ¿Qué diferencia hay?
-
-**Estado actual:** representa la situación más reciente de la máquina virtual.
-
-**Instantánea:** representa un punto anterior que decidimos conservar.
+**Importante:** Estado actual no significa que exista una instantánea guardada.
 
 ### 7.4. Iniciar la creación de la instantánea
 
-Con la máquina virtual apagada:
+1. Permanecer en la sección **Instantáneas**.
+2. Seleccionar **Estado actual**, si corresponde.
+3. Buscar la acción **Tomar** en la barra de herramientas.
+4. Hacer clic.
 
-1. Permanecer en la pestaña **Instantáneas**.
-2. Seleccionar **Estado actual**, si es necesario.
-3. Buscar en la barra de herramientas el botón para tomar una instantánea.
-4. Hacer clic en **Tomar** o en la opción equivalente que muestre VirtualBox.
+Según la versión y disposición de la interfaz, también se puede acceder desde el menú contextual del estado actual.
 
-También puede utilizarse:
+### 7.5. Introducir el nombre de la instantánea
 
-1. Hacer clic derecho sobre **Estado actual**.
-2. Seleccionar **Tomar**.
+VirtualBox muestra una ventana donde podemos indicar el nombre.
 
-En versiones cuya interfaz aparece en inglés, esta acción se identifica como **Take** o **Take Snapshot**.
-
-### 7.5. Introducir el nombre
-
-Al iniciar el procedimiento, VirtualBox mostrará una ventana para introducir el nombre de la instantánea.
-
-Proponemos utilizar:
+Para nuestra práctica propusimos utilizar:
 
 `Windows 10 Pro - Instalacion limpia y Guest Additions`
 
-### ¿Por qué este nombre?
+Este nombre describe el estado que queremos conservar.
 
-Porque identifica:
+### ¿Por qué debemos utilizar nombres descriptivos?
 
-- El sistema operativo.
-- El estado de instalación.
-- La presencia de Guest Additions.
+Porque en el futuro podemos crear varias instantáneas.
 
-Un nombre descriptivo permite reconocer la instantánea cuando tengamos varias.
+Un nombre descriptivo nos ayuda a identificar qué configuración y programas tenía Windows cuando guardamos ese estado.
 
 ### 7.6. Introducir una descripción
 
-VirtualBox también permite agregar una descripción.
+VirtualBox permite agregar una descripción para documentar el punto de recuperación.
 
-Proponemos escribir:
+Una descripción adecuada para nuestra práctica sería:
 
-**Windows 10 Pro 22H2 instalado y configurado. Cuenta local creada. Guest Additions 7.2.22 instalado. Controlador grafico WDDM verificado. Redimensionamiento de pantalla, modo pantalla completa e integracion del raton comprobados. Punto de recuperacion previo a nuevas practicas.**
+> Windows 10 Pro 22H2 instalado y configurado. Usuario local creado. Guest Additions 7.2.22 instalado. Controlador gráfico WDDM verificado. Redimensionamiento automático de pantalla, modo pantalla completa e integración del ratón funcionando correctamente. Estado previo a nuevas prácticas.
 
-### ¿Para qué sirve la descripción?
-
-Permite recordar exactamente qué condiciones tenía la máquina virtual cuando se creó la instantánea.
-
-Es especialmente útil cuando existen varios puntos de recuperación.
+**Nota:** el texto anterior representa una descripción recomendada. No conservamos una captura que permita verificar el contenido exacto introducido en el campo durante la creación.
 
 ### 7.7. Confirmar la creación
 
-Después de introducir el nombre y la descripción:
+1. Revisar el nombre.
+2. Revisar la descripción.
+3. Comprobar que estamos trabajando con `PC-Windows10-Osmaily`.
+4. Hacer clic en **Aceptar**.
+5. Permitir que VirtualBox termine la operación.
 
-1. Revisar ambos campos.
-2. Confirmar que estamos trabajando sobre `PC-Windows10-Osmaily`.
-3. Hacer clic en el botón de confirmación, que puede aparecer como **Aceptar**.
-4. Esperar a que VirtualBox complete el procedimiento.
+### Resultado
 
-No debemos cerrar VirtualBox ni interrumpir el proceso mientras se está creando la instantánea.
+La instantánea quedó creada y posteriormente pudimos utilizarla para restaurar Windows 10.
+
+Esto quedó confirmado mediante la prueba de restauración.
 
 ---
 
-## 8. Comprobar que la instantánea se creó correctamente
+## 8. Comprobar que la instantánea existe
 
-Después de confirmar la creación, debemos verificar que aparece en el administrador.
+Una vez creada, debemos verificar que está disponible en Oracle VirtualBox Administrador.
 
-### 8.1. Revisar el árbol de instantáneas
+### 8.1. Abrir Instantáneas
 
-1. Permanecer en **Oracle VirtualBox Administrador**.
+1. Abrir Oracle VirtualBox Administrador.
 2. Seleccionar `PC-Windows10-Osmaily`.
-3. Abrir **Instantáneas**.
-4. Buscar el nombre de la instantánea creada.
+3. Acceder a **Instantáneas**.
 
-El nombre esperado es:
+### 8.2. Revisar el árbol de instantáneas
 
-`Windows 10 Pro - Instalacion limpia y Guest Additions`
+Debería aparecer el punto de recuperación guardado y un elemento correspondiente al estado actual.
 
-### 8.2. Revisar Estado actual
+En nuestra práctica utilizamos la instantánea creada después de instalar y configurar Windows 10 Pro y Guest Additions.
 
-Después de crear una instantánea, VirtualBox mostrará normalmente:
+### 8.3. Diferencia entre la instantánea guardada y Estado actual
 
-- La instantánea guardada.
-- Un elemento **Estado actual** asociado a ella.
+**Instantánea guardada**
 
-Esto significa que VirtualBox conserva el punto de recuperación y permite que la máquina continúe evolucionando.
+Representa el punto de recuperación que decidimos conservar.
 
-### 8.3. Revisar las propiedades
+**Estado actual**
 
-Para consultar los datos de la instantánea:
+Representa la situación presente de la máquina virtual.
 
-1. Seleccionar su nombre en el árbol.
-2. Buscar la opción **Propiedades** o el control equivalente.
-3. Abrirla.
-4. Revisar el nombre y la descripción.
+Después de realizar modificaciones, VirtualBox puede mostrar:
 
-En la interfaz de VirtualBox también pueden aparecer apartados para consultar la información técnica del estado guardado.
+**Estado actual (modificado)**
 
-### 8.4. Comprobar el nombre de la máquina
+Este elemento continúa representando el estado desde el que utilizamos normalmente la máquina virtual.
 
-Verificar que la instantánea pertenece a:
+### 8.4. ¿Por qué no debemos confundirlos?
 
-`PC-Windows10-Osmaily`
+Durante nuestra práctica, al seleccionar la instantánea histórica, el botón **Iniciar** aparecía deshabilitado.
 
-Esto es importante cuando administramos varias máquinas virtuales.
+Sin embargo, cuando seleccionábamos **Estado actual (modificado)**, el botón **Iniciar** estaba disponible.
 
-### 8.5. Resultado esperado
+**Aprendizaje:** para iniciar normalmente la máquina virtual desde el administrador, seleccionamos el estado actual, no la instantánea histórica.
 
-La práctica estará completada cuando:
+### 8.5. Comprobación adicional desde Windows 11
 
-- La instantánea aparezca en el árbol.
-- Su nombre sea correcto.
-- Su descripción corresponda al estado guardado.
-- La máquina virtual conserve su configuración.
-- No aparezcan errores durante la creación.
+También comprobamos la existencia de archivos asociados a la instantánea en el almacenamiento del equipo anfitrión.
 
----
+**Procedimiento:**
 
-## 9. Comprobar que Windows sigue funcionando
+1. Abrir el Explorador de archivos de Windows 11.
+2. Seleccionar **Este equipo**.
+3. Abrir la unidad **Datos (E:)**.
+4. Entrar en **VirtualBox**.
+5. Abrir `PC-Windows10-Osmaily`.
+6. Entrar en **Snapshots**.
 
-Crear una instantánea no debe impedir que podamos seguir utilizando nuestra máquina virtual.
+**Ruta comprobada:**
 
-### 9.1. Iniciar la máquina
+`E:\VirtualBox\PC-Windows10-Osmaily\Snapshots`
 
-1. Seleccionar `PC-Windows10-Osmaily`.
-2. Buscar **Estado actual**.
-3. Hacer clic en **Iniciar** desde el Administrador de VirtualBox.
-4. Esperar a que Windows 10 arranque.
+En esa carpeta encontramos un archivo identificado mediante un nombre interno generado por VirtualBox.
 
-### 9.2. Iniciar sesión
+### ¿Qué significa Snapshots?
 
-1. Esperar a que aparezca la pantalla de inicio de sesión.
-2. Iniciar sesión con el usuario local.
-3. Comprobar que se muestra el escritorio.
+**Snapshots** es la palabra en inglés para **Instantáneas**.
 
-### 9.3. Realizar las comprobaciones
+La carpeta almacena archivos internos asociados a los estados guardados de la máquina virtual.
 
-Revisar:
+### Advertencia
 
-- Menú Inicio.
-- Explorador de archivos.
-- Funcionamiento del ratón.
-- Redimensionamiento de pantalla.
-- Modo ventana.
+**No debemos abrir, modificar, mover ni eliminar manualmente los archivos de la carpeta Snapshots.**
 
-### 9.4. Resultado esperado
-
-Windows 10 debe continuar funcionando normalmente.
-
-**Importante:** iniciar Windows después de crear la instantánea no significa que la hayamos restaurado. Solo estamos utilizando el estado actual de la máquina.
+Para administrar las instantáneas debemos utilizar **Oracle VirtualBox Administrador → Instantáneas**.
 
 ---
 
-## 10. ¿Qué ocurre cuando modificamos Windows después de una instantánea?
+## 9. Prueba práctica — Crear un cambio después de la instantánea
 
-Esta sección explica cómo funciona el sistema de recuperación de VirtualBox.
+Para comprobar que la restauración realmente recupera un estado anterior, realizamos un ejercicio sencillo.
 
-### 10.1. Estado inicial
+El objetivo era crear un cambio visible y después comprobar si desaparecía al restaurar.
 
-Tenemos Windows 10 Pro funcionando correctamente.
+### 9.1. Iniciar Windows 10
 
-Creamos la instantánea:
+1. Abrir Oracle VirtualBox Administrador.
+2. Seleccionar `PC-Windows10-Osmaily`.
+3. Iniciar la máquina virtual.
+4. Esperar a que Windows arranque.
+5. Iniciar sesión.
 
-`Windows 10 Pro - Instalacion limpia y Guest Additions`
+### 9.2. Crear una carpeta de prueba
 
-### 10.2. Cambios posteriores
+Dentro de Windows 10:
 
-Después de crearla, podemos:
+1. Ir al escritorio.
+2. Hacer clic derecho sobre una zona vacía.
+3. Seleccionar **Nuevo**.
+4. Hacer clic en **Carpeta**.
+5. Escribir el nombre:
 
-- Instalar programas.
-- Crear documentos.
-- Modificar configuraciones.
-- Ejecutar pruebas.
-- Actualizar determinados componentes.
+`prueba`
 
-Los cambios posteriores pasan a formar parte del estado actual de la máquina.
+6. Presionar **Enter**.
 
-### 10.3. ¿Se modifica la instantánea anterior?
+### 9.3. Comprobar que la carpeta existe
 
-No de la misma manera que se modifica el estado actual.
+Revisamos el escritorio y confirmamos que la carpeta `prueba` aparecía.
 
-VirtualBox conserva la referencia al estado guardado y utiliza imágenes diferenciales para registrar cambios posteriores en los discos virtuales normales.
+Esta carpeta fue creada **después de guardar la instantánea**.
 
-### 10.4. ¿Qué es una imagen diferencial?
+### 9.4. ¿Por qué creamos esta carpeta?
 
-Es un archivo de almacenamiento utilizado para registrar modificaciones posteriores a un punto de referencia.
+Porque necesitábamos una modificación sencilla que permitiera comprobar si VirtualBox restauraba correctamente el estado anterior.
 
-En lugar de duplicar inmediatamente todo el contenido del disco virtual, VirtualBox puede mantener una cadena de archivos con las diferencias.
+La carpeta funcionó como evidencia del cambio realizado después de la instantánea.
 
-### 10.5. ¿Por qué es importante conocerlo?
+### 9.5. Resultado de esta etapa
 
-Porque esos archivos diferenciales:
-
-- Consumen espacio de almacenamiento.
-- Pueden crecer con el uso.
-- Forman parte del funcionamiento de las instantáneas.
-- No deben eliminarse manualmente desde el Explorador de archivos.
-
-**Advertencia:** borrar archivos `.vdi` o archivos de instantáneas directamente desde Windows 11 puede dañar la estructura de almacenamiento de la máquina virtual.
-
-La administración de instantáneas debe realizarse desde VirtualBox.
+**Carpeta `prueba` creada correctamente en el escritorio de Windows 10.**
 
 ---
 
-## 11. Cómo restaurar una instantánea
+## 10. Apagar Windows antes de restaurar
 
-**Este procedimiento se documenta para futuras prácticas. No necesitamos ejecutarlo inmediatamente después de crear nuestra primera instantánea.**
+Después de crear la carpeta de prueba, apagamos la máquina virtual normalmente.
 
-### 11.1. ¿Cuándo restauraríamos una instantánea?
+### 10.1. Abrir las opciones de energía
 
-Por ejemplo, si:
-
-- Una configuración provoca problemas.
-- Un programa deja Windows inestable.
-- Queremos repetir una práctica desde el principio.
-- Necesitamos recuperar una configuración anterior.
-
-### 11.2. Advertencia antes de restaurar
-
-Restaurar una instantánea puede eliminar los cambios realizados posteriormente en los discos virtuales normales.
-
-Por ejemplo, si después de crear la instantánea guardamos un documento dentro de Windows 10 y luego restauramos el estado anterior, ese documento podría desaparecer.
-
-**Debemos guardar fuera de la máquina virtual cualquier información importante antes de restaurar.**
-
-### 11.3. Preparar la máquina
-
-**Paso 1 — Guardar el trabajo**
-
-1. Revisar las aplicaciones abiertas.
-2. Guardar los archivos importantes.
-3. Copiar fuera de la máquina virtual cualquier dato que necesitemos conservar.
-
-**Paso 2 — Apagar Windows**
-
-1. Abrir **Inicio**.
+1. Dentro de Windows 10, hacer clic en **Inicio**.
 2. Seleccionar **Inicio/Apagado**.
-3. Hacer clic en **Apagar**.
-4. Esperar a que la máquina quede apagada.
 
-### 11.4. Abrir el administrador de instantáneas
+### 10.2. Apagar Windows
+
+1. Hacer clic en **Apagar**.
+2. Esperar a que Windows termine el procedimiento.
+3. Comprobar que la máquina virtual queda apagada.
+
+### ¿Por qué es importante este paso?
+
+Queríamos realizar la restauración con la máquina detenida.
+
+Además, antes de recuperar un estado anterior conviene cerrar correctamente el sistema y conservar fuera de la máquina cualquier información importante que no deseamos perder.
+
+---
+
+## 11. Restaurar la instantánea en Oracle VirtualBox
+
+Este fue el procedimiento que utilizamos para recuperar el estado de Windows 10 anterior a la creación de la carpeta `prueba`.
+
+### 11.1. Abrir Oracle VirtualBox Administrador
 
 Desde Windows 11:
 
 1. Abrir **Oracle VirtualBox Administrador**.
-2. Seleccionar `PC-Windows10-Osmaily`.
-3. Abrir **Instantáneas**.
-4. Localizar la instantánea que deseamos recuperar.
+2. Localizar `PC-Windows10-Osmaily`.
+3. Seleccionarla.
+4. Comprobar que se encuentra apagada.
 
-### 11.5. Seleccionar la instantánea
+### 11.2. Abrir la sección Instantáneas
 
-1. Hacer clic sobre:
+1. Buscar la pestaña **Instantáneas**.
+2. Hacer clic.
+3. Esperar a que aparezca el árbol de instantáneas.
 
-`Windows 10 Pro - Instalacion limpia y Guest Additions`
+### 11.3. Seleccionar el punto de recuperación
 
-2. Revisar sus propiedades.
-3. Confirmar que corresponde al punto de recuperación deseado.
+En el árbol:
 
-### 11.6. Iniciar la restauración
+1. Localizar la instantánea que guardamos antes de crear la carpeta `prueba`.
+2. Hacer clic sobre su nombre.
+3. Revisar que corresponde al estado que deseamos recuperar.
+
+**Importante:** debemos seleccionar la instantánea guardada, no **Estado actual (modificado)**.
+
+### 11.4. Iniciar la restauración
 
 1. Buscar el botón **Restaurar**.
 2. Hacer clic.
-3. Leer cuidadosamente cualquier advertencia mostrada.
-4. Revisar si VirtualBox ofrece conservar el estado actual mediante otra instantánea.
-5. Continuar únicamente cuando estemos seguros de que queremos regresar al estado anterior.
+3. Leer el mensaje de confirmación.
+4. Confirmar la operación.
 
-### 11.7. Esperar a que termine
+En nuestra práctica apareció un mensaje que confirmamos para continuar.
 
-VirtualBox realizará las operaciones necesarias para recuperar el estado seleccionado.
+### 11.5. ¿Qué ocurre al restaurar?
 
-No debemos interrumpir el procedimiento.
+VirtualBox recupera el estado correspondiente a la instantánea seleccionada.
 
-### 11.8. Iniciar Windows después de restaurar
+Los cambios realizados después de crearla pueden perderse si no los guardamos por separado.
 
-1. Seleccionar **Estado actual**.
+En nuestro caso, queríamos descartar intencionalmente la carpeta `prueba`.
+
+### 11.6. ¿Cuánto tardó la restauración?
+
+En nuestra prueba, el proceso fue muy rápido.
+
+No observamos una barra de progreso ni un porcentaje de avance.
+
+### ¿Significa que no funcionó?
+
+No necesariamente.
+
+La restauración de una máquina virtual apagada puede completarse rápidamente, especialmente cuando no tiene muchos cambios posteriores.
+
+Sin embargo, **la rapidez de la operación no demuestra por sí sola que la restauración haya terminado correctamente**.
+
+Por eso realizamos una comprobación posterior iniciando Windows 10.
+
+### 11.7. Comprobar el estado después de restaurar
+
+Después de confirmar la restauración:
+
+1. Permanecer en **Oracle VirtualBox Administrador → Instantáneas**.
+2. Seleccionar **Estado actual (modificado)**.
+3. Comprobar que el botón **Iniciar** está habilitado.
+
+Durante la práctica observamos que el botón **Iniciar** se deshabilitaba cuando seleccionábamos la instantánea histórica y se habilitaba cuando seleccionábamos **Estado actual (modificado)**.
+
+Esto es normal en esa vista del Administrador.
+
+### 11.8. Iniciar Windows 10
+
+1. Seleccionar **Estado actual (modificado)**.
 2. Hacer clic en **Iniciar**.
 3. Esperar a que Windows 10 arranque.
-4. Comprobar que el sistema corresponde al estado recuperado.
+4. Iniciar sesión con el usuario local.
 
-### 11.9. Precaución
+### 11.9. Verificar la carpeta de prueba
 
-Restaurar una instantánea no debe confundirse con reiniciar Windows.
+Cuando apareció el escritorio:
 
-**Reiniciar:** apaga y vuelve a iniciar el sistema.
+1. Revisamos el lugar donde habíamos creado la carpeta `prueba`.
+2. Comprobamos si todavía existía.
+3. Observamos que la carpeta ya no aparecía.
 
-**Restaurar una instantánea:** regresa a un estado previamente guardado y puede descartar cambios posteriores.
+### Resultado confirmado
 
-### 11.10. Prueba práctica — Verificación de una restauración
+**La carpeta `prueba` había desaparecido del escritorio.**
 
-Para comprobar que la restauración de instantáneas funciona correctamente, realizamos una prueba creando una carpeta dentro de Windows 10 después de haber guardado una instantánea.
-
-#### Paso 1 — Crear un cambio después de la instantánea
-
-1. Iniciamos la máquina virtual `PC-Windows10-Osmaily`.
-2. Accedimos al escritorio de Windows 10.
-3. Creamos una carpeta llamada `prueba`.
-4. Comprobamos que aparecía en el escritorio.
-
-#### Paso 2 — Apagar la máquina virtual
-
-1. Abrimos **Inicio → Inicio/Apagado**.
-2. Seleccionamos **Apagar**.
-3. Esperamos a que la máquina virtual quedara apagada.
-
-#### Paso 3 — Restaurar la instantánea
-
-1. Abrimos **Oracle VirtualBox Administrador** desde Windows 11.
-2. Seleccionamos `PC-Windows10-Osmaily`.
-3. Accedimos a **Instantáneas**.
-4. Seleccionamos la instantánea creada antes de la carpeta `prueba`.
-5. Hicimos clic en **Restaurar**.
-6. Confirmamos el mensaje de restauración.
-7. Esperamos a que VirtualBox terminara la operación.
-
-**Observación:** la restauración fue muy rápida y no observamos una barra de progreso.
-
-#### Paso 4 — Iniciar Windows después de restaurar
-
-1. Seleccionamos **Estado actual (modificado)**.
-2. Hicimos clic en **Iniciar**.
-3. Esperamos a que Windows 10 arrancara.
-4. Accedimos al escritorio.
-
-#### Paso 5 — Comprobar el resultado
-
-Buscamos la carpeta `prueba` que habíamos creado anteriormente.
-
-**Resultado:** la carpeta ya no aparecía en el escritorio.
-
-Esto confirmó que VirtualBox había recuperado el estado del disco virtual correspondiente a la instantánea anterior a su creación.
-
-#### Conclusión
-
-La prueba de restauración fue exitosa.
-
-Aprendimos que una instantánea permite recuperar un estado anterior de la máquina virtual y descartar cambios realizados posteriormente.
-
-También comprobamos que la restauración puede completarse rápidamente y que la verificación más importante consiste en iniciar el sistema y comprobar que recuperamos el estado esperado.
+Esto confirmó que la máquina virtual había recuperado correctamente el estado anterior a la creación de esa carpeta.
 
 ---
 
-## 12. Cómo crear varias instantáneas
+## 12. Resultado de la prueba de restauración
 
-VirtualBox permite conservar más de una instantánea de la misma máquina virtual.
+La prueba consistió en modificar el sistema después de crear la instantánea y recuperar posteriormente el estado inicial.
 
-### 12.1. Ejemplo de organización
+| N.º | Acción realizada | Resultado |
+|---|---|---|
+| 1 | Crear la instantánea de Windows 10 Pro | Completado |
+| 2 | Iniciar Windows después de crearla | Correcto |
+| 3 | Crear la carpeta `prueba` en el escritorio | Completado |
+| 4 | Apagar Windows 10 | Completado |
+| 5 | Abrir Oracle VirtualBox Administrador | Correcto |
+| 6 | Seleccionar la instantánea guardada | Correcto |
+| 7 | Hacer clic en Restaurar | Completado |
+| 8 | Confirmar el mensaje de restauración | Completado |
+| 9 | Seleccionar Estado actual (modificado) | Correcto |
+| 10 | Iniciar Windows 10 | Correcto |
+| 11 | Revisar el escritorio | La carpeta `prueba` desapareció |
 
-Podríamos utilizar los siguientes nombres:
+### Conclusión de la prueba
+
+**La restauración fue exitosa.**
+
+Comprobamos que una instantánea permite recuperar un estado anterior y descartar los cambios realizados posteriormente.
+
+También aprendimos que la comprobación definitiva no consiste solamente en pulsar **Restaurar**, sino en iniciar nuevamente la máquina y verificar que recuperamos el estado esperado.
+
+---
+
+## 13. ¿Qué ocurre con los archivos después de crear una instantánea?
+
+Para comprender el funcionamiento de VirtualBox, debemos conocer el concepto de imágenes diferenciales.
+
+### 13.1. Estado inicial
+
+Antes de crear una instantánea, la máquina virtual utiliza su disco VDI para almacenar Windows y sus archivos.
+
+### 13.2. Creación de la instantánea
+
+Cuando creamos una instantánea, VirtualBox conserva una referencia al estado del disco.
+
+Los cambios posteriores de los discos virtuales normales se gestionan mediante imágenes diferenciales.
+
+### 13.3. ¿Qué es una imagen diferencial?
+
+Es un archivo que registra modificaciones realizadas respecto a un estado anterior.
+
+Esto permite conservar distintos puntos de recuperación sin duplicar necesariamente todo el contenido del disco cada vez.
+
+### 13.4. ¿Por qué es importante?
+
+Porque estos archivos:
+
+- Pueden aumentar de tamaño.
+- Consumen espacio en el equipo anfitrión.
+- Forman parte de la estructura de almacenamiento de la máquina.
+- Pueden depender de otros archivos.
+
+**Nunca debemos eliminarlos manualmente desde el Explorador de archivos.**
+
+---
+
+## 14. Dónde almacena VirtualBox las instantáneas
+
+Durante nuestra práctica comprobamos la ubicación real de los archivos de instantáneas.
+
+### 14.1. Carpeta principal de la máquina virtual
+
+La máquina se encuentra en:
+
+`E:\VirtualBox\PC-Windows10-Osmaily`
+
+### 14.2. Carpeta Snapshots
+
+La ubicación comprobada fue:
+
+`E:\VirtualBox\PC-Windows10-Osmaily\Snapshots`
+
+### 14.3. Cómo acceder a la carpeta
+
+Desde Windows 11:
+
+1. Abrir el Explorador de archivos.
+2. Seleccionar **Este equipo**.
+3. Abrir **Datos (E:)**.
+4. Entrar en **VirtualBox**.
+5. Seleccionar **PC-Windows10-Osmaily**.
+6. Abrir **Snapshots**.
+
+### 14.4. ¿Qué encontramos?
+
+Observamos un archivo con un nombre identificador generado internamente por VirtualBox.
+
+Estos identificadores permiten que VirtualBox administre archivos relacionados con los estados guardados.
+
+### 14.5. ¿Debemos trabajar directamente en esa carpeta?
+
+No.
+
+La carpeta **Snapshots** sirve para almacenar archivos.
+
+La pestaña **Instantáneas** de Oracle VirtualBox Administrador sirve para administrar los puntos de recuperación.
+
+### Diferencia importante
+
+| Elemento | Función |
+|---|---|
+| Carpeta Snapshots | Almacena archivos internos |
+| Pestaña Instantáneas | Administra los puntos de recuperación |
+| Estado actual | Representa el estado presente de la máquina |
+| Restaurar | Recupera una instantánea guardada |
+
+---
+
+## 15. Registro de nuestra práctica
+
+Después de crear y restaurar una instantánea, registramos los siguientes resultados:
+
+| Campo | Resultado |
+|---|---|
+| Máquina virtual | PC-Windows10-Osmaily |
+| Sistema operativo | Windows 10 Pro |
+| Versión | 22H2 |
+| Guest Additions | 7.2.22 |
+| Estado de Windows antes de crearla | Apagado correctamente |
+| Fecha de la práctica de restauración | 11/11/2026 |
+| Creación de la instantánea | Completada |
+| Carpeta Snapshots | Verificada |
+| Ubicación | E:\VirtualBox\PC-Windows10-Osmaily\Snapshots |
+| Inicio de Windows posterior | Correcto |
+| Carpeta de prueba | `prueba`, en el escritorio |
+| Restauración ejecutada | Correctamente |
+| Inicio de Windows después de restaurar | Correcto |
+| Carpeta de prueba después de restaurar | No aparece |
+| Estado final | Práctica completada |
+
+### Observación
+
+No registramos aquí una fecha exacta de creación de la instantánea porque no verificamos ese dato desde sus propiedades.
+
+La fecha indicada corresponde al ejercicio de restauración que realizamos.
+
+---
+
+## 16. Lista de comprobación de la práctica
+
+- [x] Abrir Oracle VirtualBox Administrador.
+- [x] Seleccionar `PC-Windows10-Osmaily`.
+- [x] Comprobar que Windows 10 funciona correctamente.
+- [x] Apagar Windows normalmente.
+- [x] Verificar que la máquina virtual está apagada.
+- [x] Abrir Instantáneas.
+- [x] Crear una instantánea.
+- [x] Comprobar la existencia de archivos en Snapshots.
+- [x] Iniciar nuevamente Windows 10.
+- [x] Crear la carpeta `prueba` en el escritorio.
+- [x] Apagar nuevamente Windows.
+- [x] Abrir Oracle VirtualBox Administrador → Instantáneas.
+- [x] Seleccionar la instantánea guardada.
+- [x] Ejecutar Restaurar.
+- [x] Confirmar el mensaje de restauración.
+- [x] Seleccionar Estado actual (modificado).
+- [x] Iniciar Windows 10.
+- [x] Comprobar que la carpeta `prueba` desapareció.
+- [x] Confirmar que la restauración funcionó correctamente.
+
+**Resultado:** creación y restauración de una instantánea verificadas satisfactoriamente.
+
+---
+
+## 17. Cómo administrar otras instantáneas
+
+VirtualBox permite crear varias instantáneas de una misma máquina virtual.
+
+### 17.1. Crear varias instantáneas
+
+Por ejemplo, en futuras prácticas podríamos conservar:
 
 **Instantánea 1**
 
@@ -711,223 +793,143 @@ Podríamos utilizar los siguientes nombres:
 
 `Windows 10 Pro - Antes de cambios avanzados`
 
-Estos nombres son ejemplos de una posible organización futura.
+Estos nombres representan ejemplos para futuras prácticas, no instantáneas adicionales que hayamos creado.
 
-### 12.2. ¿Por qué conviene utilizar nombres descriptivos?
+### 17.2. ¿Por qué utilizar nombres descriptivos?
 
-Porque permiten reconocer:
+Porque permiten identificar rápidamente:
 
-- Qué sistema operativo se guardó.
-- Qué programas estaban instalados.
-- Qué configuraciones se habían aplicado.
-- Cuál era el objetivo de cada punto de recuperación.
+- El sistema operativo.
+- Las aplicaciones instaladas.
+- La configuración guardada.
+- El propósito del punto de recuperación.
 
-### 12.3. ¿Debemos crear una instantánea para cada cambio?
+### 17.3. ¿Debemos crear muchas instantáneas?
 
 No necesariamente.
 
-Las instantáneas consumen almacenamiento y requieren mantenimiento.
+Cada instantánea puede implicar más uso de almacenamiento y una estructura de archivos más compleja.
 
-Es preferible crearlas antes de cambios importantes o al completar etapas relevantes del aprendizaje.
+Es mejor crear puntos de recuperación en momentos relevantes.
 
 ---
 
-## 13. Cómo eliminar una instantánea
+## 18. Cómo eliminar una instantánea
 
-**Esta sección es informativa. No eliminaremos nuestra instantánea de seguridad durante esta práctica.**
+**Esta sección es teórica. No realizamos una eliminación de instantáneas durante nuestra práctica.**
 
-### 13.1. ¿Por qué eliminar una instantánea?
+### 18.1. ¿Para qué eliminar una instantánea?
 
-Podríamos querer eliminarla cuando:
+Podemos necesitar eliminar una cuando ya no queremos conservar ese punto de recuperación.
 
-- Ya no es necesaria.
-- Hemos creado otros puntos de recuperación.
-- Necesitamos administrar mejor el almacenamiento.
+### 18.2. Procedimiento general
 
-### 13.2. Procedimiento general
-
-1. Abrir Oracle VirtualBox Administrador.
+1. Abrir **Oracle VirtualBox Administrador**.
 2. Seleccionar la máquina virtual correspondiente.
-3. Abrir **Instantáneas**.
+3. Acceder a **Instantáneas**.
 4. Seleccionar la instantánea que queremos eliminar.
-5. Utilizar la opción **Eliminar**.
+5. Buscar la opción **Eliminar**.
 6. Leer la advertencia.
-7. Confirmar solamente si estamos seguros.
+7. Confirmar únicamente si estamos seguros.
 
-### 13.3. ¿Eliminar es lo mismo que restaurar?
+### 18.3. ¿Eliminar una instantánea es lo mismo que restaurarla?
 
 No.
 
-**Eliminar una instantánea** quita ese punto de recuperación y puede implicar la consolidación de archivos diferenciales.
+**Eliminar:** quita un punto de recuperación y puede requerir consolidar archivos diferenciales.
 
-**Restaurar una instantánea** regresa la máquina al estado que se había guardado.
+**Restaurar:** recupera el estado correspondiente a una instantánea guardada.
 
-### 13.4. Precauciones
+### 18.4. Precauciones
 
-- No eliminar instantáneas directamente desde el Explorador de Windows.
-- No interrumpir una operación de eliminación.
+- No eliminar archivos directamente desde la carpeta Snapshots.
+- No interrumpir el proceso de eliminación.
 - Comprobar que existe espacio libre suficiente.
-- Confirmar que ya no necesitamos ese punto de recuperación.
-
-Al eliminar una instantánea, VirtualBox puede necesitar procesar o fusionar archivos de disco virtual, por lo que la operación puede tardar más que su creación.
+- Confirmar que la instantánea ya no será necesaria.
 
 ---
 
-## 14. Dónde almacena VirtualBox las instantáneas
+## 19. Principales aprendizajes
 
-VirtualBox utiliza archivos asociados a la máquina virtual para conservar su configuración y sus cambios de almacenamiento.
+### 19.1. Una instantánea permite regresar a un estado anterior
 
-### 14.1. Ubicación de nuestra máquina
+Comprobamos que podemos recuperar Windows 10 después de realizar cambios.
 
-La máquina virtual se encuentra bajo:
+### 19.2. Una instantánea no reemplaza una copia de seguridad
 
-`E:\VirtualBox\PC-Windows10-Osmaily`
+Para protegernos frente a la pérdida del almacenamiento físico necesitamos respaldos independientes.
 
-### 14.2. Carpeta habitual de instantáneas
+### 19.3. Es recomendable crear instantáneas después de completar una instalación estable
 
-En configuraciones estándar, VirtualBox utiliza una carpeta denominada:
+En nuestro caso, guardamos Windows 10 Pro después de configurar y verificar Guest Additions.
 
-`Snapshots`
+### 19.4. Estado actual e instantánea son elementos diferentes
 
-Esta suele encontrarse dentro de la carpeta de la máquina virtual.
+La instantánea representa el estado guardado.
 
-En nuestro caso, si se mantiene esa ubicación predeterminada, sería:
+Estado actual representa la situación presente de la máquina virtual.
 
-`E:\VirtualBox\PC-Windows10-Osmaily\Snapshots`
+### 19.5. El botón Iniciar corresponde al estado actual
 
-**Importante:** esta ruta es la ubicación esperada según la estructura predeterminada, no una carpeta cuya existencia hayamos comprobado todavía.
+Durante la práctica observamos que el botón **Iniciar** se habilitaba al seleccionar **Estado actual (modificado)**.
 
-### 14.3. Cómo revisar la ubicación real
+### 19.6. Una restauración puede completarse muy rápidamente
 
-1. Abrir Oracle VirtualBox Administrador.
-2. Seleccionar `PC-Windows10-Osmaily`.
-3. Abrir **Configuración**.
-4. Revisar las propiedades generales de la máquina, incluida la ubicación de instantáneas si aparece disponible.
-5. Comprobar la ubicación utilizada.
+No siempre veremos una barra de progreso.
 
-### 14.4. ¿Podemos borrar archivos de esa carpeta?
+Lo importante es comprobar posteriormente el estado recuperado.
 
-No debemos hacerlo manualmente.
+### 19.7. Restaurar puede eliminar cambios posteriores
 
-Los archivos de instantáneas pueden depender unos de otros.
+Lo comprobamos cuando desapareció la carpeta `prueba`.
 
-Eliminar uno incorrectamente puede impedir que VirtualBox reconstruya el estado del disco.
+### 19.8. Snapshots es la carpeta de almacenamiento de las instantáneas
 
----
+No debemos confundir esta carpeta con la herramienta de administración del mismo nombre.
 
-## 15. Registro de la instantánea de nuestra práctica
+### 19.9. La comprobación final es fundamental
 
-Este apartado se completará después de realizar la creación.
+No basta con ejecutar una operación.
 
-| Campo | Valor |
-|---|---|
-| Máquina virtual | PC-Windows10-Osmaily |
-| Sistema operativo | Windows 10 Pro |
-| Versión | 22H2 |
-| Guest Additions | 7.2.22 |
-| Nombre propuesto | Windows 10 Pro - Instalacion limpia y Guest Additions |
-| Estado de Windows antes de crearla | Apagado correctamente |
-| Fecha de creación | Pendiente |
-| Instantánea visible en VirtualBox | Pendiente de comprobar |
-| Reinicio posterior de Windows | Pendiente de comprobar |
-| Estado de la práctica | Pendiente de ejecución |
-
-Una vez creada, actualizaremos las filas pendientes con los resultados reales.
+Debemos verificar que produjo el resultado esperado.
 
 ---
 
-## 16. Lista de comprobación de la práctica
+## 20. Resultado final de la práctica
 
-- [ ] Abrir Oracle VirtualBox Administrador.
-- [ ] Seleccionar `PC-Windows10-Osmaily`.
-- [ ] Comprobar que Windows 10 funciona correctamente.
-- [ ] Guardar y cerrar los archivos abiertos.
-- [ ] Apagar Windows desde Inicio → Inicio/Apagado → Apagar.
-- [ ] Verificar que la máquina aparece como Apagada.
-- [ ] Abrir la pestaña Instantáneas.
-- [ ] Identificar Estado actual.
-- [ ] Seleccionar la opción Tomar.
-- [ ] Introducir el nombre de la instantánea.
-- [ ] Introducir una descripción.
-- [ ] Confirmar la creación.
-- [ ] Esperar a que finalice.
-- [ ] Comprobar que la instantánea aparece en el árbol.
-- [ ] Revisar sus propiedades.
-- [ ] Iniciar nuevamente Windows 10.
-- [ ] Comprobar que el sistema continúa funcionando.
-- [ ] Registrar la fecha y el resultado de la práctica.
+Completamos correctamente la creación y restauración de una instantánea de Windows 10 Pro en Oracle VirtualBox.
 
----
+### Procedimiento realizado
 
-## 17. Principales aprendizajes
+1. Partimos de una instalación estable de Windows 10 Pro.
+2. Creamos una instantánea para conservar ese estado.
+3. Verificamos los archivos asociados en la carpeta Snapshots.
+4. Iniciamos Windows 10.
+5. Creamos una carpeta llamada `prueba` en el escritorio.
+6. Apagamos Windows normalmente.
+7. Restauramos la instantánea desde Oracle VirtualBox Administrador.
+8. Iniciamos nuevamente Windows 10.
+9. Comprobamos que la carpeta `prueba` había desaparecido.
 
-### 17.1. Una instantánea conserva un punto de recuperación
+### Conclusión
 
-Permite regresar una máquina virtual a un estado anterior.
+**La restauración fue exitosa.**
 
-### 17.2. Una instantánea no sustituye una copia de seguridad
+Esta práctica nos permitió comprender cómo funcionan los puntos de recuperación de VirtualBox y comprobar su utilidad mediante un ejercicio real.
 
-Si se pierde la carpeta de la máquina virtual y sus archivos asociados, también podrían perderse las instantáneas.
+Aprendimos a crear una instantánea, localizarla, restaurarla y verificar que el sistema recuperó correctamente su estado anterior.
 
-### 17.3. Conviene crear instantáneas después de configuraciones estables
+También identificamos la diferencia entre una instantánea y una copia de seguridad independiente, así como las precauciones necesarias al administrar los archivos de la máquina virtual.
 
-Una instalación limpia y verificada es un buen punto para crear una instantánea.
-
-### 17.4. VirtualBox puede conservar varias instantáneas
-
-Podemos registrar distintos momentos de evolución de una máquina virtual.
-
-### 17.5. Estado actual e instantánea no significan lo mismo
-
-El estado actual representa la situación presente de la máquina.
-
-La instantánea conserva un estado que decidimos guardar.
-
-### 17.6. Restaurar puede eliminar cambios posteriores
-
-Debemos revisar cuidadosamente qué información se perderá al volver a un estado anterior.
-
-### 17.7. Las instantáneas requieren almacenamiento
-
-Su consumo puede aumentar conforme utilizamos la máquina virtual.
-
-### 17.8. No debemos manipular manualmente los archivos diferenciales
-
-La creación, restauración y eliminación de instantáneas debe realizarse desde las herramientas de VirtualBox.
-
-### 17.9. Es importante documentar los estados guardados
-
-Un nombre y una descripción clara facilitan localizar el punto de recuperación adecuado.
+**Estado final: práctica completada y verificada.**
 
 ---
 
-## 18. Resultado esperado de la práctica
+## 21. Referencia
 
-Al finalizar, debemos disponer de una instantánea de `PC-Windows10-Osmaily` que conserve el estado estable de Windows 10 Pro después de instalar Guest Additions.
+Documentación oficial de Oracle VirtualBox:
 
-### Estado que queremos conservar
-
-- Windows 10 Pro instalado.
-- Usuario local configurado.
-- Guest Additions 7.2.22 instalado.
-- Controlador gráfico reconocido.
-- Redimensionamiento de pantalla funcionando.
-- Modo pantalla completa funcionando.
-- Integración del ratón funcionando.
-
-### Finalidad
-
-Utilizar esta instantánea como punto de recuperación antes de continuar con nuevas prácticas dentro de Windows 10.
-
-**Estado actual de esta documentación: procedimiento preparado, pendiente de ejecución y verificación en VirtualBox.**
-
----
-
-## 19. Fuente de referencia
-
-Documentación oficial de Oracle VirtualBox 7.2:
-
-[Oracle VirtualBox — Snapshots](https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/working-with-vms.html#snapshots)
+[Oracle VirtualBox — Manual de usuario](https://www.virtualbox.org/manual/)
 
 ---
 

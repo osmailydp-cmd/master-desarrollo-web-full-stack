@@ -688,6 +688,7 @@ La prueba de restauración fue exitosa.
 Aprendimos que una instantánea permite recuperar un estado anterior de la máquina virtual y descartar cambios realizados posteriormente.
 
 También comprobamos que la restauración puede completarse rápidamente y que la verificación más importante consiste en iniciar el sistema y comprobar que recuperamos el estado esperado.
+
 ---
 
 ## 12. Cómo crear varias instantáneas

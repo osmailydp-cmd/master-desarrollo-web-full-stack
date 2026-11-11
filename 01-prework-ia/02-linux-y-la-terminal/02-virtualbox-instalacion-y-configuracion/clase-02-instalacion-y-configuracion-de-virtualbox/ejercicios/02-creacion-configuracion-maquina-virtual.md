@@ -924,7 +924,7 @@ La máquina virtual `PC-Windows10-Osmaily` fue creada correctamente en Oracle Vi
 
 ### Siguiente práctica
 
-[Práctica — Instalación de Windows 10 Pro](instalacion-configuracion-windows-10-pro.md)
+[Práctica — Instalación y configuración de Windows 10 Pro](../../clase-04-instalacion-unicamente-de-linux-o-windows-10/ejercicios/01-instalacion-configuracion-windows-10-pro.md)
 
 En la próxima nota documentaremos:
 

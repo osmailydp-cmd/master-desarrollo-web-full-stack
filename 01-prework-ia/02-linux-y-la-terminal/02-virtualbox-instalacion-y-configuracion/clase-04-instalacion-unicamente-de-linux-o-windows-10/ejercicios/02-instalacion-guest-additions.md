@@ -1,4 +1,4 @@
-# Práctica 04 — Instalación y configuración de VirtualBox Guest Additions en Windows 10 Pro
+# Práctica — Instalación y configuración de VirtualBox Guest Additions en Windows 10 Pro
 
 **Curso:** Máster en Desarrollo Web Full Stack  
 **Módulo:** Linux y la Terminal  
@@ -1249,7 +1249,7 @@ La instalación de **Oracle VirtualBox Guest Additions 7.2.22** quedó completad
 
 ### Siguiente práctica
 
-[Práctica 05 — Creación de una instantánea de seguridad](05-instantanea-seguridad.md)
+[Práctica — Creación de una instantánea de seguridad](03-instantanea-seguridad.md)
 
 En la siguiente práctica aprenderemos:
 

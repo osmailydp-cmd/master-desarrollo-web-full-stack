@@ -112,7 +112,7 @@ Utilizamos la herramienta oficial de Microsoft para crear el medio de instalaci�
 
 Ese procedimiento se encuentra documentado por separado en:
 
-[Guía para obtener una ISO de Windows 10](01-creacion-iso-windows-10.md)
+[Guía para obtener una ISO de Windows 10](creacion-iso-windows-10.md)
 
 **En esta práctica partimos de la ISO ya descargada.**
 
@@ -924,7 +924,7 @@ La máquina virtual `PC-Windows10-Osmaily` fue creada correctamente en Oracle Vi
 
 ### Siguiente práctica
 
-[Práctica 02 — Instalación de Windows 10 Pro](03-instalacion-windows-10-pro.md)
+[Práctica — Instalación de Windows 10 Pro](instalacion-configuracion-windows-10-pro.md)
 
 En la próxima nota documentaremos:
 

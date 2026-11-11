@@ -823,7 +823,7 @@ La instalación finalizó correctamente, y el sistema quedó preparado para cont
 
 ### Siguiente práctica
 
-[Práctica 04 — Instalación y configuración de Guest Additions](instalacion-guest-additions.md)
+[Práctica — Instalación y configuración de Guest Additions](02-instalacion-guest-additions.md)
 
 En esa práctica documentaremos:
 

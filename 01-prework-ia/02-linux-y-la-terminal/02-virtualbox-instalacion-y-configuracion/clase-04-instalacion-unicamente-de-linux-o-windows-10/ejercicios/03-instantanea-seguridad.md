@@ -630,6 +630,37 @@ Comprobamos que una instantánea permite recuperar un estado anterior y descarta
 
 También aprendimos que la comprobación definitiva no consiste solamente en pulsar **Restaurar**, sino en iniciar nuevamente la máquina y verificar que recuperamos el estado esperado.
 
+### Incidencia posterior a la restauración — Distorsión gráfica de Windows 10
+
+Después de restaurar correctamente la instantánea y comprobar que la carpeta `prueba` había desaparecido, encontramos un problema de visualización.
+
+#### Problema detectado
+
+Al maximizar y restaurar la ventana de VirtualBox, Windows 10 comenzó a mostrar franjas azules distorsionadas y una gran zona negra que impedía visualizar correctamente el escritorio.
+
+#### Procedimiento realizado
+
+1. Probamos la combinación `Windows + Ctrl + Shift + B` para reinicializar el controlador gráfico, pero no solucionó el problema.
+2. Apagamos la máquina virtual desde Oracle VirtualBox Administrador.
+3. Iniciamos nuevamente Windows 10.
+4. Abrimos **Configuración → Sistema → Pantalla**.
+5. Buscamos **Escala y distribución → Resolución de pantalla**.
+6. Comprobamos que Windows mostraba una resolución de **1151 × 863**.
+7. Cambiamos manualmente la resolución a **1280 × 720**.
+8. Volvimos a maximizar y restaurar la ventana de VirtualBox.
+
+#### Resultado
+
+El escritorio volvió a visualizarse correctamente y el redimensionamiento de la ventana funcionó con normalidad.
+
+#### Aprendizaje
+
+Después de restaurar una instantánea pueden aparecer problemas de visualización relacionados con la resolución o el redimensionamiento del sistema invitado.
+
+En nuestra práctica, seleccionar nuevamente **1280 × 720** permitió recuperar el funcionamiento correcto de la pantalla.
+
+No fue necesario reinstalar Guest Additions ni volver a restaurar la instantánea.
+
 ---
 
 ## 13. ¿Qué ocurre con los archivos después de crear una instantánea?

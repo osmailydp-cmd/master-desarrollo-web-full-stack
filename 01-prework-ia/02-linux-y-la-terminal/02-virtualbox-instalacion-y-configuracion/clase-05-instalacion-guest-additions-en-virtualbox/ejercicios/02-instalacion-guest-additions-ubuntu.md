@@ -1444,34 +1444,17 @@ Si en el futuro trabajamos con contenido sensible, será conveniente revisar qu�
 - [x] Agregar usuario al grupo `vboxsf`.
 - [x] Reiniciar Ubuntu.
 - [x] Verificar acceso a la carpeta compartida.
-- [ ] Crear instantánea posterior a la configuración de Guest Additions.
+- [x] Crear instantánea posterior a la configuración de Guest Additions.
 
 ---
 
-## 42. Instantánea de seguridad recomendada
+**Estado:** Completada y verificada.
 
-Como la máquina virtual ya tiene Guest Additions instalado y las carpetas compartidas funcionan, conviene guardar este nuevo estado.
+**Fecha de creación:** 14/11/2026, 08:36.
 
-### Nombre propuesto
+**Nombre:** `Ubuntu 22.04.3 - Guest Additions 7.2.22 configuradas`.
 
-`Ubuntu 22.04.3 - Guest Additions 7.2.22 configuradas`
-
-### Procedimiento
-
-1. Apagar Ubuntu correctamente.
-2. Abrir Oracle VirtualBox Administrador.
-3. Seleccionar `PC-Ubuntu-Osmaily`.
-4. Entrar en **Instantáneas**.
-5. Seleccionar **Estado actual**.
-6. Hacer clic en **Tomar**.
-7. Escribir el nombre de la nueva instantánea.
-8. Confirmar.
-
-### Descripción sugerida
-
-Guest Additions 7.2.22 instaladas y verificadas. Resolución automática, ratón, portapapeles bidireccional y carpeta compartida funcionando. Sesión gráfica Ubuntu on Xorg. Permisos `vboxsf` configurados. Limitación pendiente: arrastrar archivos desde Ubuntu hacia Windows.
-
-**Estado:** pendiente de confirmar su creación.
+**Resultado:** Instantánea creada correctamente con Ubuntu apagado, conservando la instalación de Guest Additions 7.2.22, la sesión X11, el portapapeles bidireccional y la carpeta compartida con permisos configurados.
 
 ---
 

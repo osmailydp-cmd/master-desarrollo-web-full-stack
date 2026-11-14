@@ -2,7 +2,7 @@
 
 **Curso:** Máster en Desarrollo Web Full Stack  
 **Módulo:** Linux y la Terminal  
-**Clase 04:** Instalación únicamente de Linux o Windows 10  
+**Clase 05:** Instalación de Guest Additions en VirtualBox
 **Herramienta:** Oracle VirtualBox  
 **Máquina virtual:** `PC-Windows10-Osmaily`  
 **Sistema anfitrión:** Windows 11 Home  

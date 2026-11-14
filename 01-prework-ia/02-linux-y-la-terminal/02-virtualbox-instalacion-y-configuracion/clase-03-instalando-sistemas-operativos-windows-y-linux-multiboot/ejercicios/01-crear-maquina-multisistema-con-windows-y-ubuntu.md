@@ -4,13 +4,13 @@
 **Módulo:** Linux y la Terminal  
 **Clase:** 03 — Instalación de sistemas operativos Windows y Linux Multiboot  
 **Tipo:** Guía de práctica personal  
-**Objetivo:** Instalar Windows 10 Pro y Ubuntu 22.04.3 en un mismo disco virtual utilizando BIOS/MBR, configurar GRUB e implementar cuatro instantáneas de recuperación.
+**Objetivo:** Instalar Windows 10 Pro y Ubuntu 22.04.3 en un mismo disco virtual utilizando BIOS/MBR, configurar GRUB y crear cuatro instantáneas de recuperación.
 
 ---
 
-# PARTE I — CREACIÓN DE LA MÁQUINA VIRTUAL
+# PARTE I — CONFIGURACIÓN DE LA MÁQUINA VIRTUAL
 
-## 1. Configuración de VirtualBox
+## 1. Crear la máquina virtual
 
 Abrir **Oracle VirtualBox Administrador → Nueva**.
 
@@ -20,7 +20,7 @@ Abrir **Oracle VirtualBox Administrador → Nueva**.
 |---|---|
 | VM Name | `PC-Multiboot-Osmaily` |
 | VM Folder | `E:\VirtualBox` |
-| ISO Image | `Windows.iso` |
+| ISO Image | `E:\Descargas\ISOS\Windows.iso` |
 | OS | Microsoft Windows |
 | OS Distribution | Windows |
 | OS Version | Windows 10 (64-bit) |
@@ -32,7 +32,7 @@ Abrir **Oracle VirtualBox Administrador → Nueva**.
 |---|---|
 | Base Memory | 4096 MB |
 | Number of CPUs | 2 |
-| Use EFI | **Desmarcado** |
+| Use EFI | Desmarcado |
 | Hard Disk Size | 100,00 GB |
 
 Seleccionar **Siguiente → Terminar**.
@@ -41,12 +41,14 @@ Seleccionar **Siguiente → Terminar**.
 
 Abrir **Configuración → Almacenamiento**.
 
-| Campo | Resultado esperado |
+| Campo | Resultado comprobado |
 |---|---|
 | Nombre | `PC-Multiboot-Osmaily.vdi` |
 | Tipo (Formato) | Normal (VDI) |
 | Virtual size | 100,00 GB |
+| Actual size inicial | 2,00 MB |
 | Detalles de almacenamiento | Almacenamiento reservado dinámicamente |
+| Puerto | SATA 0 |
 | Imagen ISO | `Windows.iso` |
 
 ### 1.4. Configuración de pantalla
@@ -58,14 +60,12 @@ Abrir **Configuración → Pantalla**.
 | Video Memory | 128 MB |
 | Number of Virtual Monitors | 1 |
 | Scale Factor | 100 % |
-| Graphics Controller | VBoxSVGA, si aparece |
-| Enable 3D Acceleration | Desmarcado, si aparece |
 
 ---
 
 ## 2. Distribución del disco virtual
 
-| Sistema | Espacio aproximado |
+| Sistema | Espacio previsto |
 |---|---:|
 | Windows 10 Pro y particiones auxiliares | 50 GB |
 | Ubuntu 22.04.3 y swap | 50 GB |
@@ -75,6 +75,7 @@ Abrir **Configuración → Pantalla**.
 |---|---|
 | Disco | Un único VDI |
 | Firmware | BIOS tradicional |
+| Use EFI | Desmarcado |
 | Tabla de particiones | MBR |
 | Gestor de arranque final | GNU GRUB |
 
@@ -82,7 +83,7 @@ Abrir **Configuración → Pantalla**.
 
 # PARTE II — INSTALACIÓN DE WINDOWS 10 PRO
 
-## 3. Iniciar el instalador
+## 3. Iniciar el instalador de Windows
 
 Seleccionar `PC-Multiboot-Osmaily` → **Iniciar**.
 
@@ -100,7 +101,7 @@ Seleccionar **Siguiente → Instalar ahora**.
 
 | Pantalla | Selección |
 |---|---|
-| Activar Windows | No tengo clave de producto, si corresponde |
+| Activar Windows | No tengo clave de producto |
 | Edición | Windows 10 Pro — x64 |
 | Términos de licencia | Aceptar |
 | Tipo de instalación | Personalizada: instalar solo Windows (avanzado) |
@@ -119,18 +120,17 @@ En **¿Dónde quieres instalar Windows?**:
 4. Seleccionar **Aplicar**.
 5. Aceptar la creación de particiones adicionales.
 
-### 4.2. Particiones esperadas
+### 4.2. Particiones creadas
 
-| Partición | Acción |
-|---|---|
-| Reservada para el sistema, si aparece | Conservar |
-| Principal — NTFS | Instalar Windows |
-| Recuperación, si aparece | Conservar |
-| Espacio sin asignar | Reservar para Ubuntu |
+| Partición | Tamaño | Tipo | Acción |
+|---|---:|---|---|
+| Unidad 0 Partición 1: Reservado para el sistema | 50 MB | Sistema | Conservar |
+| Unidad 0 Partición 2 | 50,0 GB | Principal | Instalar Windows |
+| Espacio sin asignar en la unidad 0 | 50,0 GB | Sin asignar | Reservar para Ubuntu |
 
 ### 4.3. Instalar Windows
 
-1. Seleccionar la partición **Principal** destinada a Windows.
+1. Seleccionar **Unidad 0 Partición 2 — 50,0 GB — Principal**.
 2. Pulsar **Siguiente**.
 3. Completar la instalación.
 4. Permitir los reinicios automáticos.
@@ -153,7 +153,7 @@ No crear ni formatear particiones en el espacio reservado para Ubuntu.
 
 | Campo | Configuración |
 |---|---|
-| Tipo de cuenta | Cuenta sin conexión, si está disponible |
+| Tipo de cuenta | Cuenta sin conexión |
 | Usuario | `Osmaily` |
 | Contraseña | Configurar contraseña personal |
 | Ubicación | No |
@@ -174,7 +174,7 @@ Completar el asistente hasta llegar al escritorio.
 1. Hacer clic derecho en **Inicio**.
 2. Seleccionar **Administración de discos**.
 3. Identificar las particiones de Windows.
-4. Comprobar que quedan aproximadamente 50 GB **No asignados**.
+4. Comprobar que permanecen aproximadamente 50 GB **No asignados**.
 
 ### 6.2. Comprobar el firmware
 
@@ -348,7 +348,6 @@ El disco virtual debería aparecer como `/dev/sda`.
 |---|---|
 | Partición reservada de Windows | Conservar |
 | Windows — NTFS | Conservar |
-| Recuperación, si aparece | Conservar |
 | Espacio libre | Utilizar para Ubuntu |
 
 No eliminar ni formatear ninguna partición de Windows.
@@ -366,7 +365,7 @@ Seleccionar **espacio libre → +**.
 | Campo | Valor |
 |---|---|
 | Tamaño | 45000 MB |
-| Tipo | Lógica, si está disponible |
+| Tipo | Lógica |
 | Ubicación | Al principio de este espacio |
 | Utilizar como | sistema de ficheros ext4 transaccional |
 | Punto de montaje | `/` |
@@ -380,7 +379,7 @@ Seleccionar el espacio libre restante → **+**.
 | Campo | Valor |
 |---|---|
 | Tamaño | Todo el espacio restante |
-| Tipo | Lógica, si está disponible |
+| Tipo | Lógica |
 | Utilizar como | área de intercambio |
 | Punto de montaje | No corresponde |
 
@@ -392,13 +391,10 @@ Confirmar con **OK**.
 |---|---|
 | Reservada de Windows | No |
 | Windows — NTFS | No |
-| Recuperación, si aparece | No |
 | Ubuntu `/` — ext4 | Sí |
 | Ubuntu swap | Crear como intercambio |
 
-**En MBR, utilizar particiones lógicas para Ubuntu cuando el instalador las ofrezca permite evitar el límite de cuatro particiones primarias.** El instalador puede crear automáticamente una partición extendida para alojarlas.
-
-Si no ofrece la opción lógica y ya existen varias particiones primarias, no confirmar cambios hasta revisar la distribución.
+No eliminar las particiones de Windows.
 
 ---
 
@@ -419,7 +415,7 @@ Seleccionar:
 | Partición EFI | No se utiliza |
 | Partición biosgrub | No se necesita en MBR |
 
-Seleccionar **Instalar ahora** y revisar los cambios antes de confirmarlos.
+Seleccionar **Instalar ahora** y confirmar los cambios.
 
 ---
 
@@ -584,15 +580,15 @@ Windows 10 Pro y Ubuntu 22.04.3 instalados con BIOS/MBR y arranque dual mediante
 
 ## 21. Lista de comprobación
 
-- [ ] Máquina virtual creada.
-- [ ] Disco VDI dinámico de 100 GB.
-- [ ] Use EFI desmarcado.
+- [x] Máquina virtual creada.
+- [x] Disco VDI dinámico de 100 GB.
+- [ ] Use EFI desmarcado y arranque comprobado.
 - [ ] Windows 10 Pro instalado.
 - [ ] Primera distribución del teclado: Español.
 - [ ] Segunda distribución del teclado: Inglés.
 - [ ] Disco MBR comprobado.
 - [ ] BIOS Heredado/Legacy comprobado.
-- [ ] Espacio reservado para Ubuntu.
+- [x] Particiones de Windows creadas: 50 MB reservada, 50 GB principal y 50 GB sin asignar.
 - [ ] Instantánea 1 — Windows limpio.
 - [ ] Guest Additions de Windows instaladas.
 - [ ] Instantánea 2 — Windows con Guest Additions.

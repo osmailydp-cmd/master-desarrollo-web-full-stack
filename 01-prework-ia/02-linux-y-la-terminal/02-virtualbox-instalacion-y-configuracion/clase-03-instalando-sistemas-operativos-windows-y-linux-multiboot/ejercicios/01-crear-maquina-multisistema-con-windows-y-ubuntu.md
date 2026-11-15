@@ -310,15 +310,15 @@ Windows 10 Pro instalado con BIOS tradicional y particiones MBR. Espacio sin asi
 
 ## 8. Instalar Guest Additions en Windows 10
 
-Iniciar Windows.
+Iniciar Windows 10 desde `PC-Multiboot-Osmaily`.
 
 ### 8.1. Insertar el CD
 
-1. Abrir **Dispositivos**.
+1. En la ventana de VirtualBox, abrir **Dispositivos**.
 2. Seleccionar **Insertar imagen de CD de los complementos del invitado...**.
-3. Abrir **Explorador de archivos**.
-4. Entrar en **Este equipo**.
-5. Abrir **VirtualBox Guest Additions**.
+3. Dentro de Windows 10, abrir el **Explorador de archivos**.
+4. Seleccionar **Este equipo**.
+5. Abrir la unidad **VirtualBox Guest Additions**.
 
 ### 8.2. Ejecutar el instalador
 
@@ -326,41 +326,123 @@ Iniciar Windows.
 2. Aceptar el control de cuentas de usuario.
 3. Seleccionar **Next**.
 4. Mantener la ubicación predeterminada.
-5. Continuar con **Next → Install**.
-6. Aceptar los controladores solicitados.
+5. Seleccionar **Next → Install**.
+6. Aceptar la instalación de los controladores.
 7. Seleccionar **Reboot now → Finish**.
+8. Esperar a que Windows 10 reinicie.
+
+**Resultado:** Guest Additions 7.2.22 instalado.
 
 ### 8.3. Comprobar Guest Additions
 
-| Función | Comprobación |
-|---|---|
-| Pantalla | Redimensionar la ventana |
-| Ratón | Mover entre anfitrión e invitado |
-| Portapapeles | Dispositivos → Portapapeles compartido → Bidireccional |
-| Arrastrar y soltar | Dispositivos → Arrastrar y soltar → Bidireccional |
+| Función | Procedimiento | Resultado |
+|---|---|---|
+| Adaptación de pantalla | Redimensionar la ventana de VirtualBox | Comprobado |
+| Pantalla completa | Seleccionar **Ver → Modo pantalla completa** | Comprobado |
+| Integración del ratón | Mover el puntero entre Windows 11 y Windows 10 | Comprobado |
+| Portapapeles compartido | **Dispositivos → Portapapeles compartido → Bidireccional** | Comprobado |
+| Arrastrar y soltar | **Dispositivos → Arrastrar y soltar → Bidireccional** | Comprobado |
 
-- [ ] Instalación completada.
-- [ ] Windows reiniciado.
-- [ ] Pantalla adaptándose correctamente.
-- [ ] Ratón funcionando.
-- [ ] Portapapeles comprobado en ambos sentidos.
+### 8.4. Comprobar el portapapeles bidireccional
+
+**Windows 11 → Windows 10**
+
+1. Abrir el **Bloc de notas** de Windows 11.
+2. Escribir un texto de prueba.
+3. Seleccionar el texto y presionar **Ctrl + C**.
+4. Abrir el **Bloc de notas** de Windows 10.
+5. Presionar **Ctrl + V**.
+6. Comprobar que se pega el texto.
+
+**Windows 10 → Windows 11**
+
+1. Escribir un texto en el **Bloc de notas** de Windows 10.
+2. Seleccionarlo y presionar **Ctrl + C**.
+3. Abrir el **Bloc de notas** de Windows 11.
+4. Presionar **Ctrl + V**.
+5. Comprobar que se pega el texto.
+
+**Resultado:** portapapeles comprobado en ambos sentidos.
+
+### 8.5. Comprobar Arrastrar y soltar
+
+**Windows 11 → Windows 10**
+
+1. Abrir el **Explorador de archivos** de Windows 11.
+2. Seleccionar `prueba-compartida.txt`.
+3. Arrastrar el archivo hacia el escritorio de Windows 10.
+4. Comprobar que aparece en el escritorio.
+
+**Windows 10 → Windows 11**
+
+1. Crear un archivo de texto `window10pro.txt` en Windows 10.
+2. Arrastrarlo desde Windows 10 hacia una carpeta de Windows 11.
+3. Comprobar que aparece en la carpeta de destino.
+
+**Resultado:** transferencia de archivos comprobada en ambos sentidos.
+
+### 8.6. Lista de comprobación
+
+- [x] Guest Additions 7.2.22 instalado.
+- [x] Windows 10 reiniciado.
+- [x] Adaptación automática de pantalla comprobada.
+- [x] Modo de pantalla completa comprobado.
+- [x] Integración del ratón comprobada.
+- [x] Portapapeles Windows 11 → Windows 10 comprobado.
+- [x] Portapapeles Windows 10 → Windows 11 comprobado.
+- [x] Arrastrar y soltar Windows 11 → Windows 10 comprobado.
+- [x] Arrastrar y soltar Windows 10 → Windows 11 comprobado.
+
+**Resultado: instalación y configuración de Guest Additions completadas.**
 
 ---
 
 ## 9. Instantánea 2 — Windows 10 Pro: Guest Additions
 
-1. Apagar Windows.
-2. Abrir **Oracle VirtualBox Administrador → Instantáneas**.
-3. Seleccionar **Estado actual**.
-4. Hacer clic en **Tomar**.
+### 9.1. Crear la instantánea
 
-**Nombre:**
+1. Apagar Windows 10 normalmente.
+2. Abrir **Oracle VirtualBox Administrador**.
+3. Seleccionar `PC-Multiboot-Osmaily`.
+4. Abrir **Instantáneas**.
+5. Seleccionar **Estado actual**.
+6. Hacer clic en **Tomar**.
+7. Introducir el nombre y la descripción.
+8. Confirmar la creación.
 
-`Multiboot - Windows 10 Pro - Guest Additions configuradas`
+### 9.2. Datos de la instantánea
+
+| Campo | Valor |
+|---|---|
+| Nombre | `Multiboot - Windows 10 Pro - Guest Additions configuradas` |
+| Fecha | 15/11/2026 |
+| Hora | 07:58 |
+| Estado de la máquina virtual | Apagada |
+| Resultado | Instantánea creada correctamente |
 
 **Descripción:**
 
 Windows 10 Pro instalado con BIOS/MBR. Guest Additions instaladas y comprobadas. Espacio reservado para Ubuntu conservado.
+
+### 9.3. Verificar las instantáneas
+
+En **Oracle VirtualBox Administrador → Instantáneas**, comprobar:
+
+| N.º | Instantánea | Estado |
+|---|---|---|
+| 1 | `Multiboot - Windows 10 Pro - Instalación limpia` | Creada |
+| 2 | `Multiboot - Windows 10 Pro - Guest Additions configuradas` | Creada |
+
+### 9.4. Lista de comprobación
+
+- [x] Windows 10 apagado correctamente.
+- [x] Segunda instantánea creada.
+- [x] Nombre de la instantánea verificado.
+- [x] Descripción registrada.
+- [x] Primera instantánea conservada.
+- [x] Máquina virtual apagada.
+
+**Resultado: configuración de Windows 10 Pro completada y respaldada mediante dos instantáneas.**
 
 ---
 
@@ -667,9 +749,9 @@ Windows 10 Pro y Ubuntu 22.04.3 instalados con BIOS/MBR y arranque dual mediante
 - [x] Disco MBR comprobado.
 - [x] BIOS Heredado/Legacy comprobado.
 - [x] Particiones de Windows verificadas: 50 MB reservada, 49,40 GB principal, 559 MB recuperación y 50 GB sin asignar.
-- [ ] Instantánea 1 — Windows limpio.
-- [ ] Guest Additions de Windows instaladas.
-- [ ] Instantánea 2 — Windows con Guest Additions.
+- [x] Instantánea 1 — Windows limpio.
+- [x] Guest Additions de Windows instaladas.
+- [x] Instantánea 2 — Windows con Guest Additions.
 - [ ] Ubuntu 22.04.3 instalado.
 - [ ] Particiones de Windows conservadas.
 - [ ] Partición raíz `/` creada.

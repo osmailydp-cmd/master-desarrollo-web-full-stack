@@ -10,14 +10,14 @@
 
 # PARTE I — CONFIGURACIÓN DE LA MÁQUINA VIRTUAL
 
-## 1\. Crear la máquina virtual
+## 1. Crear la máquina virtual
 
 Abrir **Oracle VirtualBox Administrador → Nueva**.
 
 ### 1.1. Virtual Machine Name and Operating System
 
 | Campo | Configuración |
-| --- | --- |
+|---|---|
 | VM Name | `PC-Multiboot-Osmaily` |
 | VM Folder | `E:\VirtualBox` |
 | ISO Image | `E:\Descargas\ISOS\Windows.iso` |
@@ -29,7 +29,7 @@ Abrir **Oracle VirtualBox Administrador → Nueva**.
 ### 1.2. Specify Virtual Hardware
 
 | Campo | Configuración |
-| --- | --- |
+|---|---|
 | Base Memory | 4096 MB |
 | Number of CPUs | 2 |
 | Use EFI | Desmarcado |
@@ -42,7 +42,7 @@ Seleccionar **Siguiente → Terminar**.
 Abrir **Configuración → Almacenamiento**.
 
 | Campo | Resultado comprobado |
-| --- | --- |
+|---|---|
 | Nombre | `PC-Multiboot-Osmaily.vdi` |
 | Tipo (Formato) | Normal (VDI) |
 | Virtual size | 100,00 GB |
@@ -56,23 +56,23 @@ Abrir **Configuración → Almacenamiento**.
 Abrir **Configuración → Pantalla**.
 
 | Campo | Configuración |
-| --- | --- |
+|---|---|
 | Video Memory | 128 MB |
 | Number of Virtual Monitors | 1 |
 | Scale Factor | 100 % |
 
 ---
 
-## 2\. Distribución del disco virtual
+## 2. Distribución del disco virtual
 
 | Sistema | Espacio previsto |
-| --- | ---: |
+|---|---:|
 | Windows 10 Pro y particiones auxiliares | 50 GB |
 | Ubuntu 22.04.3 y swap | 50 GB |
 | **Total** | **100 GB** |
 
 | Característica | Configuración |
-| --- | --- |
+|---|---|
 | Disco | Un único VDI |
 | Firmware | BIOS tradicional |
 | Use EFI | Desmarcado |
@@ -83,14 +83,14 @@ Abrir **Configuración → Pantalla**.
 
 # PARTE II — INSTALACIÓN DE WINDOWS 10 PRO
 
-## 3\. Iniciar el instalador de Windows
+## 3. Iniciar el instalador de Windows
 
 Seleccionar `PC-Multiboot-Osmaily` → **Iniciar**.
 
 ### 3.1. Programa de configuración de Windows
 
 | Campo | Selección |
-| --- | --- |
+|---|---|
 | Idioma que va a instalar | Español (España, internacional) |
 | Formato de hora y moneda | Español (España, internacional) |
 | Teclado o método de entrada | Español |
@@ -100,7 +100,7 @@ Seleccionar **Siguiente → Instalar ahora**.
 ### 3.2. Opciones de instalación
 
 | Pantalla | Selección |
-| --- | --- |
+|---|---|
 | Activar Windows | No tengo clave de producto |
 | Edición | Windows 10 Pro — x64 |
 | Términos de licencia | Aceptar |
@@ -108,7 +108,7 @@ Seleccionar **Siguiente → Instalar ahora**.
 
 ---
 
-## 4\. Particionado de Windows
+## 4. Particionado de Windows
 
 ### 4.1. Crear la partición
 
@@ -123,7 +123,7 @@ En **¿Dónde quieres instalar Windows?**:
 ### 4.2. Particiones creadas
 
 | Partición | Tamaño | Tipo | Acción |
-| --- | ---: | --- | --- |
+|---|---:|---|---|
 | Unidad 0 Partición 1: Reservado para el sistema | 50 MB | Sistema | Conservar |
 | Unidad 0 Partición 2 | 50,0 GB | Principal | Instalar Windows |
 | Espacio sin asignar en la unidad 0 | 50,0 GB | Sin asignar | Reservar para Ubuntu |
@@ -139,14 +139,14 @@ No crear ni formatear particiones en el espacio reservado para Ubuntu.
 
 ---
 
-## 5\. Configuración inicial de Windows
+## 5. Configuración inicial de Windows
 
 Completar las siguientes pantallas del asistente de Windows 10.
 
 ### 5.1. Región y distribuciones del teclado
 
 | Orden | Pantalla | Selección |
-| --- | --- | --- |
+|---|---|---|
 | 1 | Empecemos por la región. ¿Es correcta? | Uruguay → Sí |
 | 2 | ¿Esta es la distribución de teclado correcta? | Español — Spanish → Sí |
 | 3 | ¿Quieres agregar una segunda distribución del teclado? | Agregar distribución |
@@ -156,7 +156,7 @@ Completar las siguientes pantallas del asistente de Windows 10.
 ### 5.2. Configuración de la cuenta
 
 | Orden | Pantalla | Selección |
-| --- | --- | --- |
+|---|---|---|
 | 1 | ¿Cómo quiere realizar la configuración? | Configurar para uso personal |
 | 2 | Inicio de sesión con Microsoft | Cuenta sin conexión |
 | 3 | Inicie sesión para disfrutar de la gama completa de servicios y aplicaciones de Microsoft | Experiencia limitada |
@@ -172,7 +172,7 @@ No registrar la contraseña ni las respuestas de seguridad en GitHub.
 ### 5.3. Configuración de Microsoft Edge
 
 | Pantalla | Selección |
-| --- | --- |
+|---|---|
 | Tenga siempre acceso a los datos de exploración recientes | Ahora no |
 
 ### 5.4. Configuración de privacidad
@@ -180,7 +180,7 @@ No registrar la contraseña ni las respuestas de seguridad en GitHub.
 Pantalla: **Elegir la configuración de la privacidad para tu dispositivo**.
 
 | Opción | Configuración seleccionada |
-| --- | --- |
+|---|---|
 | Ubicación | No |
 | Encontrar mi dispositivo | No |
 | Datos de diagnóstico | Interruptor desactivado; pantalla muestra «Enviar Datos de diagnóstico requeridos» |
@@ -195,7 +195,7 @@ Después de revisar las seis opciones, seleccionar **Aceptar**.
 Pantalla: **Personalicemos su experiencia**.
 
 | Opción | Selección |
-| --- | --- |
+|---|---|
 | Entretenimiento | Desmarcado |
 | Juegos | Desmarcado |
 | Escuela | Desmarcado |
@@ -213,51 +213,83 @@ Seleccionar **Omitir**.
 
 ---
 
-## 6\. Verificar Windows
+## 6. Verificar Windows
 
 ### 6.1. Comprobar las particiones
 
-1. Hacer clic derecho en **Inicio**.
-2. Seleccionar **Administración de discos**.
-3. Identificar las particiones de Windows.
-4. Comprobar que permanecen aproximadamente 50 GB **No asignados**.
+1. Desde el **escritorio de Windows 10**, localizar el botón **Inicio** (logotipo de Windows) en la esquina inferior izquierda de la barra de tareas.
+2. Hacer **clic derecho sobre el botón Inicio**.
+3. En el menú que aparece, seleccionar **Administración de discos**.
+4. En la ventana **Administración de discos**, localizar **Disco 0** en la parte inferior.
+5. Comprobar las particiones.
+
+**Resultados verificados:**
+
+| Partición | Tamaño | Estado |
+|---|---:|---|
+| Reservado para el sistema | 50 MB | Correcto |
+| Windows (C:) — NTFS | 49,40 GB | Correcto |
+| Disco 0 Partición 3 — Recuperación | 559 MB | Correcto |
+| Espacio no asignado | 50,00 GB | Reservado para Ubuntu |
+| **Disco 0** | **100,00 GB** | En pantalla |
+
+**Estado: Completado.**
 
 ### 6.2. Comprobar el firmware
 
-1. Presionar **Windows + R**.
-2. Escribir `msinfo32`.
+1. Desde el **escritorio de Windows 10**, presionar **Windows + R**.
+2. En la ventana **Ejecutar**, escribir `msinfo32`.
 3. Presionar **Enter**.
-4. Abrir **Resumen del sistema**.
-5. Buscar **Modo de BIOS**.
+4. Se abrirá **Información del sistema**.
+5. En el panel izquierdo, seleccionar **Resumen del sistema**.
+6. En el panel derecho, localizar **Modo de BIOS**.
+7. Comprobar el valor.
 
-| Campo | Resultado esperado |
-| --- | --- |
-| Modo de BIOS | Heredado / Legacy |
+**Resultado verificado:**
+
+| Campo | Valor |
+|---|---|
+| Modo de BIOS | **Heredado** |
+
+**Estado: Completado.**
 
 ### 6.3. Comprobar MBR
 
-1. Presionar **Windows + X**.
+1. Desde el **escritorio de Windows 10**, hacer clic derecho sobre el botón **Inicio**, situado en la esquina inferior izquierda de la barra de tareas.
 2. Seleccionar **Administración de discos**.
-3. Hacer clic derecho sobre el recuadro **Disco 0**.
-4. Seleccionar **Propiedades**.
-5. Abrir la pestaña **Volúmenes**.
-6. Buscar **Estilo de partición**.
+3. En la parte inferior izquierda, localizar el recuadro gris **Disco 0**, donde aparece **Básico — 100,00 GB — En pantalla**.
+4. Hacer **clic derecho directamente sobre el recuadro gris Disco 0**, no sobre las particiones.
+5. Seleccionar **Propiedades**.
+6. Abrir la pestaña **Volúmenes**.
+7. Localizar **Estilo de partición**.
 
-| Campo | Resultado esperado |
-| --- | --- |
-| Estilo de partición | Registro de arranque maestro (MBR) |
+**Resultados verificados:**
+
+| Campo | Valor |
+|---|---|
+| Disco | Disco 0 |
+| Tipo | Básico |
+| Estado | En pantalla |
+| Estilo de partición | **Registro de arranque maestro (MBR)** |
+| Capacidad | 102399 MB |
+| Espacio sin asignar | 51202 MB |
+| Espacio reservado | 0 MB |
+
+**Estado: Completado.**
 
 ### 6.4. Lista de comprobación
 
-- [ ] Windows 10 Pro inicia correctamente.
-- [ ] El usuario funciona.
-- [ ] El disco utiliza MBR.
-- [ ] El modo de BIOS es Heredado / Legacy.
-- [ ] Queda espacio sin asignar para Ubuntu.
+- [x] Windows 10 Pro inicia correctamente.
+- [x] El usuario funciona.
+- [x] El disco utiliza MBR.
+- [x] El modo de BIOS es Heredado / Legacy.
+- [x] Queda espacio sin asignar para Ubuntu.
+
+**Resultado: verificación de Windows 10 Pro completada.**
 
 ---
 
-## 7\. Instantánea 1 — Windows 10 Pro: instalación limpia
+## 7. Instantánea 1 — Windows 10 Pro: instalación limpia
 
 1. Apagar Windows normalmente.
 2. Abrir **Oracle VirtualBox Administrador**.
@@ -276,7 +308,7 @@ Windows 10 Pro instalado con BIOS tradicional y particiones MBR. Espacio sin asi
 
 ---
 
-## 8\. Instalar Guest Additions en Windows 10
+## 8. Instalar Guest Additions en Windows 10
 
 Iniciar Windows.
 
@@ -301,7 +333,7 @@ Iniciar Windows.
 ### 8.3. Comprobar Guest Additions
 
 | Función | Comprobación |
-| --- | --- |
+|---|---|
 | Pantalla | Redimensionar la ventana |
 | Ratón | Mover entre anfitrión e invitado |
 | Portapapeles | Dispositivos → Portapapeles compartido → Bidireccional |
@@ -315,7 +347,7 @@ Iniciar Windows.
 
 ---
 
-## 9\. Instantánea 2 — Windows 10 Pro: Guest Additions
+## 9. Instantánea 2 — Windows 10 Pro: Guest Additions
 
 1. Apagar Windows.
 2. Abrir **Oracle VirtualBox Administrador → Instantáneas**.
@@ -334,7 +366,7 @@ Windows 10 Pro instalado con BIOS/MBR. Guest Additions instaladas y comprobadas.
 
 # PARTE III — INSTALACIÓN DE UBUNTU 22.04.3
 
-## 10\. Cambiar la imagen ISO
+## 10. Cambiar la imagen ISO
 
 Con la máquina virtual apagada:
 
@@ -346,7 +378,7 @@ Con la máquina virtual apagada:
 
 ---
 
-## 11\. Iniciar el instalador de Ubuntu
+## 11. Iniciar el instalador de Ubuntu
 
 1. Iniciar la máquina virtual.
 2. Seleccionar **Try or Install Ubuntu**.
@@ -356,7 +388,7 @@ Con la máquina virtual apagada:
 ### 11.1. Configuración
 
 | Campo | Selección |
-| --- | --- |
+|---|---|
 | Idioma | Español |
 | Disposición del teclado | Spanish |
 | Variante | Spanish |
@@ -376,7 +408,7 @@ Si ya comenzó la escritura de particiones, no reiniciar forzadamente sin revisa
 
 ---
 
-## 12\. Tipo de instalación
+## 12. Tipo de instalación
 
 En **Tipo de instalación**, seleccionar:
 
@@ -386,12 +418,12 @@ No seleccionar **Borrar disco e instalar Ubuntu**.
 
 ---
 
-## 13\. Identificar las particiones existentes
+## 13. Identificar las particiones existentes
 
 El disco virtual debería aparecer como `/dev/sda`.
 
 | Elemento | Acción |
-| --- | --- |
+|---|---|
 | Partición reservada de Windows | Conservar |
 | Windows — NTFS | Conservar |
 | Espacio libre | Utilizar para Ubuntu |
@@ -400,7 +432,7 @@ No eliminar ni formatear ninguna partición de Windows.
 
 ---
 
-## 14\. Particionado de Ubuntu
+## 14. Particionado de Ubuntu
 
 Utilizar el espacio libre restante del disco.
 
@@ -409,7 +441,7 @@ Utilizar el espacio libre restante del disco.
 Seleccionar **espacio libre → +**.
 
 | Campo | Valor |
-| --- | --- |
+|---|---|
 | Tamaño | 45000 MB |
 | Tipo | Lógica |
 | Ubicación | Al principio de este espacio |
@@ -423,7 +455,7 @@ Confirmar con **OK**.
 Seleccionar el espacio libre restante → **+**.
 
 | Campo | Valor |
-| --- | --- |
+|---|---|
 | Tamaño | Todo el espacio restante |
 | Tipo | Lógica |
 | Utilizar como | área de intercambio |
@@ -434,7 +466,7 @@ Confirmar con **OK**.
 ### 14.3. Comprobación final
 
 | Partición | Formatear |
-| --- | --- |
+|---|---|
 | Reservada de Windows | No |
 | Windows — NTFS | No |
 | Ubuntu `/` — ext4 | Sí |
@@ -444,7 +476,7 @@ No eliminar las particiones de Windows.
 
 ---
 
-## 15\. Configurar el cargador de arranque
+## 15. Configurar el cargador de arranque
 
 En la pantalla de particionado, localizar:
 
@@ -455,7 +487,7 @@ Seleccionar:
 `/dev/sda`
 
 | Campo | Configuración |
-| --- | --- |
+|---|---|
 | Cargador | GNU GRUB |
 | Disco de instalación | `/dev/sda` |
 | Partición EFI | No se utiliza |
@@ -465,10 +497,10 @@ Seleccionar **Instalar ahora** y revisar los cambios antes de confirmarlos.
 
 ---
 
-## 16\. Configuración de Ubuntu
+## 16. Configuración de Ubuntu
 
 | Campo | Configuración |
-| --- | --- |
+|---|---|
 | Zona horaria | Montevideo |
 | Su nombre | Osmaily |
 | Nombre del equipo | `pc-multiboot-osmaily` |
@@ -487,11 +519,11 @@ Seleccionar **Instalar ahora** y revisar los cambios antes de confirmarlos.
 
 # PARTE IV — VERIFICACIÓN DEL MULTIBOOT
 
-## 17\. Comprobar GRUB
+## 17. Comprobar GRUB
 
 Después de instalar Ubuntu, debería aparecer un menú semejante a:
 
-``` text
+```text
 Ubuntu
 Advanced options for Ubuntu
 Windows 10 (on /dev/sda...)
@@ -517,7 +549,7 @@ Los nombres pueden variar.
 2. Abrir la terminal con **Ctrl + Alt + T**.
 3. Ejecutar:
 
-``` bash
+```bash
 sudo update-grub
 ```
 
@@ -527,7 +559,7 @@ Si Windows continúa sin aparecer, revisar `os-prober` antes de modificar el dis
 
 ---
 
-## 18\. Instantánea 3 — Ubuntu: instalación limpia
+## 18. Instantánea 3 — Ubuntu: instalación limpia
 
 Después de verificar ambos sistemas:
 
@@ -548,7 +580,7 @@ Windows 10 Pro y Ubuntu 22.04.3 instalados en un único disco virtual MBR, utili
 
 # PARTE V — GUEST ADDITIONS EN UBUNTU
 
-## 19\. Instalar Guest Additions
+## 19. Instalar Guest Additions
 
 Iniciar Ubuntu desde GRUB.
 
@@ -556,7 +588,7 @@ Iniciar Ubuntu desde GRUB.
 
 Abrir la terminal con **Ctrl + Alt + T**.
 
-``` bash
+```bash
 ping -c 4 google.com
 ```
 
@@ -568,15 +600,15 @@ Si no existe conexión, revisar:
 
 Ejecutar:
 
-``` bash
+```bash
 sudo apt-get update
 ```
 
-``` bash
+```bash
 sudo apt-get install gcc make perl
 ```
 
-``` bash
+```bash
 sudo apt-get install linux-headers-$(uname -r)
 ```
 
@@ -595,7 +627,7 @@ sudo apt-get install linux-headers-$(uname -r)
 ### 19.4. Comprobar funciones
 
 | Función | Comprobación |
-| --- | --- |
+|---|---|
 | Pantalla | Redimensionar ventana |
 | Ratón | Mover entre anfitrión e invitado |
 | Portapapeles | Activar Bidireccional y copiar texto |
@@ -603,7 +635,7 @@ sudo apt-get install linux-headers-$(uname -r)
 
 ---
 
-## 20\. Instantánea 4 — Ubuntu: Guest Additions
+## 20. Instantánea 4 — Ubuntu: Guest Additions
 
 Después de verificar Guest Additions:
 
@@ -624,17 +656,17 @@ Windows 10 Pro y Ubuntu 22.04.3 instalados con BIOS/MBR y arranque dual mediante
 
 # PARTE VI — VERIFICACIÓN FINAL
 
-## 21\. Lista de comprobación
+## 21. Lista de comprobación
 
 - [x] Máquina virtual creada.
 - [x] Disco VDI dinámico de 100 GB.
 - [x] Use EFI desmarcado.
-- [ ] Windows 10 Pro instalado y escritorio comprobado.
+- [x] Windows 10 Pro instalado y escritorio comprobado.
 - [x] Primera distribución del teclado: Español.
 - [x] Segunda distribución del teclado: Inglés.
-- [ ] Disco MBR comprobado.
-- [ ] BIOS Heredado/Legacy comprobado.
-- [x] Particiones de Windows creadas: 50 MB reservada, 50 GB principal y 50 GB sin asignar.
+- [x] Disco MBR comprobado.
+- [x] BIOS Heredado/Legacy comprobado.
+- [x] Particiones de Windows verificadas: 50 MB reservada, 49,40 GB principal, 559 MB recuperación y 50 GB sin asignar.
 - [ ] Instantánea 1 — Windows limpio.
 - [ ] Guest Additions de Windows instaladas.
 - [ ] Instantánea 2 — Windows con Guest Additions.
@@ -651,10 +683,10 @@ Windows 10 Pro y Ubuntu 22.04.3 instalados con BIOS/MBR y arranque dual mediante
 
 ---
 
-## 22\. Resumen de instantáneas
+## 22. Resumen de instantáneas
 
 | N.º | Nombre | Contenido |
-| --- | --- | --- |
+|---|---|---|
 | 1 | `Multiboot - Windows 10 Pro - Instalación limpia` | Windows recién instalado |
 | 2 | `Multiboot - Windows 10 Pro - Guest Additions configuradas` | Windows con Guest Additions |
 | 3 | `Multiboot - Ubuntu 22.04.3 - Instalación limpia` | Windows y Ubuntu con GRUB |
@@ -662,10 +694,10 @@ Windows 10 Pro y Ubuntu 22.04.3 instalados con BIOS/MBR y arranque dual mediante
 
 ---
 
-## 23\. Resultado esperado
+## 23. Resultado esperado
 
 | Elemento | Configuración final |
-| --- | --- |
+|---|---|
 | Máquina virtual | `PC-Multiboot-Osmaily` |
 | Disco | VDI dinámico de 100 GB |
 | Firmware | BIOS tradicional |

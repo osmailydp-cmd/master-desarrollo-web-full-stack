@@ -565,26 +565,28 @@ Utilizar los **53688 MB de espacio libre** para crear las particiones de Ubuntu.
 
 Los números de las nuevas particiones pueden variar según el instalador.
 
-### 14.4. ¿Cuándo se necesita una partición `biosgrub`?
+### 14.4. Comparación entre Ubuntu individual y Multiboot
 
-En la instalación individual anterior de Ubuntu creamos una partición **Área reservada de la BIOS de arranque**, identificada como `biosgrub`.
-
-Su necesidad depende del firmware y del tipo de tabla de particiones.
-
-| Configuración | Tabla de particiones | ¿Necesita `biosgrub`? |
+| Característica | Ubuntu individual | Multiboot actual |
 |---|---|---|
-| Ubuntu individual anterior — BIOS tradicional | GPT | Sí |
-| Multiboot actual — BIOS tradicional | MBR | No |
-| Instalación con UEFI | GPT | No; utiliza una partición EFI (ESP) |
+| Firmware | BIOS tradicional | BIOS tradicional |
+| Tabla de particiones | GPT | MBR |
+| Windows instalado previamente | No | Sí |
+| Partición raíz `/` | Primaria | Lógica |
+| Partición swap | Primaria | Lógica |
+| Partición `biosgrub` | Sí | No |
 
-**Resumen:**
+### ¿Por qué utilizamos particiones lógicas en el multiboot?
 
-- **BIOS + GPT:** crear una partición `biosgrub` para GRUB.
-- **BIOS + MBR:** no necesita una partición `biosgrub`.
-- **UEFI + GPT:** utilizar una partición EFI, normalmente montada en `/boot/efi`.
+El disco MBR admite como máximo **cuatro particiones primarias**, o **tres primarias y una extendida que contenga varias particiones lógicas**.
 
-En nuestra instalación multiboot utilizamos **BIOS tradicional + MBR**, por lo que únicamente creamos las particiones raíz `/` y swap para Ubuntu.
+En nuestra máquina ya existen tres particiones de Windows. Nos queda una sola entrada disponible en la tabla MBR.
 
+Si creamos Ubuntu `/` como **Primaria**, ocuparíamos esa cuarta entrada y ya no podríamos crear otra partición independiente para swap.
+
+En cambio, seleccionando **Lógica**, el instalador puede crear una partición extendida que contenga las dos particiones de Ubuntu (`/` y swap).
+
+**Nota sobre `biosgrub`:** En la instalación individual utilizamos BIOS + GPT, por lo que fue necesario crear una partición `biosgrub`. En el multiboot actual utilizamos BIOS + MBR, por lo que esa partición no es necesaria.
 ---
 
 ## 15. Configurar el cargador de arranque

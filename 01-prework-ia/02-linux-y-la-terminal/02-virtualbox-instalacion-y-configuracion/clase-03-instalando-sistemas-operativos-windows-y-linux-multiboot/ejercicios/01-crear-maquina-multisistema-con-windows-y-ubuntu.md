@@ -593,10 +593,9 @@ En cambio, seleccionando **Lógica**, el instalador puede crear una partición e
 **Nota sobre `biosgrub`:** En la instalación individual utilizamos BIOS + GPT, por lo que fue necesario crear una partición `biosgrub`. En el multiboot actual utilizamos BIOS + MBR, por lo que esa partición no es necesaria.
 
 ---
-
 ## 15. Configurar el cargador de arranque
 
-En la misma pantalla **Tipo de instalación**, localizar:
+En la pantalla **Tipo de instalación**, localizar:
 
 **Dispositivo donde instalar el cargador de arranque:**
 
@@ -617,12 +616,63 @@ Seleccionar:
 
 ### 15.2. Iniciar la instalación
 
-1. Confirmar que las particiones de Windows no están marcadas para formatearse.
-2. Verificar que Ubuntu tiene asignada la partición raíz `/` y el área de intercambio swap.
+1. Confirmar que las tres particiones NTFS de Windows no están marcadas para formatearse.
+2. Verificar que Ubuntu tiene asignadas la partición raíz `/dev/sda5` (ext4) y la partición swap `/dev/sda6`.
 3. Mantener `/dev/sda` como dispositivo del cargador de arranque.
 4. Seleccionar **Instalar ahora**.
-5. Revisar los cambios que muestra el instalador.
-6. Confirmar para comenzar la instalación de Ubuntu.
+
+### 15.3. Primera advertencia: partición EFI no encontrada
+
+El instalador muestra el mensaje:
+
+**Go back to the menu and resume partitioning?**
+
+**No EFI System Partition was found.**
+
+Este mensaje advierte que no se encontró una partición EFI y que el sistema podría no arrancar correctamente.
+
+Como nuestra instalación utiliza **BIOS tradicional + MBR**, no necesitamos una partición EFI.
+
+Para comprobar el modo de arranque:
+
+1. Mantener abierta la advertencia.
+2. Presionar **Ctrl + Alt + T** para abrir una terminal.
+3. Ejecutar:
+
+```bash
+ls /sys/firmware/efi
+```
+
+Resultado obtenido:
+
+```text
+ls: cannot access '/sys/firmware/efi': No such file or directory
+```
+
+Esto confirma que Ubuntu arrancó en modo BIOS tradicional y no en UEFI.
+
+4. Cerrar la terminal.
+5. En la advertencia, seleccionar **Continuar**.
+
+### 15.4. Segunda ventana: confirmar los cambios del disco
+
+El instalador muestra:
+
+**¿Desea escribir los cambios en los discos?**
+
+Indica que se modificará la tabla de particiones del disco `sda` y se formatearán las siguientes particiones:
+
+| Partición | Acción |
+|---|---|
+| `/dev/sda5` | Formatear como ext4 |
+| `/dev/sda6` | Formatear como intercambio (swap) |
+| `/dev/sda1` | Conservar Windows, sin formatear |
+| `/dev/sda2` | Conservar Windows, sin formatear |
+| `/dev/sda3` | Conservar recuperación de Windows, sin formatear |
+
+Las particiones de Windows no aparecen en la lista de particiones que se formatearán.
+
+Seleccionar **Continuar** para escribir los cambios en el disco e iniciar la instalación de Ubuntu.
 
 ---
 

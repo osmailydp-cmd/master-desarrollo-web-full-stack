@@ -502,80 +502,120 @@ No seleccionar **Borrar disco e instalar Ubuntu**.
 
 ## 13. Identificar las particiones existentes
 
-El disco virtual debería aparecer como `/dev/sda`.
+En la pantalla **Tipo de instalación**, el instalador de Ubuntu muestra el disco `/dev/sda` y las particiones creadas anteriormente por Windows 10.
 
-| Elemento | Acción |
-|---|---|
-| Partición reservada de Windows | Conservar |
-| Windows — NTFS | Conservar |
-| Espacio libre | Utilizar para Ubuntu |
+### 13.1. Particiones identificadas
 
-No eliminar ni formatear ninguna partición de Windows.
+| Dispositivo | Tipo | Tamaño | En uso | Acción |
+|---|---|---:|---:|---|
+| `/dev/sda1` | ntfs | 52 MB | 27 MB | Conservar |
+| `/dev/sda2` | ntfs | 53045 MB | 16613 MB | Conservar |
+| `/dev/sda3` | ntfs | 586 MB | 496 MB | Conservar |
+| espacio libre | Sin asignar | 53688 MB | — | Utilizar para Ubuntu |
+
+No eliminar ni formatear las tres particiones NTFS de Windows.
 
 ---
 
 ## 14. Particionado de Ubuntu
 
-Utilizar el espacio libre restante del disco.
+Utilizar los **53688 MB de espacio libre** para crear las particiones de Ubuntu.
 
-### 14.1. Partición raíz `/`
+### 14.1. Crear la partición raíz `/`
 
-Seleccionar **espacio libre → +**.
+1. Seleccionar **espacio libre — 53688 MB**.
+2. Hacer clic en **+**.
+3. Introducir la siguiente configuración:
 
 | Campo | Valor |
 |---|---|
 | Tamaño | 45000 MB |
-| Tipo | Lógica |
-| Ubicación | Al principio de este espacio |
+| Tipo de la nueva partición | Lógica |
+| Ubicación de la nueva partición | Al principio de este espacio |
 | Utilizar como | sistema de ficheros ext4 transaccional |
 | Punto de montaje | `/` |
 
-Confirmar con **OK**.
+4. Confirmar con **OK**.
 
-### 14.2. Partición swap
+### 14.2. Crear la partición swap
 
-Seleccionar el espacio libre restante → **+**.
+1. Seleccionar el **espacio libre** restante.
+2. Hacer clic en **+**.
+3. Introducir la siguiente configuración:
 
 | Campo | Valor |
 |---|---|
-| Tamaño | Todo el espacio restante |
-| Tipo | Lógica |
+| Tamaño | Todo el espacio restante, aproximadamente 8688 MB |
+| Tipo de la nueva partición | Lógica |
 | Utilizar como | área de intercambio |
 | Punto de montaje | No corresponde |
 
-Confirmar con **OK**.
+4. Confirmar con **OK**.
 
-### 14.3. Comprobación final
+### 14.3. Distribución de particiones esperada
 
-| Partición | Formatear |
-|---|---|
-| Reservada de Windows | No |
-| Windows — NTFS | No |
-| Ubuntu `/` — ext4 | Sí |
-| Ubuntu swap | Crear como intercambio |
+| Dispositivo | Función | Sistema de archivos | Acción |
+|---|---|---|---|
+| `/dev/sda1` | Reservada para el sistema de Windows | ntfs | Conservar |
+| `/dev/sda2` | Windows 10 | ntfs | Conservar |
+| `/dev/sda3` | Recuperación de Windows | ntfs | Conservar |
+| `/dev/sda4` | Partición extendida | extended | Contenedor de las particiones lógicas |
+| `/dev/sda5` | Ubuntu `/` | ext4 | Crear y formatear |
+| `/dev/sda6` | Ubuntu swap | linux-swap | Crear como intercambio |
 
-No eliminar las particiones de Windows.
+Los números de las nuevas particiones pueden variar según el instalador.
+
+### 14.4. ¿Cuándo se necesita una partición `biosgrub`?
+
+En la instalación individual anterior de Ubuntu creamos una partición **Área reservada de la BIOS de arranque**, identificada como `biosgrub`.
+
+Su necesidad depende del firmware y del tipo de tabla de particiones.
+
+| Configuración | Tabla de particiones | ¿Necesita `biosgrub`? |
+|---|---|---|
+| Ubuntu individual anterior — BIOS tradicional | GPT | Sí |
+| Multiboot actual — BIOS tradicional | MBR | No |
+| Instalación con UEFI | GPT | No; utiliza una partición EFI (ESP) |
+
+**Resumen:**
+
+- **BIOS + GPT:** crear una partición `biosgrub` para GRUB.
+- **BIOS + MBR:** no necesita una partición `biosgrub`.
+- **UEFI + GPT:** utilizar una partición EFI, normalmente montada en `/boot/efi`.
+
+En nuestra instalación multiboot utilizamos **BIOS tradicional + MBR**, por lo que únicamente creamos las particiones raíz `/` y swap para Ubuntu.
 
 ---
 
 ## 15. Configurar el cargador de arranque
 
-En la pantalla de particionado, localizar:
+En la misma pantalla **Tipo de instalación**, localizar:
 
-**Dispositivo donde instalar el cargador de arranque**
+**Dispositivo donde instalar el cargador de arranque:**
 
 Seleccionar:
 
-`/dev/sda`
+`/dev/sda ATA VBOX HARDDISK (107.4 GB)`
+
+### 15.1. Configuración
 
 | Campo | Configuración |
 |---|---|
-| Cargador | GNU GRUB |
-| Disco de instalación | `/dev/sda` |
+| Cargador de arranque | GNU GRUB |
+| Dispositivo donde instalar el cargador de arranque | `/dev/sda` |
+| Firmware | BIOS tradicional |
+| Tabla de particiones | MBR |
 | Partición EFI | No se utiliza |
-| Partición biosgrub | No se necesita en MBR |
+| Partición `biosgrub` | No se necesita |
 
-Seleccionar **Instalar ahora** y revisar los cambios antes de confirmarlos.
+### 15.2. Iniciar la instalación
+
+1. Confirmar que las particiones de Windows no están marcadas para formatearse.
+2. Verificar que Ubuntu tiene asignada la partición raíz `/` y el área de intercambio swap.
+3. Mantener `/dev/sda` como dispositivo del cargador de arranque.
+4. Seleccionar **Instalar ahora**.
+5. Revisar los cambios que muestra el instalador.
+6. Confirmar para comenzar la instalación de Ubuntu.
 
 ---
 

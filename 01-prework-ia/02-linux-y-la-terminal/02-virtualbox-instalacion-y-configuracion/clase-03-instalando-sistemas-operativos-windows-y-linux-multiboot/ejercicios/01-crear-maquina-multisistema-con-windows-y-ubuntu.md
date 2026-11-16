@@ -552,18 +552,22 @@ Utilizar los **53688 MB de espacio libre** para crear las particiones de Ubuntu.
 
 4. Confirmar con **OK**.
 
-### 14.3. Distribución de particiones esperada
+### 14.3. Distribución de particiones creada
 
-| Dispositivo | Función | Sistema de archivos | Acción |
-|---|---|---|---|
-| `/dev/sda1` | Reservada para el sistema de Windows | ntfs | Conservar |
-| `/dev/sda2` | Windows 10 | ntfs | Conservar |
-| `/dev/sda3` | Recuperación de Windows | ntfs | Conservar |
-| `/dev/sda4` | Partición extendida | extended | Contenedor de las particiones lógicas |
-| `/dev/sda5` | Ubuntu `/` | ext4 | Crear y formatear |
-| `/dev/sda6` | Ubuntu swap | linux-swap | Crear como intercambio |
+Después de crear las particiones de Ubuntu, el instalador muestra la siguiente distribución:
 
-Los números de las nuevas particiones pueden variar según el instalador.
+| Dispositivo | Función | Sistema de archivos | Tamaño | Acción |
+|---|---|---|---:|---|
+| `/dev/sda1` | Reservada para el sistema de Windows | ntfs | 52 MB | Conservar |
+| `/dev/sda2` | Windows 10 | ntfs | 53045 MB | Conservar |
+| `/dev/sda3` | Recuperación de Windows | ntfs | 586 MB | Conservar |
+| `/dev/sda4` | Partición extendida | extended | — | Contenedor de particiones lógicas |
+| `/dev/sda5` | Ubuntu `/` | ext4 | 44998 MB | Crear y formatear |
+| `/dev/sda6` | Ubuntu swap | swap | 8686 MB | Crear como intercambio |
+
+La partición extendida `/dev/sda4` contiene las dos particiones lógicas de Ubuntu y no aparece como una fila independiente en la pantalla del instalador.
+
+Las particiones de Windows permanecen sin modificaciones. Ubuntu utilizará exclusivamente el espacio libre reservado para su instalación.
 
 ### 14.4. Comparación entre Ubuntu individual y Multiboot
 

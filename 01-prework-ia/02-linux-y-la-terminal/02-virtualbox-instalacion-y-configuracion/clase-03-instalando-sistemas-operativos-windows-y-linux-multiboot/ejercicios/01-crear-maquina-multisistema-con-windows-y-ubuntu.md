@@ -591,6 +591,7 @@ Si creamos Ubuntu `/` como **Primaria**, ocuparíamos esa cuarta entrada y ya no
 En cambio, seleccionando **Lógica**, el instalador puede crear una partición extendida que contenga las dos particiones de Ubuntu (`/` y swap).
 
 **Nota sobre `biosgrub`:** En la instalación individual utilizamos BIOS + GPT, por lo que fue necesario crear una partición `biosgrub`. En el multiboot actual utilizamos BIOS + MBR, por lo que esa partición no es necesaria.
+
 ---
 
 ## 15. Configurar el cargador de arranque

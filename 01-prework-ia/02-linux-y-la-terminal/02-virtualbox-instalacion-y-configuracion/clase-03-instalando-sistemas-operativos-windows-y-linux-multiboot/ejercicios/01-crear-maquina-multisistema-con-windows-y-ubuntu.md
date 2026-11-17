@@ -1,494 +1,396 @@
-# Guía práctica — Instalación Multiboot de Windows 10 Pro y Ubuntu 22.04.3 en VirtualBox
+# Clase 03 — Instalando sistemas operativos Windows y Linux (Multiboot)
 
-**Curso:** Máster en Desarrollo Web Full Stack  
-**Módulo:** Linux y la Terminal  
-**Clase:** 03 — Instalación de sistemas operativos Windows y Linux Multiboot  
-**Tipo:** Guía de práctica personal  
-**Objetivo:** Instalar Windows 10 Pro y Ubuntu 22.04.3 en un mismo disco virtual utilizando BIOS/MBR, configurar GRUB y crear cuatro instantáneas de recuperación.
+## Objetivo
+
+Crear una máquina virtual en Oracle VirtualBox con dos sistemas operativos instalados en un mismo disco virtual:
+
+- **Windows 10 Pro**
+- **Ubuntu 22.04.3 LTS**
+
+Configurar un arranque múltiple (**multiboot**) mediante GNU GRUB, conservar ambos sistemas operativos y mejorar su integración con VirtualBox mediante Guest Additions.
 
 ---
 
-# PARTE I — CONFIGURACIÓN DE LA MÁQUINA VIRTUAL
+# PARTE I — CREACIÓN DE LA MÁQUINA VIRTUAL
 
-## 1. Crear la máquina virtual
+## 1. Preparar los archivos necesarios
 
-Abrir **Oracle VirtualBox Administrador → Nueva**.
+Utilizar:
 
-### 1.1. Virtual Machine Name and Operating System
+| Elemento | Configuración |
+|---|---|
+| Programa | Oracle VirtualBox 7.2.22 |
+| Sistema anfitrión | Windows 11 |
+| ISO de Windows | `Windows.iso` |
+| ISO de Ubuntu | `ubuntu-22.04.3-desktop-amd64.iso` |
+| Nombre de la máquina virtual | `PC-Multiboot-Osmaily` |
+| Sistemas invitados | Windows 10 Pro y Ubuntu 22.04.3 LTS |
+
+Los archivos ISO se utilizan para instalar los sistemas operativos en el disco virtual.
+
+## 2. Crear la máquina virtual
+
+1. Abrir **Oracle VirtualBox**.
+2. Seleccionar **Nueva**.
+3. Completar los datos de la máquina virtual.
+
+### 2.1. Virtual Machine Name and Operating System
 
 | Campo | Configuración |
 |---|---|
-| VM Name | `PC-Multiboot-Osmaily` |
-| VM Folder | `E:\VirtualBox` |
+| Name | `PC-Multiboot-Osmaily` |
 | ISO Image | `E:\Descargas\ISOS\Windows.iso` |
-| OS | Microsoft Windows |
-| OS Distribution | Windows |
-| OS Version | Windows 10 (64-bit) |
+| Type | Microsoft Windows |
+| Version | Windows 10 (64-bit) |
 | Proceed with Unattended Installation | Desmarcado |
 
-### 1.2. Specify Virtual Hardware
+**Proceed with Unattended Installation:** al desmarcar esta opción, la instalación se realiza manualmente y permite configurar las opciones de Windows durante el proceso.
+
+### 2.2. Specify Virtual Hardware
 
 | Campo | Configuración |
 |---|---|
 | Base Memory | 4096 MB |
-| Number of CPUs | 2 |
-| Use EFI | Desmarcado |
-| Hard Disk Size | 100,00 GB |
+| Processors | 2 |
+| Hard Disk Size | 100 GB |
 
-Seleccionar **Siguiente → Terminar**.
-
-### 1.3. Verificar el disco virtual
-
-Abrir **Configuración → Almacenamiento**.
-
-| Campo | Resultado comprobado |
-|---|---|
-| Nombre | `PC-Multiboot-Osmaily.vdi` |
-| Tipo (Formato) | Normal (VDI) |
-| Virtual size | 100,00 GB |
-| Actual size inicial | 2,00 MB |
-| Detalles de almacenamiento | Almacenamiento reservado dinámicamente |
-| Puerto | SATA 0 |
-| Imagen ISO | `Windows.iso` |
-
-### 1.4. Configuración de pantalla
-
-Abrir **Configuración → Pantalla**.
-
-| Campo | Configuración |
-|---|---|
-| Video Memory | 128 MB |
-| Number of Virtual Monitors | 1 |
-| Scale Factor | 100 % |
-
----
-
-## 2. Distribución del disco virtual
-
-| Sistema | Espacio previsto |
-|---|---:|
-| Windows 10 Pro y particiones auxiliares | 50 GB |
-| Ubuntu 22.04.3 y swap | 50 GB |
-| **Total** | **100 GB** |
+Crear un disco virtual nuevo con las siguientes características:
 
 | Característica | Configuración |
 |---|---|
-| Disco | Un único VDI |
-| Firmware | BIOS tradicional |
-| Use EFI | Desmarcado |
-| Tabla de particiones | MBR |
-| Gestor de arranque final | GNU GRUB |
+| Formato | VDI (VirtualBox Disk Image) |
+| Tipo de almacenamiento | Reservado dinámicamente |
+| Tamaño máximo | 100 GB |
+| Archivo | `PC-Multiboot-Osmaily.vdi` |
+
+Seleccionar **Siguiente**, revisar el **Resumen** y hacer clic en **Terminar**.
+
+## 3. Revisar la configuración de la máquina virtual
+
+Con la máquina apagada, seleccionar:
+
+**PC-Multiboot-Osmaily → Configuración**
+
+### 3.1. Sistema
+
+En **Sistema → Placa base**:
+
+- **Use EFI:** desmarcado.
+
+Esta configuración permite utilizar el modo de arranque BIOS tradicional.
+
+### 3.2. Pantalla
+
+En **Pantalla**:
+
+| Campo | Valor |
+|---|---|
+| Memoria de vídeo | 128 MB |
+| Número de monitores | 1 |
+| Factor de escala | 100 % |
+
+### 3.3. Almacenamiento
+
+En **Configuración → Almacenamiento**, comprobar:
+
+- Disco virtual `PC-Multiboot-Osmaily.vdi`.
+- Unidad óptica con la ISO de Windows.
+
+El disco VDI es de tipo dinámico: comienza ocupando poco espacio físico y aumenta su tamaño conforme se escriben datos.
+
+## 4. Distribución prevista del disco virtual
+
+La máquina tiene un único disco virtual de **100 GB**, que se compartirá entre los dos sistemas operativos.
+
+| Sistema | Espacio aproximado |
+|---|---:|
+| Windows 10 Pro | 50 GB |
+| Ubuntu 22.04.3 LTS | 50 GB |
+| Total | 100 GB |
+
+Primero instalaremos Windows y reservaremos el espacio restante para Ubuntu.
 
 ---
 
 # PARTE II — INSTALACIÓN DE WINDOWS 10 PRO
 
-## 3. Iniciar el instalador de Windows
+## 5. Instalar Windows 10 Pro
 
-Seleccionar `PC-Multiboot-Osmaily` → **Iniciar**.
+Iniciar la máquina virtual desde la ISO de Windows.
 
-### 3.1. Programa de configuración de Windows
+### 5.1. Configuración inicial
 
 | Campo | Selección |
 |---|---|
-| Idioma que va a instalar | Español (España, internacional) |
+| Idioma que va a instalar | Español |
 | Formato de hora y moneda | Español (España, internacional) |
 | Teclado o método de entrada | Español |
 
 Seleccionar **Siguiente → Instalar ahora**.
 
-### 3.2. Opciones de instalación
+Cuando se solicite la clave de producto, seleccionar:
 
-| Pantalla | Selección |
-|---|---|
-| Activar Windows | No tengo clave de producto |
-| Edición | Windows 10 Pro — x64 |
-| Términos de licencia | Aceptar |
-| Tipo de instalación | Personalizada: instalar solo Windows (avanzado) |
+**No tengo clave de producto**
 
----
+Elegir:
 
-## 4. Particionado de Windows
+**Windows 10 Pro**
 
-### 4.1. Crear la partición
+Aceptar los términos de licencia y continuar.
 
-En **¿Dónde quieres instalar Windows?**:
+### 5.2. Tipo de instalación
 
-1. Seleccionar **Espacio sin asignar en la unidad 0**.
-2. Seleccionar **Nuevo**.
-3. Introducir `51200 MB`.
+Seleccionar:
+
+**Personalizada: instalar solo Windows (avanzado)**
+
+### 5.3. Crear la partición de Windows
+
+En la pantalla de selección de disco:
+
+1. Seleccionar el **espacio sin asignar** del disco virtual.
+2. Hacer clic en **Nuevo**.
+3. Introducir **51200 MB**.
 4. Seleccionar **Aplicar**.
-5. Aceptar la creación de particiones adicionales.
+5. Aceptar la creación automática de particiones adicionales.
 
-### 4.2. Particiones creadas
+Windows crea una partición reservada para el sistema y otra para la instalación.
 
-| Partición | Tamaño | Tipo | Acción |
-|---|---:|---|---|
-| Unidad 0 Partición 1: Reservado para el sistema | 50 MB | Sistema | Conservar |
-| Unidad 0 Partición 2 | 50,0 GB | Principal | Instalar Windows |
-| Espacio sin asignar en la unidad 0 | 50,0 GB | Sin asignar | Reservar para Ubuntu |
+| Elemento inicial | Tamaño aproximado |
+|---|---:|
+| Partición reservada para el sistema | 50 MB |
+| Partición principal de Windows | 50 GB |
+| Espacio sin asignar | 50 GB |
 
-### 4.3. Instalar Windows
+Seleccionar **Unidad 0 Partición 2: Principal** y continuar con **Siguiente**.
 
-1. Seleccionar **Unidad 0 Partición 2 — 50,0 GB — Principal**.
-2. Pulsar **Siguiente**.
-3. Completar la instalación.
-4. Permitir los reinicios automáticos.
+**Importante:** conservar sin asignar el espacio restante para instalar Ubuntu posteriormente.
 
-No crear ni formatear particiones en el espacio reservado para Ubuntu.
+### 5.4. Completar la instalación
 
----
+Windows copia los archivos, instala las características necesarias y reinicia la máquina virtual.
 
-## 5. Configuración inicial de Windows
+Continuar con la configuración inicial del sistema operativo.
 
-Completar las siguientes pantallas del asistente de Windows 10.
+## 6. Configuración inicial de Windows 10 Pro
 
-### 5.1. Región y distribuciones del teclado
+Realizar las siguientes selecciones:
 
-| Orden | Pantalla | Selección |
-|---|---|---|
-| 1 | Empecemos por la región. ¿Es correcta? | Uruguay → Sí |
-| 2 | ¿Esta es la distribución de teclado correcta? | Español — Spanish → Sí |
-| 3 | ¿Quieres agregar una segunda distribución del teclado? | Agregar distribución |
-| 4 | Seleccionar segunda distribución | Inglés — English |
-| 5 | Confirmar la distribución | Seleccionar la opción de teclado en inglés y continuar |
-
-### 5.2. Configuración de la cuenta
-
-| Orden | Pantalla | Selección |
-|---|---|---|
-| 1 | ¿Cómo quiere realizar la configuración? | Configurar para uso personal |
-| 2 | Inicio de sesión con Microsoft | Cuenta sin conexión |
-| 3 | Inicie sesión para disfrutar de la gama completa de servicios y aplicaciones de Microsoft | Experiencia limitada |
-| 4 | ¿Quién va a usar este equipo? | `Osmaily` |
-| 5 | Crear una contraseña | Introducir contraseña personal |
-| 6 | Confirmar contraseña | Repetir contraseña |
-| 7 | Primera pregunta de seguridad | Seleccionar pregunta, introducir respuesta y pulsar Siguiente |
-| 8 | Segunda pregunta de seguridad | Seleccionar pregunta, introducir respuesta y pulsar Siguiente |
-| 9 | Tercera pregunta de seguridad | Seleccionar pregunta, introducir respuesta y pulsar Siguiente |
-
-No registrar la contraseña ni las respuestas de seguridad en GitHub.
-
-### 5.3. Configuración de Microsoft Edge
-
-| Pantalla | Selección |
+| Pantalla | Configuración |
 |---|---|
-| Tenga siempre acceso a los datos de exploración recientes | Ahora no |
+| Región | Uruguay |
+| Primera distribución de teclado | Español – Spanish |
+| Segunda distribución de teclado | Inglés – English |
+| ¿Cómo quiere realizar la configuración? | Configurar para uso personal |
+| Inicio de sesión con Microsoft | Cuenta sin conexión |
+| Servicios y aplicaciones de Microsoft | Experiencia limitada |
+| ¿Quién va a usar este equipo? | Osmaily |
+| Contraseña | Configurar contraseña personal |
+| Preguntas de seguridad | Configurar tres preguntas |
 
-### 5.4. Configuración de privacidad
+### 6.1. Configuración adicional
 
-Pantalla: **Elegir la configuración de la privacidad para tu dispositivo**.
+En **Tenga siempre acceso a los datos de exploración recientes**, seleccionar:
 
-| Opción | Configuración seleccionada |
+**Ahora no**
+
+En **Elegir la configuración de la privacidad para tu dispositivo**, configurar:
+
+| Opción | Configuración |
 |---|---|
 | Ubicación | No |
 | Encontrar mi dispositivo | No |
-| Datos de diagnóstico | Interruptor desactivado; pantalla muestra «Enviar Datos de diagnóstico requeridos» |
+| Datos de diagnóstico | Interruptor desactivado; enviar datos requeridos |
 | Entrada manuscrita y escritura | No |
 | Experiencias personalizadas | No |
 | Id. de publicidad | No |
 
-Después de revisar las seis opciones, seleccionar **Aceptar**.
+Seleccionar **Aceptar**.
 
-### 5.5. Personalización de la experiencia
+En **Personalicemos su experiencia**, seleccionar **Omitir**, sin marcar categorías adicionales.
 
-Pantalla: **Personalicemos su experiencia**.
+Finalizar hasta acceder al escritorio de Windows 10 Pro.
 
-| Opción | Selección |
-|---|---|
-| Entretenimiento | Desmarcado |
-| Juegos | Desmarcado |
-| Escuela | Desmarcado |
-| Creatividad | Desmarcado |
-| Empresa | Desmarcado |
-| Familia | Desmarcado |
+## 7. Verificar la instalación y el particionado de Windows
 
-Seleccionar **Omitir**.
+### 7.1. Revisar el disco desde Administración de discos
 
-### 5.6. Finalización de la configuración
+Desde el escritorio de Windows 10:
 
-1. Continuar con las pantallas de preparación de Windows.
-2. Esperar a que aparezca el escritorio.
-3. Comprobar que se inició sesión con el usuario `Osmaily`.
+1. Localizar el botón **Inicio** en la esquina inferior izquierda.
+2. Hacer clic derecho sobre **Inicio**.
+3. Seleccionar **Administración de discos**.
+4. Revisar la representación gráfica inferior de **Disco 0**.
 
----
+La distribución identificada fue:
 
-## 6. Verificar Windows
-
-### 6.1. Comprobar las particiones
-
-1. Desde el **escritorio de Windows 10**, localizar el botón **Inicio** (logotipo de Windows) en la esquina inferior izquierda de la barra de tareas.
-2. Hacer **clic derecho sobre el botón Inicio**.
-3. En el menú que aparece, seleccionar **Administración de discos**.
-4. En la ventana **Administración de discos**, localizar **Disco 0** en la parte inferior.
-5. Comprobar las particiones.
-
-**Resultados verificados:**
-
-| Partición | Tamaño | Estado |
+| Elemento | Tamaño | Función |
 |---|---:|---|
-| Reservado para el sistema | 50 MB | Correcto |
-| Windows (C:) — NTFS | 49,40 GB | Correcto |
-| Disco 0 Partición 3 — Recuperación | 559 MB | Correcto |
-| Espacio no asignado | 50,00 GB | Reservado para Ubuntu |
-| **Disco 0** | **100,00 GB** | En pantalla |
+| Reservado para el sistema | 50 MB | Arranque de Windows |
+| Windows (C:) — NTFS | 49,40 GB | Sistema operativo |
+| Partición de recuperación | 559 MB | Recuperación de Windows |
+| Espacio sin asignar | 50,00 GB | Reservado para Ubuntu |
 
-**Estado: Completado.**
+La unidad `ESD-ISO (D:)` corresponde a la ISO montada en la unidad óptica virtual, no a una partición adicional del disco.
 
-### 6.2. Comprobar el firmware
+### 7.2. Comprobar el modo BIOS
 
-1. Desde el **escritorio de Windows 10**, presionar **Windows + R**.
-2. En la ventana **Ejecutar**, escribir `msinfo32`.
+Desde Windows 10:
+
+1. Presionar **Windows + R**.
+2. Escribir:
+
+```text
+msinfo32
+```
+
 3. Presionar **Enter**.
-4. Se abrirá **Información del sistema**.
-5. En el panel izquierdo, seleccionar **Resumen del sistema**.
-6. En el panel derecho, localizar **Modo de BIOS**.
-7. Comprobar el valor.
+4. En **Información del sistema → Resumen del sistema**, localizar:
 
-**Resultado verificado:**
+**Modo de BIOS: Heredado**
 
-| Campo | Valor |
-|---|---|
-| Modo de BIOS | **Heredado** |
+Esto confirma que Windows utiliza BIOS tradicional.
 
-**Estado: Completado.**
+### 7.3. Comprobar la tabla de particiones MBR
 
-### 6.3. Comprobar MBR
+1. Abrir **Administración de discos**.
+2. En la parte inferior, localizar el recuadro gris situado a la izquierda de las particiones que dice **Disco 0**.
+3. Hacer clic derecho sobre ese recuadro gris.
+4. Seleccionar **Propiedades**.
+5. Abrir la pestaña **Volúmenes**.
 
-1. Desde el **escritorio de Windows 10**, hacer clic derecho sobre el botón **Inicio**, situado en la esquina inferior izquierda de la barra de tareas.
-2. Seleccionar **Administración de discos**.
-3. En la parte inferior izquierda, localizar el recuadro gris **Disco 0**, donde aparece **Básico — 100,00 GB — En pantalla**.
-4. Hacer **clic derecho directamente sobre el recuadro gris Disco 0**, no sobre las particiones.
-5. Seleccionar **Propiedades**.
-6. Abrir la pestaña **Volúmenes**.
-7. Localizar **Estilo de partición**.
+Resultado identificado:
 
-**Resultados verificados:**
+**Estilo de partición: Registro de arranque maestro (MBR)**
 
-| Campo | Valor |
+| Característica | Resultado |
 |---|---|
 | Disco | Disco 0 |
 | Tipo | Básico |
-| Estado | En pantalla |
-| Estilo de partición | **Registro de arranque maestro (MBR)** |
 | Capacidad | 102399 MB |
 | Espacio sin asignar | 51202 MB |
-| Espacio reservado | 0 MB |
+| Firmware | BIOS heredado |
+| Tabla de particiones | MBR |
 
-**Estado: Completado.**
+Esta combinación **BIOS + MBR** determinará cómo instalaremos Ubuntu y GRUB.
 
-### 6.4. Lista de comprobación
+## 8. Crear la primera instantánea de Windows
 
-- [x] Windows 10 Pro inicia correctamente.
-- [x] El usuario funciona.
-- [x] El disco utiliza MBR.
-- [x] El modo de BIOS es Heredado / Legacy.
-- [x] Queda espacio sin asignar para Ubuntu.
+Apagar Windows 10 correctamente.
 
-**Resultado: verificación de Windows 10 Pro completada.**
+En VirtualBox, abrir la sección **Instantáneas** y seleccionar **Tomar**.
 
----
+| Campo | Valor |
+|---|---|
+| Nombre | `Multiboot - Windows 10 Pro - Instalación limpia` |
+| Fecha registrada | 15/11/2026 — 07:07 |
 
-## 7. Instantánea 1 — Windows 10 Pro: instalación limpia
+Esta instantánea conserva el estado de Windows instalado, antes de configurar Guest Additions.
 
-1. Apagar Windows normalmente.
-2. Abrir **Oracle VirtualBox Administrador**.
-3. Seleccionar `PC-Multiboot-Osmaily`.
-4. Abrir **Instantáneas**.
-5. Seleccionar **Estado actual**.
-6. Seleccionar **Tomar**.
+## 9. Instalar Guest Additions en Windows 10
 
-**Nombre:**
+### 9.1. Insertar Guest Additions
 
-`Multiboot - Windows 10 Pro - Instalación limpia`
+Iniciar Windows 10 y, en el menú de la máquina virtual, seleccionar:
 
-**Descripción:**
+**Dispositivos → Insertar imagen de CD de los complementos del invitado...**
 
-Windows 10 Pro instalado con BIOS tradicional y particiones MBR. Espacio sin asignar reservado para Ubuntu. Instalación limpia antes de Guest Additions.
+Dentro de Windows:
 
----
+1. Abrir **Explorador de archivos → Este equipo**.
+2. Abrir la unidad **VirtualBox Guest Additions**.
+3. Ejecutar `VBoxWindowsAdditions.exe`.
+4. Aceptar la solicitud de permisos.
+5. Seleccionar **Next**.
+6. Mantener la ruta de instalación predeterminada.
+7. Seleccionar **Install**.
+8. Autorizar la instalación de los controladores.
+9. Elegir **Reboot now** y finalizar.
 
-## 8. Instalar Guest Additions en Windows 10
+### 9.2. Configurar las funciones de integración
 
-Iniciar Windows 10 desde `PC-Multiboot-Osmaily`.
+**Pantalla**
 
-### 8.1. Insertar el CD
+Comprobar que Windows adapta su resolución cuando cambia el tamaño de la ventana de VirtualBox.
 
-1. En la ventana de VirtualBox, abrir **Dispositivos**.
-2. Seleccionar **Insertar imagen de CD de los complementos del invitado...**.
-3. Dentro de Windows 10, abrir el **Explorador de archivos**.
-4. Seleccionar **Este equipo**.
-5. Abrir la unidad **VirtualBox Guest Additions**.
+También se puede utilizar:
 
-### 8.2. Ejecutar el instalador
+**Ver → Modo pantalla completa**
 
-1. Ejecutar `VBoxWindowsAdditions.exe`.
-2. Aceptar el control de cuentas de usuario.
-3. Seleccionar **Next**.
-4. Mantener la ubicación predeterminada.
-5. Seleccionar **Next → Install**.
-6. Aceptar la instalación de los controladores.
-7. Seleccionar **Reboot now → Finish**.
-8. Esperar a que Windows 10 reinicie.
+**Portapapeles compartido**
 
-**Resultado:** Guest Additions 7.2.22 instalado.
+Seleccionar:
 
-### 8.3. Comprobar Guest Additions
+**Dispositivos → Portapapeles compartido → Bidireccional**
 
-| Función | Procedimiento | Resultado |
-|---|---|---|
-| Adaptación de pantalla | Redimensionar la ventana de VirtualBox | Comprobado |
-| Pantalla completa | Seleccionar **Ver → Modo pantalla completa** | Comprobado |
-| Integración del ratón | Mover el puntero entre Windows 11 y Windows 10 | Comprobado |
-| Portapapeles compartido | **Dispositivos → Portapapeles compartido → Bidireccional** | Comprobado |
-| Arrastrar y soltar | **Dispositivos → Arrastrar y soltar → Bidireccional** | Comprobado |
+Se verificó que el texto puede copiarse desde Windows 11 a Windows 10 y viceversa.
 
-### 8.4. Comprobar el portapapeles bidireccional
+**Arrastrar y soltar**
 
-**Windows 11 → Windows 10**
+Seleccionar:
 
-1. Abrir el **Bloc de notas** de Windows 11.
-2. Escribir un texto de prueba.
-3. Seleccionar el texto y presionar **Ctrl + C**.
-4. Abrir el **Bloc de notas** de Windows 10.
-5. Presionar **Ctrl + V**.
-6. Comprobar que se pega el texto.
+**Dispositivos → Arrastrar y soltar → Bidireccional**
 
-**Windows 10 → Windows 11**
+Se comprobó la transferencia de archivos en ambas direcciones:
 
-1. Escribir un texto en el **Bloc de notas** de Windows 10.
-2. Seleccionarlo y presionar **Ctrl + C**.
-3. Abrir el **Bloc de notas** de Windows 11.
-4. Presionar **Ctrl + V**.
-5. Comprobar que se pega el texto.
+- `prueba-compartida.txt`: Windows 11 → Windows 10.
+- `window10pro.txt`: Windows 10 → Windows 11.
 
-**Resultado:** portapapeles comprobado en ambos sentidos.
+También se comprobó el movimiento del puntero entre el sistema anfitrión y el invitado.
 
-### 8.5. Comprobar Arrastrar y soltar
+### 9.3. Crear la segunda instantánea
 
-**Windows 11 → Windows 10**
+Apagar Windows 10.
 
-1. Abrir el **Explorador de archivos** de Windows 11.
-2. Seleccionar `prueba-compartida.txt`.
-3. Arrastrar el archivo hacia el escritorio de Windows 10.
-4. Comprobar que aparece en el escritorio.
-
-**Windows 10 → Windows 11**
-
-1. Crear un archivo de texto `window10pro.txt` en Windows 10.
-2. Arrastrarlo desde Windows 10 hacia una carpeta de Windows 11.
-3. Comprobar que aparece en la carpeta de destino.
-
-**Resultado:** transferencia de archivos comprobada en ambos sentidos.
-
-### 8.6. Lista de comprobación
-
-- [x] Guest Additions 7.2.22 instalado.
-- [x] Windows 10 reiniciado.
-- [x] Adaptación automática de pantalla comprobada.
-- [x] Modo de pantalla completa comprobado.
-- [x] Integración del ratón comprobada.
-- [x] Portapapeles Windows 11 → Windows 10 comprobado.
-- [x] Portapapeles Windows 10 → Windows 11 comprobado.
-- [x] Arrastrar y soltar Windows 11 → Windows 10 comprobado.
-- [x] Arrastrar y soltar Windows 10 → Windows 11 comprobado.
-
-**Resultado: instalación y configuración de Guest Additions completadas.**
-
----
-
-## 9. Instantánea 2 — Windows 10 Pro: Guest Additions
-
-### 9.1. Crear la instantánea
-
-1. Apagar Windows 10 normalmente.
-2. Abrir **Oracle VirtualBox Administrador**.
-3. Seleccionar `PC-Multiboot-Osmaily`.
-4. Abrir **Instantáneas**.
-5. Seleccionar **Estado actual**.
-6. Hacer clic en **Tomar**.
-7. Introducir el nombre y la descripción.
-8. Confirmar la creación.
-
-### 9.2. Datos de la instantánea
+En **VirtualBox → Instantáneas → Tomar**:
 
 | Campo | Valor |
 |---|---|
 | Nombre | `Multiboot - Windows 10 Pro - Guest Additions configuradas` |
-| Fecha | 15/11/2026 |
-| Hora | 07:58 |
-| Estado de la máquina virtual | Apagada |
-| Resultado | Instantánea creada correctamente |
-
-**Descripción:**
-
-Windows 10 Pro instalado con BIOS/MBR. Guest Additions instaladas y comprobadas. Espacio reservado para Ubuntu conservado.
-
-### 9.3. Verificar las instantáneas
-
-En **Oracle VirtualBox Administrador → Instantáneas**, comprobar:
-
-| N.º | Instantánea | Estado |
-|---|---|---|
-| 1 | `Multiboot - Windows 10 Pro - Instalación limpia` | Creada |
-| 2 | `Multiboot - Windows 10 Pro - Guest Additions configuradas` | Creada |
-
-### 9.4. Lista de comprobación
-
-- [x] Windows 10 apagado correctamente.
-- [x] Segunda instantánea creada.
-- [x] Nombre de la instantánea verificado.
-- [x] Descripción registrada.
-- [x] Primera instantánea conservada.
-- [x] Máquina virtual apagada.
-
-**Resultado: configuración de Windows 10 Pro completada y respaldada mediante dos instantáneas.**
+| Fecha registrada | 15/11/2026 — 07:58 |
+| Descripción | Windows 10 Pro instalado con BIOS/MBR. Guest Additions instaladas y comprobadas. Espacio reservado para Ubuntu conservado. |
 
 ---
 
-# PARTE III — INSTALACIÓN DE UBUNTU 22.04.3
+# PARTE III — INSTALACIÓN DE UBUNTU 22.04.3 LTS
 
-## 10. Cambiar la imagen ISO
+## 10. Cambiar la ISO de Windows por la de Ubuntu
 
 Con la máquina virtual apagada:
 
-1. Seleccionar `PC-Multiboot-Osmaily`.
+1. Seleccionar **PC-Multiboot-Osmaily**.
 2. Abrir **Configuración → Almacenamiento**.
 3. Seleccionar la unidad óptica.
-4. Sustituir `Windows.iso` por `ubuntu-22.04.3-desktop-amd64.iso`.
-5. Confirmar con **Aceptar**.
+4. Retirar la ISO de Windows.
+5. Seleccionar la ISO `ubuntu-22.04.3-desktop-amd64.iso`.
+6. Confirmar los cambios.
 
----
+Mantener **Use EFI** desmarcado en **Configuración → Sistema**.
 
-## 11. Iniciar el instalador de Ubuntu
+No modificar ni eliminar el disco virtual VDI.
 
-1. Iniciar la máquina virtual.
-2. Seleccionar **Try or Install Ubuntu**.
-3. Esperar a que cargue el entorno gráfico.
-4. Seleccionar **Instalar Ubuntu**.
+## 11. Iniciar la instalación de Ubuntu
 
-### 11.1. Configuración
+Encender la máquina virtual desde la ISO de Ubuntu.
 
-| Campo | Selección |
+En el menú de arranque de Ubuntu, seleccionar:
+
+**Try or Install Ubuntu**
+
+La opción **Ubuntu (safe graphics)** utiliza una configuración gráfica más conservadora, destinada a problemas de compatibilidad durante el arranque.
+
+### 11.1. Configuración del instalador
+
+| Campo | Configuración |
 |---|---|
 | Idioma | Español |
-| Disposición del teclado | Spanish |
+| Distribución de teclado | Spanish |
 | Variante | Spanish |
-| Tipo de instalación | Normal |
+| Tipo de instalación | Instalación normal |
 | Descargar actualizaciones durante la instalación | Desmarcado |
-| Software de terceros | Desmarcado |
+| Instalar software de terceros | Desmarcado |
 
-### 11.2. Si aparecen problemas gráficos
-
-1. Abrir **Máquina → Reiniciar**.
-2. Esperar al menú de arranque de la ISO.
-3. Seleccionar **Ubuntu (safe graphics)**.
-4. Presionar **Enter**.
-5. Continuar con **Instalar Ubuntu**.
-
-Si ya comenzó la escritura de particiones, no reiniciar forzadamente sin revisar el problema.
-
----
+Continuar hasta llegar a **Tipo de instalación**.
 
 ## 12. Tipo de instalación
 
@@ -496,13 +398,13 @@ En **Tipo de instalación**, seleccionar:
 
 **Más opciones**
 
-No seleccionar **Borrar disco e instalar Ubuntu**.
+Esta opción permite realizar el particionado manual del disco.
 
----
+**No seleccionar «Borrar disco e instalar Ubuntu»**, porque eliminaría Windows y las particiones existentes.
 
 ## 13. Identificar las particiones existentes
 
-En la pantalla **Tipo de instalación**, el instalador de Ubuntu muestra el disco `/dev/sda` y las particiones creadas anteriormente por Windows 10.
+En la pantalla **Tipo de instalación**, el instalador muestra el disco `/dev/sda` y las particiones creadas anteriormente por Windows 10.
 
 ### 13.1. Particiones identificadas
 
@@ -514,8 +416,6 @@ En la pantalla **Tipo de instalación**, el instalador de Ubuntu muestra el disc
 | espacio libre | Sin asignar | 53688 MB | — | Utilizar para Ubuntu |
 
 No eliminar ni formatear las tres particiones NTFS de Windows.
-
----
 
 ## 14. Particionado de Ubuntu
 
@@ -554,7 +454,7 @@ Utilizar los **53688 MB de espacio libre** para crear las particiones de Ubuntu.
 
 ### 14.3. Distribución de particiones creada
 
-Después de crear las particiones de Ubuntu, el instalador muestra la siguiente distribución:
+Después de crear las particiones, el instalador mostró:
 
 | Dispositivo | Función | Sistema de archivos | Tamaño | Acción |
 |---|---|---|---:|---|
@@ -567,9 +467,7 @@ Después de crear las particiones de Ubuntu, el instalador muestra la siguiente 
 
 La partición extendida `/dev/sda4` contiene las dos particiones lógicas de Ubuntu y no aparece como una fila independiente en la pantalla del instalador.
 
-Las particiones de Windows permanecen sin modificaciones. Ubuntu utilizará exclusivamente el espacio libre reservado para su instalación.
-
-### 14.4. Comparación entre Ubuntu individual y Multiboot
+### 14.4. Comparación entre Ubuntu individual y multiboot
 
 | Característica | Ubuntu individual | Multiboot actual |
 |---|---|---|
@@ -580,7 +478,7 @@ Las particiones de Windows permanecen sin modificaciones. Ubuntu utilizará excl
 | Partición swap | Primaria | Lógica |
 | Partición `biosgrub` | Sí | No |
 
-### ¿Por qué utilizamos particiones lógicas en el multiboot?
+**¿Por qué utilizamos particiones lógicas en el multiboot?**
 
 El disco MBR admite como máximo **cuatro particiones primarias**, o **tres primarias y una extendida que contenga varias particiones lógicas**.
 
@@ -590,9 +488,8 @@ Si creamos Ubuntu `/` como **Primaria**, ocuparíamos esa cuarta entrada y ya no
 
 En cambio, seleccionando **Lógica**, el instalador puede crear una partición extendida que contenga las dos particiones de Ubuntu (`/` y swap).
 
-**Nota sobre `biosgrub`:** En la instalación individual utilizamos BIOS + GPT, por lo que fue necesario crear una partición `biosgrub`. En el multiboot actual utilizamos BIOS + MBR, por lo que esa partición no es necesaria.
+**Nota sobre `biosgrub`:** En nuestra instalación individual utilizamos BIOS + GPT, por lo que fue necesario crear una partición `biosgrub`. En el multiboot actual utilizamos BIOS + MBR, por lo que no se necesita esa partición.
 
----
 ## 15. Configurar el cargador de arranque
 
 En la pantalla **Tipo de instalación**, localizar:
@@ -623,15 +520,15 @@ Seleccionar:
 
 ### 15.3. Primera advertencia: partición EFI no encontrada
 
-El instalador muestra el mensaje:
+El instalador muestra:
 
 **Go back to the menu and resume partitioning?**
 
 **No EFI System Partition was found.**
 
-Este mensaje advierte que no se encontró una partición EFI y que el sistema podría no arrancar correctamente.
+El mensaje advierte que no se encontró una partición EFI y que el sistema podría no arrancar correctamente.
 
-Como nuestra instalación utiliza **BIOS tradicional + MBR**, no necesitamos una partición EFI.
+Nuestra instalación utiliza **BIOS tradicional + MBR**, por lo que no requiere una partición EFI.
 
 Para comprobar el modo de arranque:
 
@@ -649,7 +546,7 @@ Resultado obtenido:
 ls: cannot access '/sys/firmware/efi': No such file or directory
 ```
 
-Esto confirma que Ubuntu arrancó en modo BIOS tradicional y no en UEFI.
+La ausencia de ese directorio confirma que Ubuntu arrancó en modo BIOS y no en UEFI.
 
 4. Cerrar la terminal.
 5. En la advertencia, seleccionar **Continuar**.
@@ -660,23 +557,23 @@ El instalador muestra:
 
 **¿Desea escribir los cambios en los discos?**
 
-Indica que se modificará la tabla de particiones del disco `sda` y se formatearán las siguientes particiones:
+Indica que se modificará la tabla de particiones de `sda` y que se formatearán:
 
 | Partición | Acción |
 |---|---|
 | `/dev/sda5` | Formatear como ext4 |
-| `/dev/sda6` | Formatear como intercambio (swap) |
-| `/dev/sda1` | Conservar Windows, sin formatear |
-| `/dev/sda2` | Conservar Windows, sin formatear |
-| `/dev/sda3` | Conservar recuperación de Windows, sin formatear |
+| `/dev/sda6` | Formatear como intercambio |
+| `/dev/sda1` | Conservar, sin formatear |
+| `/dev/sda2` | Conservar, sin formatear |
+| `/dev/sda3` | Conservar, sin formatear |
 
-Las particiones de Windows no aparecen en la lista de particiones que se formatearán.
+Las particiones de Windows no aparecen entre las que se formatearán.
 
-Seleccionar **Continuar** para escribir los cambios en el disco e iniciar la instalación de Ubuntu.
-
----
+Seleccionar **Continuar** para escribir los cambios e iniciar la instalación de Ubuntu.
 
 ## 16. Configuración de Ubuntu
+
+Completar los datos solicitados durante la instalación.
 
 | Campo | Configuración |
 |---|---|
@@ -692,204 +589,313 @@ Seleccionar **Continuar** para escribir los cambios en el disco e iniciar la ins
 1. Seleccionar **Continuar**.
 2. Completar la instalación.
 3. Seleccionar **Reiniciar ahora**.
-4. Retirar la ISO cuando corresponda.
+4. Retirar la ISO cuando el instalador lo solicite.
 
 ---
 
-# PARTE IV — VERIFICACIÓN DEL MULTIBOOT
+# PARTE IV — CONFIGURACIÓN GRÁFICA Y VERIFICACIÓN DEL MULTIBOOT
 
-## 17. Comprobar GRUB
+## 17. Comprobar GNU GRUB
 
-Después de instalar Ubuntu, debería aparecer un menú semejante a:
+Después de finalizar la instalación de Ubuntu y reiniciar la máquina virtual, aparece el menú **GNU GRUB versión 2.06**.
+
+En nuestra instalación se identificaron las siguientes opciones:
 
 ```text
 Ubuntu
 Advanced options for Ubuntu
-Windows 10 (on /dev/sda...)
+Memory test (memtest86+.elf)
+Memory test (memtest86+.bin, serial console)
+Windows 10 (on /dev/sda1)
 ```
 
-Los nombres pueden variar.
+GRUB permite seleccionar qué sistema operativo iniciar.
 
-### 17.1. Probar Ubuntu
+Seleccionar **Ubuntu** y presionar **Enter**.
 
-1. Seleccionar **Ubuntu**.
-2. Iniciar sesión.
-3. Verificar el escritorio.
+Antes de realizar las pruebas de funcionamiento, configuraremos el entorno gráfico de Ubuntu para evitar problemas de visualización.
 
-### 17.2. Probar Windows
+## 18. Configurar Xorg (X11) para mejorar la experiencia gráfica
 
-1. Reiniciar Ubuntu.
-2. Seleccionar la entrada de **Windows** en GRUB.
-3. Confirmar que Windows 10 Pro inicia correctamente.
+En nuestra instalación de Ubuntu 22.04.3 con VirtualBox 7.2.22, la sesión Wayland presentó problemas gráficos: las ventanas no se actualizaban correctamente y era necesario cambiar el tamaño de la ventana de VirtualBox para visualizar las acciones realizadas.
 
-### 17.3. Si Windows no aparece en GRUB
+El problema se resolvió cambiando de **Wayland a Xorg (X11)**.
 
-1. Iniciar Ubuntu.
-2. Abrir la terminal con **Ctrl + Alt + T**.
-3. Ejecutar:
+### 18.1. Seleccionar Ubuntu on Xorg antes de iniciar sesión
+
+En la pantalla de inicio de sesión de Ubuntu:
+
+1. Seleccionar el usuario **Osmaily**.
+2. Localizar el icono de **engranaje** en la parte inferior derecha.
+3. Seleccionar **Ubuntu on Xorg**.
+4. Introducir la contraseña e iniciar sesión.
+
+Esto permite utilizar Xorg desde el primer inicio de sesión, antes de realizar la configuración permanente.
+
+### 18.2. Configurar Xorg de forma permanente
+
+Abrir la terminal con **Ctrl + Alt + T** y ejecutar:
 
 ```bash
-sudo update-grub
+sudo nano /etc/gdm3/custom.conf
 ```
 
-4. Reiniciar y comprobar.
+Introducir la contraseña y presionar **Enter**.
 
-Si Windows continúa sin aparecer, revisar `os-prober` antes de modificar el disco.
+En el archivo, localizar la sección `[daemon]` y la línea:
 
----
-
-## 18. Instantánea 3 — Ubuntu: instalación limpia
-
-Después de verificar ambos sistemas:
-
-1. Apagar la máquina virtual.
-2. Abrir **Oracle VirtualBox Administrador → Instantáneas**.
-3. Seleccionar **Estado actual**.
-4. Hacer clic en **Tomar**.
-
-**Nombre:**
-
-`Multiboot - Ubuntu 22.04.3 - Instalación limpia`
-
-**Descripción:**
-
-Windows 10 Pro y Ubuntu 22.04.3 instalados en un único disco virtual MBR, utilizando BIOS tradicional. Arranque dual mediante GRUB comprobado. Ubuntu sin Guest Additions configuradas.
-
----
-
-# PARTE V — GUEST ADDITIONS EN UBUNTU
-
-## 19. Instalar Guest Additions
-
-Iniciar Ubuntu desde GRUB.
-
-### 19.1. Comprobar Internet
-
-Abrir la terminal con **Ctrl + Alt + T**.
-
-```bash
-ping -c 4 google.com
+```ini
+#WaylandEnable=false
 ```
 
-Si no existe conexión, revisar:
+Eliminar el símbolo `#` para que quede:
 
-**Dispositivos → Red → Conectar adaptador de red**
+```ini
+[daemon]
+WaylandEnable=false
+```
 
-### 19.2. Instalar dependencias
+Con este cambio, GDM desactiva Wayland y utiliza Xorg para el inicio de sesión gráfico.
+
+### 18.3. Guardar la configuración
+
+En **GNU nano**:
+
+1. Presionar **Ctrl + O** para guardar.
+2. Presionar **Enter** para confirmar.
+3. Presionar **Ctrl + X** para salir.
+
+### 18.4. Reiniciar y verificar X11
 
 Ejecutar:
 
 ```bash
-sudo apt-get update
+sudo reboot
 ```
+
+Después de iniciar sesión, abrir una terminal y ejecutar:
 
 ```bash
-sudo apt-get install gcc make perl
+echo $XDG_SESSION_TYPE
 ```
 
-```bash
-sudo apt-get install linux-headers-$(uname -r)
+Resultado esperado:
+
+```text
+x11
 ```
 
-### 19.3. Insertar Guest Additions
+En nuestra práctica, el comando devolvió `x11`, confirmando que la sesión gráfica estaba utilizando Xorg.
 
-1. Abrir **Dispositivos** en VirtualBox.
-2. Seleccionar **Insertar imagen de CD de los complementos del invitado...**.
-3. Abrir la unidad `VBox_GAs_7.2.22`.
-4. Hacer clic derecho en `autorun.sh`.
-5. Seleccionar **Ejecutar como un programa**.
-6. Introducir la contraseña.
-7. Esperar a que termine la instalación.
-8. Presionar **Enter** para cerrar.
-9. Reiniciar Ubuntu.
+Una vez aplicada esta configuración y comprobada después de reiniciar, Ubuntu debería seguir utilizando Xorg en los siguientes inicios.
 
-### 19.4. Comprobar funciones
+### 18.5. Resultado de la configuración gráfica
 
-| Función | Comprobación |
-|---|---|
-| Pantalla | Redimensionar ventana |
-| Ratón | Mover entre anfitrión e invitado |
-| Portapapeles | Activar Bidireccional y copiar texto |
-| Arrastrar y soltar | Activar Bidireccional y probar archivos |
+Con **Ubuntu on Xorg**, se comprobó que era posible:
+
+- Abrir y cerrar el explorador de archivos.
+- Abrir y cerrar Firefox.
+- Utilizar las ventanas normalmente.
+- Visualizar los cambios sin modificar constantemente el tamaño de VirtualBox.
+
+Este ajuste se realiza antes de continuar con las pruebas del multiboot y Guest Additions.
+
+## 19. Probar ambos sistemas operativos
+
+### 19.1. Probar Ubuntu
+
+1. Iniciar Ubuntu desde GNU GRUB.
+2. Iniciar sesión utilizando Xorg (X11).
+3. Abrir el explorador de archivos y Firefox.
+4. Comprobar el funcionamiento del escritorio.
+
+Ubuntu inició correctamente y respondió normalmente después del cambio a Xorg.
+
+### 19.2. Probar Windows 10
+
+1. Apagar o reiniciar Ubuntu.
+2. Iniciar nuevamente la máquina virtual.
+3. En GNU GRUB, seleccionar **Windows 10 (on /dev/sda1)**.
+4. Presionar **Enter**.
+5. Iniciar sesión en Windows 10.
+6. Comprobar que el sistema funciona.
+
+Windows 10 arrancó correctamente desde GRUB y permitió iniciar sesión sin inconvenientes.
 
 ---
 
-## 20. Instantánea 4 — Ubuntu: Guest Additions
+# PARTE V — GUEST ADDITIONS DE UBUNTU E INSTANTÁNEAS
 
-Después de verificar Guest Additions:
+## 20. Instalar Guest Additions en Ubuntu
 
-1. Apagar Ubuntu normalmente.
-2. Abrir **Oracle VirtualBox Administrador → Instantáneas**.
-3. Seleccionar **Estado actual**.
-4. Hacer clic en **Tomar**.
+Después de corregir el entorno gráfico y comprobar el arranque de ambos sistemas, continuar con la instalación de Guest Additions en Ubuntu.
 
-**Nombre:**
+### 20.1. Instalar las dependencias
+
+Iniciar Ubuntu y abrir la terminal con **Ctrl + Alt + T**.
+
+Actualizar los repositorios:
+
+```bash
+sudo apt update
+```
+
+Instalar las herramientas necesarias para compilar los módulos de VirtualBox:
+
+```bash
+sudo apt install build-essential dkms linux-headers-$(uname -r)
+```
+
+Introducir la contraseña y confirmar la instalación de los paquetes solicitados.
+
+### 20.2. Insertar Guest Additions
+
+En el menú de VirtualBox, seleccionar:
+
+**Dispositivos → Insertar imagen de CD de los complementos del invitado...**
+
+En Ubuntu:
+
+1. Abrir **Archivos**.
+2. Localizar la unidad de **VirtualBox Guest Additions**.
+3. Abrir la unidad.
+4. Ejecutar el instalador `autorun.sh`.
+5. Introducir la contraseña de administrador cuando se solicite.
+6. Completar la instalación.
+
+Reiniciar Ubuntu:
+
+```bash
+sudo reboot
+```
+
+### 20.3. Configurar la integración
+
+Después del reinicio, probar:
+
+**Resolución de pantalla**
+
+Modificar el tamaño de la ventana de VirtualBox y comprobar que Ubuntu adapta su resolución.
+
+**Portapapeles compartido**
+
+Seleccionar:
+
+**Dispositivos → Portapapeles compartido → Bidireccional**
+
+Probar la copia de texto entre Windows 11 y Ubuntu.
+
+**Arrastrar y soltar**
+
+Seleccionar:
+
+**Dispositivos → Arrastrar y soltar → Bidireccional**
+
+Probar la transferencia de archivos entre el sistema anfitrión y Ubuntu.
+
+La disponibilidad de estas funciones depende de que los componentes de Guest Additions estén instalados y funcionando correctamente.
+
+## 21. Crear las instantáneas de Ubuntu
+
+Las instantáneas permiten conservar estados importantes de la máquina virtual.
+
+### 21.1. Instantánea de Ubuntu instalado
+
+Después de comprobar el multiboot y dejar estable el entorno gráfico de Ubuntu:
+
+1. Apagar la máquina virtual.
+2. Abrir **Instantáneas** en VirtualBox.
+3. Seleccionar **Tomar**.
+4. Asignar el nombre:
+
+`Multiboot - Ubuntu 22.04.3 - Instalación limpia`
+
+Esta instantánea representa Ubuntu instalado, con GRUB configurado y el funcionamiento gráfico corregido, antes de instalar Guest Additions en Ubuntu.
+
+### 21.2. Instantánea de Guest Additions configuradas
+
+Después de instalar y comprobar Guest Additions en Ubuntu:
+
+1. Apagar la máquina virtual.
+2. Abrir **Instantáneas**.
+3. Seleccionar **Tomar**.
+4. Asignar el nombre:
 
 `Multiboot - Ubuntu 22.04.3 - Guest Additions configuradas`
 
-**Descripción:**
+### 21.3. Registro de instantáneas
 
-Windows 10 Pro y Ubuntu 22.04.3 instalados con BIOS/MBR y arranque dual mediante GRUB. Guest Additions instaladas y verificadas en ambos sistemas operativos.
-
----
-
-# PARTE VI — VERIFICACIÓN FINAL
-
-## 21. Lista de comprobación
-
-- [x] Máquina virtual creada.
-- [x] Disco VDI dinámico de 100 GB.
-- [x] Use EFI desmarcado.
-- [x] Windows 10 Pro instalado y escritorio comprobado.
-- [x] Primera distribución del teclado: Español.
-- [x] Segunda distribución del teclado: Inglés.
-- [x] Disco MBR comprobado.
-- [x] BIOS Heredado/Legacy comprobado.
-- [x] Particiones de Windows verificadas: 50 MB reservada, 49,40 GB principal, 559 MB recuperación y 50 GB sin asignar.
-- [x] Instantánea 1 — Windows limpio.
-- [x] Guest Additions de Windows instaladas.
-- [x] Instantánea 2 — Windows con Guest Additions.
-- [ ] Ubuntu 22.04.3 instalado.
-- [ ] Particiones de Windows conservadas.
-- [ ] Partición raíz `/` creada.
-- [ ] Partición swap creada.
-- [ ] GRUB instalado en `/dev/sda`.
-- [ ] Ubuntu inicia correctamente.
-- [ ] Windows inicia correctamente.
-- [ ] Instantánea 3 — Ubuntu limpio.
-- [ ] Guest Additions de Ubuntu instaladas.
-- [ ] Instantánea 4 — Ubuntu con Guest Additions.
-
----
-
-## 22. Resumen de instantáneas
-
-| N.º | Nombre | Contenido |
+| N.º | Nombre | Estado |
 |---|---|---|
-| 1 | `Multiboot - Windows 10 Pro - Instalación limpia` | Windows recién instalado |
-| 2 | `Multiboot - Windows 10 Pro - Guest Additions configuradas` | Windows con Guest Additions |
-| 3 | `Multiboot - Ubuntu 22.04.3 - Instalación limpia` | Windows y Ubuntu con GRUB |
-| 4 | `Multiboot - Ubuntu 22.04.3 - Guest Additions configuradas` | Ambos sistemas con Guest Additions |
+| 1 | `Multiboot - Windows 10 Pro - Instalación limpia` | Creada |
+| 2 | `Multiboot - Windows 10 Pro - Guest Additions configuradas` | Creada |
+| 3 | `Multiboot - Ubuntu 22.04.3 - Instalación limpia` | Pendiente de registrar |
+| 4 | `Multiboot - Ubuntu 22.04.3 - Guest Additions configuradas` | Pendiente |
 
 ---
 
-## 23. Resultado esperado
+# PARTE VI — RESUMEN DE LA PRÁCTICA
 
-| Elemento | Configuración final |
+## 22. Resultado de la instalación multiboot
+
+### 22.1. Configuración general
+
+| Elemento | Resultado |
 |---|---|
 | Máquina virtual | `PC-Multiboot-Osmaily` |
-| Disco | VDI dinámico de 100 GB |
+| Software de virtualización | Oracle VirtualBox 7.2.22 |
+| Sistema anfitrión | Windows 11 |
+| Primer sistema invitado | Windows 10 Pro |
+| Segundo sistema invitado | Ubuntu 22.04.3 LTS |
+| Memoria RAM | 4096 MB |
+| Procesadores | 2 |
+| Disco virtual | VDI dinámico, 100 GB |
 | Firmware | BIOS tradicional |
-| Use EFI | Desmarcado |
 | Tabla de particiones | MBR |
-| Sistema operativo 1 | Windows 10 Pro |
-| Sistema operativo 2 | Ubuntu 22.04.3 |
-| Gestor de arranque | GNU GRUB |
-| Guest Additions | Windows y Ubuntu |
-| Instantáneas | 4 |
+| Cargador de arranque | GNU GRUB 2.06 |
+| Entorno gráfico de Ubuntu | Xorg (X11) |
 
-**Objetivo final:** iniciar una única máquina virtual y elegir Windows 10 Pro o Ubuntu 22.04.3 mediante GRUB.
+### 22.2. Particiones
 
----
+| Partición | Sistema | Uso |
+|---|---|---|
+| `/dev/sda1` | Windows 10 | Reservada para el sistema |
+| `/dev/sda2` | Windows 10 | Partición principal |
+| `/dev/sda3` | Windows 10 | Recuperación |
+| `/dev/sda4` | Disco MBR | Partición extendida |
+| `/dev/sda5` | Ubuntu | Raíz `/`, ext4 |
+| `/dev/sda6` | Ubuntu | Área de intercambio |
 
-**Portafolio de aprendizaje — Máster en Desarrollo Web Full Stack.**
+### 22.3. Aprendizajes principales
+
+- Crear una máquina virtual con un único disco para varios sistemas operativos.
+- Instalar Windows 10 Pro y reservar espacio para Ubuntu.
+- Identificar las diferencias entre BIOS, UEFI, MBR y GPT.
+- Crear particiones primarias, extendidas y lógicas.
+- Comprender cuándo se necesita una partición `biosgrub`.
+- Instalar Ubuntu sin eliminar las particiones de Windows.
+- Configurar GNU GRUB para seleccionar el sistema operativo.
+- Solucionar problemas gráficos de Ubuntu cambiando de Wayland a Xorg.
+- Instalar y configurar Guest Additions.
+- Utilizar instantáneas para conservar diferentes estados de la máquina virtual.
+
+### 22.4. Estado de la práctica
+
+| Actividad | Estado |
+|---|---|
+| Crear la máquina virtual | Completada |
+| Instalar Windows 10 Pro | Completada |
+| Verificar BIOS y MBR | Completada |
+| Instalar Guest Additions en Windows | Completada |
+| Crear las dos instantáneas de Windows | Completada |
+| Instalar Ubuntu 22.04.3 LTS | Completada |
+| Crear particiones raíz y swap | Completada |
+| Configurar GNU GRUB | Completada |
+| Iniciar Windows 10 desde GRUB | Completada |
+| Iniciar Ubuntu desde GRUB | Completada |
+| Cambiar Ubuntu a Xorg (X11) | Completada |
+| Configurar Xorg permanentemente | Archivo modificado; persistencia por confirmar |
+| Instalar Guest Additions en Ubuntu | Pendiente |
+| Crear las instantáneas de Ubuntu | Pendiente |
+
+**Resultado actual:** Windows 10 Pro y Ubuntu 22.04.3 LTS están instalados en el mismo disco virtual y ambos pueden iniciarse mediante GNU GRUB. El entorno gráfico de Ubuntu funciona correctamente utilizando Xorg (X11).

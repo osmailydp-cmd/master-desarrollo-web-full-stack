@@ -2,12 +2,12 @@
 
 ## Objetivo
 
-Crear una máquina virtual en Oracle VirtualBox con dos sistemas operativos instalados en un mismo disco virtual:
+Crear una máquina virtual en **Oracle VirtualBox 7.2.22** e instalar dos sistemas operativos en un mismo disco virtual:
 
-- **Windows 10 Pro**
-- **Ubuntu 22.04.3 LTS**
+- Windows 10 Pro
+- Ubuntu 22.04.3 LTS
 
-Configurar un arranque múltiple (**multiboot**) mediante GNU GRUB, conservar ambos sistemas operativos y mejorar su integración con VirtualBox mediante Guest Additions.
+Configurar el arranque múltiple mediante **GNU GRUB**, aprender a administrar particiones y mejorar la integración entre los sistemas operativos mediante **Guest Additions** y carpetas compartidas.
 
 ---
 
@@ -15,28 +15,26 @@ Configurar un arranque múltiple (**multiboot**) mediante GNU GRUB, conservar am
 
 ## 1. Preparar los archivos necesarios
 
-Utilizar:
-
 | Elemento | Configuración |
 |---|---|
-| Programa | Oracle VirtualBox 7.2.22 |
+| Virtualizador | Oracle VirtualBox 7.2.22 |
 | Sistema anfitrión | Windows 11 |
 | ISO de Windows | `Windows.iso` |
 | ISO de Ubuntu | `ubuntu-22.04.3-desktop-amd64.iso` |
 | Nombre de la máquina virtual | `PC-Multiboot-Osmaily` |
 | Sistemas invitados | Windows 10 Pro y Ubuntu 22.04.3 LTS |
 
-Los archivos ISO se utilizan para instalar los sistemas operativos en el disco virtual.
+El objetivo es instalar ambos sistemas operativos en un único disco virtual, conservando la posibilidad de iniciar cualquiera de ellos.
 
 ## 2. Crear la máquina virtual
 
-1. Abrir **Oracle VirtualBox**.
-2. Seleccionar **Nueva**.
-3. Completar los datos de la máquina virtual.
+Abrir **Oracle VirtualBox** y seleccionar **Nueva**.
 
 ### 2.1. Virtual Machine Name and Operating System
 
-| Campo | Configuración |
+Completar la configuración inicial:
+
+| Campo | Valor |
 |---|---|
 | Name | `PC-Multiboot-Osmaily` |
 | ISO Image | `E:\Descargas\ISOS\Windows.iso` |
@@ -44,17 +42,17 @@ Los archivos ISO se utilizan para instalar los sistemas operativos en el disco v
 | Version | Windows 10 (64-bit) |
 | Proceed with Unattended Installation | Desmarcado |
 
-**Proceed with Unattended Installation:** al desmarcar esta opción, la instalación se realiza manualmente y permite configurar las opciones de Windows durante el proceso.
+**Proceed with Unattended Installation:** cuando está marcada, VirtualBox automatiza parte de la instalación y permite preconfigurar usuario, contraseña y otros parámetros. Al desmarcarla, realizamos la instalación manualmente y configuramos Windows durante el proceso.
 
 ### 2.2. Specify Virtual Hardware
 
-| Campo | Configuración |
+| Campo | Valor |
 |---|---|
 | Base Memory | 4096 MB |
 | Processors | 2 |
 | Hard Disk Size | 100 GB |
 
-Crear un disco virtual nuevo con las siguientes características:
+Crear un disco virtual con las siguientes características:
 
 | Característica | Configuración |
 |---|---|
@@ -62,12 +60,15 @@ Crear un disco virtual nuevo con las siguientes características:
 | Tipo de almacenamiento | Reservado dinámicamente |
 | Tamaño máximo | 100 GB |
 | Archivo | `PC-Multiboot-Osmaily.vdi` |
+| Ruta | `E:\VirtualBox\PC-Multiboot-Osmaily\PC-Multiboot-Osmaily.vdi` |
 
-Seleccionar **Siguiente**, revisar el **Resumen** y hacer clic en **Terminar**.
+Seleccionar **Siguiente**, revisar el **Resumen** y pulsar **Terminar**.
+
+En esta versión de VirtualBox, el tamaño del disco se configura dentro de **Specify Virtual Hardware**.
 
 ## 3. Revisar la configuración de la máquina virtual
 
-Con la máquina apagada, seleccionar:
+Con la máquina virtual apagada, abrir:
 
 **PC-Multiboot-Osmaily → Configuración**
 
@@ -75,13 +76,13 @@ Con la máquina apagada, seleccionar:
 
 En **Sistema → Placa base**:
 
-- **Use EFI:** desmarcado.
+| Opción | Configuración |
+|---|---|
+| Use EFI | Desmarcado |
 
-Esta configuración permite utilizar el modo de arranque BIOS tradicional.
+Esta configuración permite utilizar el firmware **BIOS tradicional**.
 
 ### 3.2. Pantalla
-
-En **Pantalla**:
 
 | Campo | Valor |
 |---|---|
@@ -91,28 +92,28 @@ En **Pantalla**:
 
 ### 3.3. Almacenamiento
 
-En **Configuración → Almacenamiento**, comprobar:
+En **Configuración → Almacenamiento**, verificar la presencia de:
 
 - Disco virtual `PC-Multiboot-Osmaily.vdi`.
-- Unidad óptica con la ISO de Windows.
+- Unidad óptica con `Windows.iso`.
 
-El disco VDI es de tipo dinámico: comienza ocupando poco espacio físico y aumenta su tamaño conforme se escriben datos.
+El disco VDI utiliza almacenamiento dinámico: su archivo físico crece conforme se almacenan datos, hasta el tamaño máximo configurado.
 
-## 4. Distribución prevista del disco virtual
+## 4. Planificar la distribución del disco
 
-La máquina tiene un único disco virtual de **100 GB**, que se compartirá entre los dos sistemas operativos.
+Se utilizará un único disco virtual de **100 GB**, compartido por ambos sistemas operativos.
 
-| Sistema | Espacio aproximado |
+| Sistema operativo | Espacio aproximado |
 |---|---:|
 | Windows 10 Pro | 50 GB |
 | Ubuntu 22.04.3 LTS | 50 GB |
 | Total | 100 GB |
 
-Primero instalaremos Windows y reservaremos el espacio restante para Ubuntu.
+Primero instalaremos Windows y dejaremos el espacio restante sin asignar para Ubuntu.
 
 ---
 
-# PARTE II — INSTALACIÓN DE WINDOWS 10 PRO
+# PARTE II — INSTALACIÓN Y CONFIGURACIÓN DE WINDOWS 10 PRO
 
 ## 5. Instalar Windows 10 Pro
 
@@ -128,11 +129,11 @@ Iniciar la máquina virtual desde la ISO de Windows.
 
 Seleccionar **Siguiente → Instalar ahora**.
 
-Cuando se solicite la clave de producto, seleccionar:
+En la pantalla de activación, seleccionar:
 
 **No tengo clave de producto**
 
-Elegir:
+En la selección de ediciones, elegir:
 
 **Windows 10 Pro**
 
@@ -148,33 +149,33 @@ Seleccionar:
 
 En la pantalla de selección de disco:
 
-1. Seleccionar el **espacio sin asignar** del disco virtual.
-2. Hacer clic en **Nuevo**.
+1. Seleccionar el espacio sin asignar.
+2. Pulsar **Nuevo**.
 3. Introducir **51200 MB**.
 4. Seleccionar **Aplicar**.
-5. Aceptar la creación automática de particiones adicionales.
+5. Aceptar la creación de particiones adicionales por Windows.
 
-Windows crea una partición reservada para el sistema y otra para la instalación.
+Distribución inicial:
 
-| Elemento inicial | Tamaño aproximado |
+| Elemento | Tamaño aproximado |
 |---|---:|
-| Partición reservada para el sistema | 50 MB |
-| Partición principal de Windows | 50 GB |
+| Unidad 0 Partición 1: Reservado para el sistema | 50 MB |
+| Unidad 0 Partición 2: Principal | 50 GB |
 | Espacio sin asignar | 50 GB |
 
-Seleccionar **Unidad 0 Partición 2: Principal** y continuar con **Siguiente**.
+Seleccionar **Unidad 0 Partición 2: Principal** y pulsar **Siguiente**.
 
-**Importante:** conservar sin asignar el espacio restante para instalar Ubuntu posteriormente.
+No asignar el espacio restante: se utilizará posteriormente para Ubuntu.
 
 ### 5.4. Completar la instalación
 
 Windows copia los archivos, instala las características necesarias y reinicia la máquina virtual.
 
-Continuar con la configuración inicial del sistema operativo.
+Continuar con la configuración inicial del sistema.
 
 ## 6. Configuración inicial de Windows 10 Pro
 
-Realizar las siguientes selecciones:
+Completar las siguientes pantallas:
 
 | Pantalla | Configuración |
 |---|---|
@@ -188,13 +189,13 @@ Realizar las siguientes selecciones:
 | Contraseña | Configurar contraseña personal |
 | Preguntas de seguridad | Configurar tres preguntas |
 
-### 6.1. Configuración adicional
+### 6.1. Opciones adicionales
 
 En **Tenga siempre acceso a los datos de exploración recientes**, seleccionar:
 
 **Ahora no**
 
-En **Elegir la configuración de la privacidad para tu dispositivo**, configurar:
+En **Elegir la configuración de la privacidad para tu dispositivo**:
 
 | Opción | Configuración |
 |---|---|
@@ -211,9 +212,9 @@ En **Personalicemos su experiencia**, seleccionar **Omitir**, sin marcar categor
 
 Finalizar hasta acceder al escritorio de Windows 10 Pro.
 
-## 7. Verificar la instalación y el particionado de Windows
+## 7. Verificar Windows y las particiones del disco
 
-### 7.1. Revisar el disco desde Administración de discos
+### 7.1. Abrir Administración de discos
 
 Desde el escritorio de Windows 10:
 
@@ -222,7 +223,7 @@ Desde el escritorio de Windows 10:
 3. Seleccionar **Administración de discos**.
 4. Revisar la representación gráfica inferior de **Disco 0**.
 
-La distribución identificada fue:
+Distribución identificada:
 
 | Elemento | Tamaño | Función |
 |---|---:|---|
@@ -231,9 +232,9 @@ La distribución identificada fue:
 | Partición de recuperación | 559 MB | Recuperación de Windows |
 | Espacio sin asignar | 50,00 GB | Reservado para Ubuntu |
 
-La unidad `ESD-ISO (D:)` corresponde a la ISO montada en la unidad óptica virtual, no a una partición adicional del disco.
+La unidad `ESD-ISO (D:)` corresponde a la ISO montada en la unidad óptica virtual; no es una partición del disco.
 
-### 7.2. Comprobar el modo BIOS
+### 7.2. Verificar el modo BIOS
 
 Desde Windows 10:
 
@@ -245,21 +246,24 @@ msinfo32
 ```
 
 3. Presionar **Enter**.
-4. En **Información del sistema → Resumen del sistema**, localizar:
+4. Abrir **Información del sistema → Resumen del sistema**.
+5. Localizar el campo **Modo de BIOS**.
+
+Resultado obtenido:
 
 **Modo de BIOS: Heredado**
 
 Esto confirma que Windows utiliza BIOS tradicional.
 
-### 7.3. Comprobar la tabla de particiones MBR
+### 7.3. Verificar la tabla de particiones MBR
 
 1. Abrir **Administración de discos**.
-2. En la parte inferior, localizar el recuadro gris situado a la izquierda de las particiones que dice **Disco 0**.
+2. Localizar el recuadro gris **Disco 0** situado a la izquierda de las particiones.
 3. Hacer clic derecho sobre ese recuadro gris.
 4. Seleccionar **Propiedades**.
 5. Abrir la pestaña **Volúmenes**.
 
-Resultado identificado:
+Resultado obtenido:
 
 **Estilo de partición: Registro de arranque maestro (MBR)**
 
@@ -272,30 +276,38 @@ Resultado identificado:
 | Firmware | BIOS heredado |
 | Tabla de particiones | MBR |
 
-Esta combinación **BIOS + MBR** determinará cómo instalaremos Ubuntu y GRUB.
+La combinación **BIOS + MBR** determina el tipo de particionado que utilizaremos para Ubuntu.
 
 ## 8. Crear la primera instantánea de Windows
 
-Apagar Windows 10 correctamente.
+Apagar correctamente Windows 10.
 
-En VirtualBox, abrir la sección **Instantáneas** y seleccionar **Tomar**.
+En VirtualBox:
 
-| Campo | Valor |
-|---|---|
-| Nombre | `Multiboot - Windows 10 Pro - Instalación limpia` |
-| Fecha registrada | 15/11/2026 — 07:07 |
+1. Seleccionar **PC-Multiboot-Osmaily**.
+2. Abrir **Instantáneas**.
+3. Pulsar **Tomar**.
+4. Introducir los datos de la instantánea.
 
-Esta instantánea conserva el estado de Windows instalado, antes de configurar Guest Additions.
+**Nombre:**
+
+`Multiboot - Windows 10 Pro - Instalación limpia`
+
+**Fecha registrada:** 15/11/2026 — 07:07.
+
+Esta instantánea conserva Windows 10 Pro instalado, antes de configurar Guest Additions.
 
 ## 9. Instalar Guest Additions en Windows 10
 
 ### 9.1. Insertar Guest Additions
 
-Iniciar Windows 10 y, en el menú de la máquina virtual, seleccionar:
+Iniciar Windows 10.
+
+En el menú de VirtualBox, seleccionar:
 
 **Dispositivos → Insertar imagen de CD de los complementos del invitado...**
 
-Dentro de Windows:
+En Windows:
 
 1. Abrir **Explorador de archivos → Este equipo**.
 2. Abrir la unidad **VirtualBox Guest Additions**.
@@ -309,11 +321,11 @@ Dentro de Windows:
 
 ### 9.2. Configurar las funciones de integración
 
-**Pantalla**
+**Resolución de pantalla**
 
-Comprobar que Windows adapta su resolución cuando cambia el tamaño de la ventana de VirtualBox.
+Modificar el tamaño de la ventana de VirtualBox y comprobar que Windows adapta su resolución.
 
-También se puede utilizar:
+También utilizar:
 
 **Ver → Modo pantalla completa**
 
@@ -323,7 +335,7 @@ Seleccionar:
 
 **Dispositivos → Portapapeles compartido → Bidireccional**
 
-Se verificó que el texto puede copiarse desde Windows 11 a Windows 10 y viceversa.
+Se comprobó la copia de texto desde Windows 11 hacia Windows 10 y viceversa.
 
 **Arrastrar y soltar**
 
@@ -333,22 +345,28 @@ Seleccionar:
 
 Se comprobó la transferencia de archivos en ambas direcciones:
 
-- `prueba-compartida.txt`: Windows 11 → Windows 10.
-- `window10pro.txt`: Windows 10 → Windows 11.
+| Archivo | Dirección |
+|---|---|
+| `prueba-compartida.txt` | Windows 11 → Windows 10 |
+| `window10pro.txt` | Windows 10 → Windows 11 |
 
-También se comprobó el movimiento del puntero entre el sistema anfitrión y el invitado.
+También se verificó el movimiento del puntero entre el sistema anfitrión y el invitado.
 
-### 9.3. Crear la segunda instantánea
+### 9.3. Crear la segunda instantánea de Windows
 
-Apagar Windows 10.
+Apagar correctamente Windows 10.
 
 En **VirtualBox → Instantáneas → Tomar**:
 
-| Campo | Valor |
-|---|---|
-| Nombre | `Multiboot - Windows 10 Pro - Guest Additions configuradas` |
-| Fecha registrada | 15/11/2026 — 07:58 |
-| Descripción | Windows 10 Pro instalado con BIOS/MBR. Guest Additions instaladas y comprobadas. Espacio reservado para Ubuntu conservado. |
+**Nombre:**
+
+`Multiboot - Windows 10 Pro - Guest Additions configuradas`
+
+**Descripción:**
+
+Windows 10 Pro instalado con BIOS/MBR. Guest Additions instaladas y comprobadas. Espacio reservado para Ubuntu conservado.
+
+**Fecha registrada:** 15/11/2026 — 07:58.
 
 ---
 
@@ -361,11 +379,11 @@ Con la máquina virtual apagada:
 1. Seleccionar **PC-Multiboot-Osmaily**.
 2. Abrir **Configuración → Almacenamiento**.
 3. Seleccionar la unidad óptica.
-4. Retirar la ISO de Windows.
-5. Seleccionar la ISO `ubuntu-22.04.3-desktop-amd64.iso`.
+4. Retirar `Windows.iso`.
+5. Seleccionar `ubuntu-22.04.3-desktop-amd64.iso`.
 6. Confirmar los cambios.
 
-Mantener **Use EFI** desmarcado en **Configuración → Sistema**.
+Mantener **Use EFI** desmarcado en la configuración de la máquina virtual.
 
 No modificar ni eliminar el disco virtual VDI.
 
@@ -373,11 +391,11 @@ No modificar ni eliminar el disco virtual VDI.
 
 Encender la máquina virtual desde la ISO de Ubuntu.
 
-En el menú de arranque de Ubuntu, seleccionar:
+En el menú inicial, seleccionar:
 
 **Try or Install Ubuntu**
 
-La opción **Ubuntu (safe graphics)** utiliza una configuración gráfica más conservadora, destinada a problemas de compatibilidad durante el arranque.
+La opción **Ubuntu (safe graphics)** inicia con parámetros gráficos más conservadores y puede ayudar ante problemas de compatibilidad durante el arranque.
 
 ### 11.1. Configuración del instalador
 
@@ -394,17 +412,17 @@ Continuar hasta llegar a **Tipo de instalación**.
 
 ## 12. Tipo de instalación
 
-En **Tipo de instalación**, seleccionar:
+En la pantalla **Tipo de instalación**, seleccionar:
 
 **Más opciones**
 
-Esta opción permite realizar el particionado manual del disco.
+Esto permite realizar el particionado manual.
 
-**No seleccionar «Borrar disco e instalar Ubuntu»**, porque eliminaría Windows y las particiones existentes.
+No seleccionar **Borrar disco e instalar Ubuntu**, porque eliminaría los sistemas y datos existentes en el disco virtual.
 
 ## 13. Identificar las particiones existentes
 
-En la pantalla **Tipo de instalación**, el instalador muestra el disco `/dev/sda` y las particiones creadas anteriormente por Windows 10.
+En la pantalla **Tipo de instalación**, el instalador reconoce el disco `/dev/sda` y las particiones creadas anteriormente por Windows 10.
 
 ### 13.1. Particiones identificadas
 
@@ -415,7 +433,7 @@ En la pantalla **Tipo de instalación**, el instalador muestra el disco `/dev/sd
 | `/dev/sda3` | ntfs | 586 MB | 496 MB | Conservar |
 | espacio libre | Sin asignar | 53688 MB | — | Utilizar para Ubuntu |
 
-No eliminar ni formatear las tres particiones NTFS de Windows.
+No eliminar ni formatear ninguna de las tres particiones NTFS de Windows.
 
 ## 14. Particionado de Ubuntu
 
@@ -425,7 +443,7 @@ Utilizar los **53688 MB de espacio libre** para crear las particiones de Ubuntu.
 
 1. Seleccionar **espacio libre — 53688 MB**.
 2. Hacer clic en **+**.
-3. Introducir la siguiente configuración:
+3. Completar los siguientes campos:
 
 | Campo | Valor |
 |---|---|
@@ -441,7 +459,7 @@ Utilizar los **53688 MB de espacio libre** para crear las particiones de Ubuntu.
 
 1. Seleccionar el **espacio libre** restante.
 2. Hacer clic en **+**.
-3. Introducir la siguiente configuración:
+3. Completar los siguientes campos:
 
 | Campo | Valor |
 |---|---|
@@ -526,9 +544,9 @@ El instalador muestra:
 
 **No EFI System Partition was found.**
 
-El mensaje advierte que no se encontró una partición EFI y que el sistema podría no arrancar correctamente.
+El mensaje advierte que no existe una partición EFI y que el sistema podría no arrancar correctamente.
 
-Nuestra instalación utiliza **BIOS tradicional + MBR**, por lo que no requiere una partición EFI.
+Como nuestra instalación utiliza **BIOS tradicional + MBR**, no necesitamos una partición EFI.
 
 Para comprobar el modo de arranque:
 
@@ -546,7 +564,7 @@ Resultado obtenido:
 ls: cannot access '/sys/firmware/efi': No such file or directory
 ```
 
-La ausencia de ese directorio confirma que Ubuntu arrancó en modo BIOS y no en UEFI.
+Esto confirma que Ubuntu arrancó en modo BIOS tradicional, no en UEFI.
 
 4. Cerrar la terminal.
 5. En la advertencia, seleccionar **Continuar**.
@@ -567,13 +585,13 @@ Indica que se modificará la tabla de particiones de `sda` y que se formatearán
 | `/dev/sda2` | Conservar, sin formatear |
 | `/dev/sda3` | Conservar, sin formatear |
 
-Las particiones de Windows no aparecen entre las que se formatearán.
+Las particiones NTFS de Windows no aparecen en la lista de particiones que se formatearán.
 
-Seleccionar **Continuar** para escribir los cambios e iniciar la instalación de Ubuntu.
+Seleccionar **Continuar** para escribir los cambios e iniciar la instalación.
 
 ## 16. Configuración de Ubuntu
 
-Completar los datos solicitados durante la instalación.
+Completar los datos solicitados:
 
 | Campo | Configuración |
 |---|---|
@@ -599,7 +617,7 @@ Completar los datos solicitados durante la instalación.
 
 Después de finalizar la instalación de Ubuntu y reiniciar la máquina virtual, aparece el menú **GNU GRUB versión 2.06**.
 
-En nuestra instalación se identificaron las siguientes opciones:
+Las opciones identificadas en nuestra instalación fueron:
 
 ```text
 Ubuntu
@@ -609,7 +627,7 @@ Memory test (memtest86+.bin, serial console)
 Windows 10 (on /dev/sda1)
 ```
 
-GRUB permite seleccionar qué sistema operativo iniciar.
+GRUB permite seleccionar el sistema operativo que deseamos iniciar.
 
 Seleccionar **Ubuntu** y presionar **Enter**.
 
@@ -617,16 +635,16 @@ Antes de realizar las pruebas de funcionamiento, configuraremos el entorno gráf
 
 ## 18. Configurar Xorg (X11) para mejorar la experiencia gráfica
 
-En nuestra instalación de Ubuntu 22.04.3 con VirtualBox 7.2.22, la sesión Wayland presentó problemas gráficos: las ventanas no se actualizaban correctamente y era necesario cambiar el tamaño de la ventana de VirtualBox para visualizar las acciones realizadas.
+En Ubuntu 22.04.3 con VirtualBox 7.2.22, la sesión Wayland presentó problemas gráficos: las ventanas no se actualizaban correctamente y era necesario cambiar el tamaño de la ventana de VirtualBox para visualizar las acciones realizadas.
 
-El problema se resolvió cambiando de **Wayland a Xorg (X11)**.
+El problema se resolvió utilizando **Ubuntu on Xorg (X11)**.
 
 ### 18.1. Seleccionar Ubuntu on Xorg antes de iniciar sesión
 
 En la pantalla de inicio de sesión de Ubuntu:
 
 1. Seleccionar el usuario **Osmaily**.
-2. Localizar el icono de **engranaje** en la parte inferior derecha.
+2. Localizar el icono de **engranaje**.
 3. Seleccionar **Ubuntu on Xorg**.
 4. Introducir la contraseña e iniciar sesión.
 
@@ -642,20 +660,20 @@ sudo nano /etc/gdm3/custom.conf
 
 Introducir la contraseña y presionar **Enter**.
 
-En el archivo, localizar la sección `[daemon]` y la línea:
+Dentro del archivo, localizar la sección `[daemon]` y la línea:
 
 ```ini
 #WaylandEnable=false
 ```
 
-Eliminar el símbolo `#` para que quede:
+Eliminar el símbolo `#` para dejar:
 
 ```ini
 [daemon]
 WaylandEnable=false
 ```
 
-Con este cambio, GDM desactiva Wayland y utiliza Xorg para el inicio de sesión gráfico.
+Esta configuración desactiva Wayland en GDM y permite utilizar Xorg como sistema gráfico.
 
 ### 18.3. Guardar la configuración
 
@@ -679,26 +697,24 @@ Después de iniciar sesión, abrir una terminal y ejecutar:
 echo $XDG_SESSION_TYPE
 ```
 
-Resultado esperado:
+Resultado obtenido:
 
 ```text
 x11
 ```
 
-En nuestra práctica, el comando devolvió `x11`, confirmando que la sesión gráfica estaba utilizando Xorg.
-
-Una vez aplicada esta configuración y comprobada después de reiniciar, Ubuntu debería seguir utilizando Xorg en los siguientes inicios.
+Esto confirma que Ubuntu utiliza Xorg (X11).
 
 ### 18.5. Resultado de la configuración gráfica
 
-Con **Ubuntu on Xorg**, se comprobó que era posible:
+Con Xorg se comprobó que era posible:
 
 - Abrir y cerrar el explorador de archivos.
 - Abrir y cerrar Firefox.
-- Utilizar las ventanas normalmente.
-- Visualizar los cambios sin modificar constantemente el tamaño de VirtualBox.
+- Mover y utilizar las ventanas normalmente.
+- Visualizar los cambios sin modificar continuamente el tamaño de VirtualBox.
 
-Este ajuste se realiza antes de continuar con las pruebas del multiboot y Guest Additions.
+La configuración permanente evita tener que seleccionar manualmente Ubuntu on Xorg en cada inicio mientras permanezca `WaylandEnable=false` en GDM.
 
 ## 19. Probar ambos sistemas operativos
 
@@ -709,7 +725,7 @@ Este ajuste se realiza antes de continuar con las pruebas del multiboot y Guest 
 3. Abrir el explorador de archivos y Firefox.
 4. Comprobar el funcionamiento del escritorio.
 
-Ubuntu inició correctamente y respondió normalmente después del cambio a Xorg.
+Ubuntu inició correctamente y respondió normalmente después de cambiar a Xorg.
 
 ### 19.2. Probar Windows 10
 
@@ -718,37 +734,61 @@ Ubuntu inició correctamente y respondió normalmente después del cambio a Xorg
 3. En GNU GRUB, seleccionar **Windows 10 (on /dev/sda1)**.
 4. Presionar **Enter**.
 5. Iniciar sesión en Windows 10.
-6. Comprobar que el sistema funciona.
+6. Comprobar que funciona correctamente.
 
-Windows 10 arrancó correctamente desde GRUB y permitió iniciar sesión sin inconvenientes.
+Windows 10 arrancó desde GRUB y permitió iniciar sesión sin inconvenientes.
 
 ---
 
-# PARTE V — GUEST ADDITIONS DE UBUNTU E INSTANTÁNEAS
+# PARTE V — INSTANTÁNEAS Y GUEST ADDITIONS DE UBUNTU
 
-## 20. Instalar Guest Additions en Ubuntu
+## 20. Crear la primera instantánea de Ubuntu — Instalación limpia
 
-Después de corregir el entorno gráfico y comprobar el arranque de ambos sistemas, continuar con la instalación de Guest Additions en Ubuntu.
+Después de instalar Ubuntu, configurar GNU GRUB, comprobar el arranque de ambos sistemas y corregir la experiencia gráfica mediante Xorg, crear una instantánea antes de instalar Guest Additions.
 
-### 20.1. Instalar las dependencias
+### 20.1. Crear la instantánea
 
-Iniciar Ubuntu y abrir la terminal con **Ctrl + Alt + T**.
+1. Apagar Ubuntu correctamente.
+2. En Oracle VirtualBox, seleccionar **PC-Multiboot-Osmaily**.
+3. Abrir **Instantáneas**.
+4. Seleccionar **Tomar**.
+5. Introducir los siguientes datos.
 
-Actualizar los repositorios:
+**Nombre:**
+
+`Multiboot - Ubuntu 22.04.3 - Instalación limpia`
+
+**Descripción:**
+
+Ubuntu 22.04.3 LTS instalado junto a Windows 10 Pro en BIOS/MBR. GNU GRUB configurado y arranque de ambos sistemas comprobado. Xorg (X11) configurado para mejorar la experiencia gráfica. Guest Additions de Ubuntu aún no instaladas.
+
+6. Confirmar la creación de la instantánea.
+
+Esta instantánea conserva Ubuntu instalado y funcionando, antes de agregar Guest Additions.
+
+## 21. Instalar Guest Additions en Ubuntu
+
+Guest Additions permite mejorar la integración entre Ubuntu y Windows 11 mediante funciones como la adaptación de resolución, el portapapeles compartido y el intercambio de archivos.
+
+### 21.1. Instalar las dependencias
+
+Iniciar Ubuntu desde GNU GRUB.
+
+Abrir la terminal con **Ctrl + Alt + T** y ejecutar:
 
 ```bash
 sudo apt update
 ```
 
-Instalar las herramientas necesarias para compilar los módulos de VirtualBox:
+Instalar las herramientas necesarias:
 
 ```bash
 sudo apt install build-essential dkms linux-headers-$(uname -r)
 ```
 
-Introducir la contraseña y confirmar la instalación de los paquetes solicitados.
+Introducir la contraseña y confirmar la instalación de los paquetes.
 
-### 20.2. Insertar Guest Additions
+### 21.2. Insertar Guest Additions
 
 En el menú de VirtualBox, seleccionar:
 
@@ -757,93 +797,204 @@ En el menú de VirtualBox, seleccionar:
 En Ubuntu:
 
 1. Abrir **Archivos**.
-2. Localizar la unidad de **VirtualBox Guest Additions**.
+2. Localizar la unidad **VirtualBox Guest Additions**.
 3. Abrir la unidad.
-4. Ejecutar el instalador `autorun.sh`.
-5. Introducir la contraseña de administrador cuando se solicite.
+4. Ejecutar `autorun.sh`.
+5. Autorizar la ejecución e introducir la contraseña cuando se solicite.
 6. Completar la instalación.
 
-Reiniciar Ubuntu:
+### 21.3. Reiniciar Ubuntu
+
+Ejecutar:
 
 ```bash
 sudo reboot
 ```
 
-### 20.3. Configurar la integración
+Iniciar sesión nuevamente en Ubuntu.
 
-Después del reinicio, probar:
-
-**Resolución de pantalla**
+### 21.4. Comprobar la integración gráfica
 
 Modificar el tamaño de la ventana de VirtualBox y comprobar que Ubuntu adapta su resolución.
 
-**Portapapeles compartido**
+También comprobar el movimiento del puntero entre Windows 11 y Ubuntu.
 
-Seleccionar:
+### 21.5. Configurar el portapapeles compartido
+
+En el menú de VirtualBox:
 
 **Dispositivos → Portapapeles compartido → Bidireccional**
 
-Probar la copia de texto entre Windows 11 y Ubuntu.
+Probar la copia de texto entre Windows 11 y Ubuntu en ambas direcciones.
 
-**Arrastrar y soltar**
+**Resultado:** portapapeles compartido funcionando correctamente.
 
-Seleccionar:
+### 21.6. Configurar arrastrar y soltar
+
+En VirtualBox, seleccionar:
 
 **Dispositivos → Arrastrar y soltar → Bidireccional**
 
-Probar la transferencia de archivos entre el sistema anfitrión y Ubuntu.
+Se realizaron pruebas de transferencia de archivos:
 
-La disponibilidad de estas funciones depende de que los componentes de Guest Additions estén instalados y funcionando correctamente.
+| Dirección | Resultado |
+|---|---|
+| Windows 11 → Ubuntu | Funciona correctamente |
+| Ubuntu → Windows 11 | No permite arrastrar el archivo fuera de la ventana de VirtualBox |
 
-## 21. Crear las instantáneas de Ubuntu
+La transferencia desde Windows 11 hacia **Archivos → Descargas** de Ubuntu funcionó correctamente.
 
-Las instantáneas permiten conservar estados importantes de la máquina virtual.
+En la dirección contraria, el archivo no lograba cruzar el borde de la ventana de VirtualBox.
 
-### 21.1. Instantánea de Ubuntu instalado
+### 21.7. Comprobar el servicio de arrastrar y soltar
 
-Después de comprobar el multiboot y dejar estable el entorno gráfico de Ubuntu:
+Para revisar los componentes de Guest Additions, abrir una terminal y ejecutar:
 
-1. Apagar la máquina virtual.
-2. Abrir **Instantáneas** en VirtualBox.
-3. Seleccionar **Tomar**.
-4. Asignar el nombre:
+```bash
+pgrep -af VBoxClient
+```
 
-`Multiboot - Ubuntu 22.04.3 - Instalación limpia`
+Se identificaron procesos relacionados con:
 
-Esta instantánea representa Ubuntu instalado, con GRUB configurado y el funcionamiento gráfico corregido, antes de instalar Guest Additions en Ubuntu.
+```text
+VBoxClient --clipboard
+VBoxClient --seamless
+VBoxClient --draganddrop
+VBoxClient --vmsvga
+```
 
-### 21.2. Instantánea de Guest Additions configuradas
+Esto confirmó que los componentes de Guest Additions estaban ejecutándose, incluido el servicio de arrastrar y soltar.
 
-Después de instalar y comprobar Guest Additions en Ubuntu:
+Se reinició el componente:
 
-1. Apagar la máquina virtual.
-2. Abrir **Instantáneas**.
-3. Seleccionar **Tomar**.
-4. Asignar el nombre:
+```bash
+pkill -f 'VBoxClient --draganddrop'
+```
+
+Después se inició nuevamente:
+
+```bash
+VBoxClient --draganddrop
+```
+
+La transferencia desde Ubuntu hacia Windows 11 mediante arrastrar y soltar continuó sin funcionar.
+
+Para disponer de un método de intercambio de archivos en ambas direcciones, se configuró una carpeta compartida.
+
+## 22. Configurar una carpeta compartida entre Windows 11 y Ubuntu
+
+La carpeta compartida permite acceder a los mismos archivos desde el sistema anfitrión Windows 11 y desde Ubuntu, sin depender de arrastrar y soltar entre ventanas.
+
+### 22.1. Crear la carpeta en Windows 11
+
+En Windows 11, crear una carpeta llamada:
+
+`VirtualBox-Compartida`
+
+Esta carpeta almacenará los archivos que deseamos intercambiar entre Windows y Ubuntu.
+
+### 22.2. Agregar la carpeta compartida en VirtualBox
+
+Con Ubuntu encendido, seleccionar:
+
+**Dispositivos → Carpetas compartidas → Configuración de carpetas compartidas**
+
+1. Pulsar el icono **+** para agregar una carpeta.
+2. En **Ruta de carpeta**, seleccionar `VirtualBox-Compartida`.
+3. En **Nombre de carpeta**, introducir `Compartida`.
+4. Marcar **Automontar**.
+5. Marcar **Hacer permanente**.
+6. Mantener **Solo lectura** desmarcado.
+7. Confirmar con **Aceptar**.
+
+### 22.3. Conceder permisos al usuario de Ubuntu
+
+Abrir la terminal y ejecutar:
+
+```bash
+sudo usermod -aG vboxsf $USER
+```
+
+Este comando agrega el usuario actual al grupo `vboxsf`, utilizado para acceder a carpetas compartidas de VirtualBox.
+
+Reiniciar Ubuntu para aplicar el cambio:
+
+```bash
+sudo reboot
+```
+
+### 22.4. Acceder a la carpeta desde Ubuntu
+
+Abrir **Archivos** y navegar hasta:
+
+**Otras ubicaciones → Equipo → media → sf_Compartida**
+
+La carpeta compartida utiliza como ruta:
+
+```text
+/media/sf_Compartida
+```
+
+### 22.5. Probar la transferencia de archivos
+
+Realizar las siguientes pruebas:
+
+1. Copiar un archivo desde Windows 11 a `VirtualBox-Compartida`.
+2. Abrir la carpeta compartida desde Ubuntu y acceder al archivo.
+3. Copiar un archivo desde Ubuntu hacia `sf_Compartida`.
+4. Abrir la carpeta desde Windows 11 y comprobar que aparece el archivo.
+
+**Resultado:** carpeta compartida configurada y transferencia de archivos comprobada correctamente en ambas direcciones.
+
+La carpeta compartida quedó como método funcional para intercambiar archivos entre Windows 11 y Ubuntu.
+
+## 23. Crear la segunda instantánea de Ubuntu — Guest Additions configuradas
+
+Después de instalar Guest Additions y completar las pruebas de integración, crear la última instantánea de la máquina virtual.
+
+### 23.1. Crear la instantánea
+
+1. Apagar Ubuntu correctamente.
+2. En VirtualBox, seleccionar **PC-Multiboot-Osmaily**.
+3. Abrir **Instantáneas**.
+4. Seleccionar **Tomar**.
+5. Introducir los siguientes datos.
+
+**Nombre:**
 
 `Multiboot - Ubuntu 22.04.3 - Guest Additions configuradas`
 
-### 21.3. Registro de instantáneas
+**Descripción:**
 
-| N.º | Nombre | Estado |
+Ubuntu 22.04.3 LTS instalado en multiboot con Windows 10 Pro. GNU GRUB y Xorg (X11) configurados. Guest Additions instaladas y comprobadas. Portapapeles compartido, integración gráfica y carpeta compartida bidireccional funcionando correctamente.
+
+6. Confirmar la creación de la instantánea.
+
+### 23.2. Registro final de instantáneas
+
+| N.º | Instantánea | Estado |
 |---|---|---|
 | 1 | `Multiboot - Windows 10 Pro - Instalación limpia` | Creada |
 | 2 | `Multiboot - Windows 10 Pro - Guest Additions configuradas` | Creada |
-| 3 | `Multiboot - Ubuntu 22.04.3 - Instalación limpia` | Pendiente de registrar |
-| 4 | `Multiboot - Ubuntu 22.04.3 - Guest Additions configuradas` | Pendiente |
+| 3 | `Multiboot - Ubuntu 22.04.3 - Instalación limpia` | Creada |
+| 4 | `Multiboot - Ubuntu 22.04.3 - Guest Additions configuradas` | Creada |
+
+Las instantáneas se crearon respetando el orden:
+
+**Instalación limpia → Guest Additions configuradas**, primero para Windows y después para Ubuntu.
 
 ---
 
-# PARTE VI — RESUMEN DE LA PRÁCTICA
+# PARTE VI — RESUMEN FINAL DE LA PRÁCTICA
 
-## 22. Resultado de la instalación multiboot
+## 24. Resultado de la instalación multiboot
 
-### 22.1. Configuración general
+### 24.1. Configuración general
 
-| Elemento | Resultado |
+| Elemento | Configuración |
 |---|---|
 | Máquina virtual | `PC-Multiboot-Osmaily` |
-| Software de virtualización | Oracle VirtualBox 7.2.22 |
+| Virtualizador | Oracle VirtualBox 7.2.22 |
 | Sistema anfitrión | Windows 11 |
 | Primer sistema invitado | Windows 10 Pro |
 | Segundo sistema invitado | Ubuntu 22.04.3 LTS |
@@ -854,8 +1005,9 @@ Después de instalar y comprobar Guest Additions en Ubuntu:
 | Tabla de particiones | MBR |
 | Cargador de arranque | GNU GRUB 2.06 |
 | Entorno gráfico de Ubuntu | Xorg (X11) |
+| Instantáneas creadas | 4 |
 
-### 22.2. Particiones
+### 24.2. Distribución del disco
 
 | Partición | Sistema | Uso |
 |---|---|---|
@@ -866,20 +1018,41 @@ Después de instalar y comprobar Guest Additions en Ubuntu:
 | `/dev/sda5` | Ubuntu | Raíz `/`, ext4 |
 | `/dev/sda6` | Ubuntu | Área de intercambio |
 
-### 22.3. Aprendizajes principales
+### 24.3. Resultado de las pruebas
+
+| Función | Resultado |
+|---|---|
+| Iniciar Windows 10 desde GRUB | Correcto |
+| Iniciar Ubuntu desde GRUB | Correcto |
+| Funcionamiento de Windows 10 | Correcto |
+| Funcionamiento de Ubuntu con Xorg | Correcto |
+| Guest Additions de Windows 10 | Instaladas y comprobadas |
+| Guest Additions de Ubuntu | Instaladas y comprobadas |
+| Portapapeles compartido | Funciona |
+| Arrastrar y soltar Windows 11 → Windows 10 | Funciona |
+| Arrastrar y soltar Windows 10 → Windows 11 | Funciona |
+| Arrastrar y soltar Windows 11 → Ubuntu | Funciona |
+| Arrastrar y soltar Ubuntu → Windows 11 | No funciona |
+| Carpeta compartida Windows 11 ↔ Ubuntu | Funciona en ambas direcciones |
+| Instantáneas | 4 creadas |
+
+### 24.4. Aprendizajes principales
 
 - Crear una máquina virtual con un único disco para varios sistemas operativos.
 - Instalar Windows 10 Pro y reservar espacio para Ubuntu.
-- Identificar las diferencias entre BIOS, UEFI, MBR y GPT.
-- Crear particiones primarias, extendidas y lógicas.
+- Diferenciar BIOS, UEFI, MBR y GPT.
+- Identificar particiones primarias, extendidas y lógicas.
 - Comprender cuándo se necesita una partición `biosgrub`.
-- Instalar Ubuntu sin eliminar las particiones de Windows.
-- Configurar GNU GRUB para seleccionar el sistema operativo.
-- Solucionar problemas gráficos de Ubuntu cambiando de Wayland a Xorg.
-- Instalar y configurar Guest Additions.
-- Utilizar instantáneas para conservar diferentes estados de la máquina virtual.
+- Instalar Ubuntu sin eliminar Windows.
+- Configurar GNU GRUB como gestor de arranque.
+- Resolver problemas gráficos de Ubuntu cambiando de Wayland a Xorg (X11).
+- Instalar Guest Additions en Windows y Ubuntu.
+- Configurar el portapapeles compartido.
+- Probar arrastrar y soltar entre anfitrión e invitados.
+- Configurar carpetas compartidas y permisos mediante el grupo `vboxsf`.
+- Crear instantáneas para conservar diferentes estados de la máquina virtual.
 
-### 22.4. Estado de la práctica
+### 24.5. Estado final de la práctica
 
 | Actividad | Estado |
 |---|---|
@@ -891,11 +1064,25 @@ Después de instalar y comprobar Guest Additions en Ubuntu:
 | Instalar Ubuntu 22.04.3 LTS | Completada |
 | Crear particiones raíz y swap | Completada |
 | Configurar GNU GRUB | Completada |
-| Iniciar Windows 10 desde GRUB | Completada |
-| Iniciar Ubuntu desde GRUB | Completada |
-| Cambiar Ubuntu a Xorg (X11) | Completada |
-| Configurar Xorg permanentemente | Archivo modificado; persistencia por confirmar |
-| Instalar Guest Additions en Ubuntu | Pendiente |
-| Crear las instantáneas de Ubuntu | Pendiente |
+| Probar el arranque de Windows y Ubuntu | Completada |
+| Configurar Xorg (X11) | Completada |
+| Crear la primera instantánea de Ubuntu | Completada |
+| Instalar Guest Additions en Ubuntu | Completada |
+| Comprobar las funciones de integración | Completada |
+| Configurar la carpeta compartida | Completada |
+| Comprobar transferencias por carpeta compartida | Completada |
+| Crear la segunda instantánea de Ubuntu | Completada |
 
-**Resultado actual:** Windows 10 Pro y Ubuntu 22.04.3 LTS están instalados en el mismo disco virtual y ambos pueden iniciarse mediante GNU GRUB. El entorno gráfico de Ubuntu funciona correctamente utilizando Xorg (X11).
+## Conclusión
+
+Se creó una máquina virtual multiboot con **Windows 10 Pro y Ubuntu 22.04.3 LTS**, instalados en un mismo disco virtual con tabla de particiones MBR y firmware BIOS tradicional.
+
+**GNU GRUB** permite seleccionar el sistema operativo durante el arranque, y ambos sistemas fueron iniciados y comprobados correctamente.
+
+En Ubuntu se configuró **Xorg (X11)** para mejorar la experiencia gráfica y se instalaron **Guest Additions** para integrar el sistema con VirtualBox.
+
+La carpeta compartida permitió intercambiar archivos entre Windows 11 y Ubuntu en ambas direcciones.
+
+Finalmente, se crearon **cuatro instantáneas**, conservando los estados de instalación limpia y Guest Additions configuradas de ambos sistemas operativos.
+
+**Resultado: práctica de instalación y configuración multiboot completada.**

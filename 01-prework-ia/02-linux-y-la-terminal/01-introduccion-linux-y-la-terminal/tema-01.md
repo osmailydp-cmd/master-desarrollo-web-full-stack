@@ -15,4 +15,4 @@
 
 Los apuntes y ejercicios se añadirán a cada clase a medida que avance el estudio.
 
-[Volver al módulo](../README.md)
+[Volver al módulo](../Linux-y-la-Terminal.md)

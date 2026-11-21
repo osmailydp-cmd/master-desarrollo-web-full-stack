@@ -9,7 +9,7 @@ También conocer los principales sistemas de archivos, la estructura de director
 ## 2. Material de referencia
 
 - **Repositorio de ConquerBlocks:** https://github.com/ConquerBlocks/conquerblocks-linux-terminal
-- **Diapositivas:** `LyT-Clase-07-Archivos-utiles-y-primeros-comandos-1.pdf`
+- **Diapositivas:** `LyT-Clase-07-Archivos-utiles-y-primeros-comandos-1_5eeab86f.pdf`
 
 ## 3. ¿Qué es un comando?
 
@@ -73,50 +73,105 @@ ls -l /home
 
 ## 5. Primeros comandos de Linux
 
-| Comando | Función |
-|---|---|
-| `man comando` | Consultar el manual de un comando. |
-| `comando --help` | Mostrar ayuda sobre un comando. |
-| `date` | Mostrar fecha y hora del sistema. |
-| `cal` | Mostrar un calendario. |
-| `who` | Mostrar los usuarios conectados. |
-| `whoami` | Mostrar el usuario actual. |
-| `clear` | Limpiar la pantalla de la terminal. |
-| `whereis` | Localizar archivos asociados a un comando. |
-| `uname` | Mostrar información del sistema. |
-| `passwd` | Cambiar la contraseña del usuario. |
-| `history` | Mostrar el historial de comandos. |
-| `exit` | Salir de la sesión o cerrar la terminal. |
+Durante la práctica de la clase se estudiaron los siguientes **21 comandos**:
 
-### 5.1. Ejemplos y opciones
+### 5.1. Tabla resumen de comandos practicados
+
+| N.º | Comando | Función |
+|---:|---|---|
+| 1 | `sudo apt-get update` | Actualiza la lista de paquetes disponibles en los repositorios. |
+| 2 | `sudo apt-get install ncal` | Instala el paquete `ncal`. |
+| 3 | `ncal` | Muestra el calendario del mes actual. |
+| 4 | `ncal -m 8` | Muestra el calendario de agosto del año actual. |
+| 5 | `who` | Muestra los usuarios con sesiones iniciadas en el sistema. |
+| 6 | `whoami` | Muestra el nombre del usuario actual. |
+| 7 | `date` | Muestra la fecha y hora del sistema. |
+| 8 | `date +"%d/%m/%Y %H:%M"` | Muestra la fecha y hora en formato día/mes/año hora:minutos. |
+| 9 | `clear` | Limpia la pantalla de la terminal sin borrar el historial. |
+| 10 | `ls` | Lista los archivos y directorios de la ubicación actual. |
+| 11 | `whereis ls` | Localiza el ejecutable `ls` y archivos asociados, como su manual. |
+| 12 | `uname` | Muestra el nombre del núcleo del sistema operativo. |
+| 13 | `uname -a` | Muestra información detallada del sistema y del kernel. |
+| 14 | `cat /etc/issue` | Muestra la identificación de la distribución Linux instalada. |
+| 15 | `passwd` | Permite cambiar la contraseña del usuario actual. |
+| 16 | `passwd osmaily` | Permite cambiar la contraseña del usuario `osmaily`, con los permisos correspondientes. |
+| 17 | `history` | Muestra el historial de comandos de la terminal. |
+| 18 | `history 10` | Muestra los últimos 10 comandos del historial. |
+| 19 | `sudo -v` | Valida las credenciales y actualiza la autenticación de `sudo`. |
+| 20 | `sudo -i` | Abre una Shell de administrador simulando un inicio de sesión de `root`. |
+| 21 | `sudo -s` | Abre una Shell con permisos de administrador conservando generalmente más características del entorno actual. |
+
+### 5.2. Opciones, argumentos y formatos utilizados
+
+| Elemento | Explicación |
+|---|---|
+| `sudo` | Ejecuta comandos con privilegios elevados, normalmente como administrador. |
+| `apt-get` | Herramienta para gestionar paquetes de software. |
+| `-m 8` | En `ncal`, indica que se desea mostrar el mes de agosto. |
+| `%d` | Día del mes. |
+| `%m` | Mes numérico. |
+| `%Y` | Año de cuatro cifras. |
+| `%H` | Hora en formato de 24 horas. |
+| `%M` | Minutos. |
+| `-a` | En `uname`, muestra toda la información disponible. |
+| `/etc/issue` | Archivo que contiene información de identificación del sistema. |
+| `10` | En `history 10`, indica la cantidad de comandos que se mostrarán. |
+| `-v` | En `sudo`, valida o renueva la autenticación. |
+| `-i` | En `sudo`, inicia una Shell de tipo login como administrador. |
+| `-s` | En `sudo`, inicia una Shell con privilegios de administrador. |
+
+### 5.3. Diferencias importantes
+
+**`who` y `whoami`**
+
+- `who`: muestra las sesiones de usuarios registradas.
+- `whoami`: muestra el usuario con el que se ejecuta el comando.
+
+**`passwd` y `passwd osmaily`**
+
+- `passwd`: cambia la contraseña del usuario actual.
+- `passwd osmaily`: solicita cambiar la contraseña del usuario indicado, según los permisos disponibles.
+
+**`uname` y `uname -a`**
+
+- `uname`: muestra el nombre del kernel, normalmente `Linux`.
+- `uname -a`: muestra información más completa del sistema.
+
+**`sudo -v`, `sudo -i` y `sudo -s`**
+
+- `sudo -v`: valida las credenciales sin abrir una Shell de administrador.
+- `sudo -i`: abre una sesión de administrador con un entorno similar al de inicio de sesión de `root`.
+- `sudo -s`: abre una Shell de administrador sin simular necesariamente un inicio de sesión completo.
+
+Para salir de una Shell abierta con `sudo -i` o `sudo -s`, ejecutar:
 
 ```bash
-man cal
-cal --help
-date
-date +%B
-date +%j
-cal -3
-who -a
-who -b
-whoami
-clear
-whereis cal
-uname -a
-cat /etc/issue
-history
 exit
 ```
 
-**Otros elementos importantes:**
+### 5.4. Consultar ayuda de los comandos
 
-- `q`: salir del manual de `man`.
-- `!!`: recuperar el último comando ejecutado.
-- `sudo !!`: ejecutar con `sudo` el último comando del historial.
+El material teórico presenta dos métodos para consultar información sobre los comandos:
 
-El documento también presenta `hwclock` para consultar y sincronizar el reloj de hardware.
+**Manual del comando:**
 
-**Nota:** los comandos que modifican la hora del sistema o sincronizan relojes requieren especial cuidado y permisos adecuados.
+```bash
+man cal
+```
+
+Para salir del manual, presionar **q**.
+
+**Ayuda del comando:**
+
+```bash
+cal --help
+```
+
+Otros conceptos importantes:
+
+- `!!`: hace referencia al último comando del historial.
+- `sudo !!`: permite repetir el último comando utilizando `sudo`.
+- `Ctrl + L`: limpia visualmente la terminal, al igual que `clear`.
 
 ## 6. ¿Qué es un sistema de archivos?
 
@@ -219,8 +274,8 @@ Un **inodo** es una estructura que permite identificar un archivo dentro del sis
 
 ## 10. Conclusión
 
-En esta clase aprendemos los fundamentos para trabajar desde la terminal de Linux: cómo se interpretan los comandos, cómo utilizar modificadores y argumentos, y cómo consultar la ayuda del sistema.
+En esta clase aprendimos los fundamentos para trabajar desde la terminal de Linux: cómo se interpretan los comandos, cómo utilizar modificadores y argumentos, y cómo consultar la ayuda del sistema.
 
 También estudiamos la estructura jerárquica de Linux, los principales directorios y los sistemas de archivos.
 
-Estos conocimientos constituyen la base para trabajar con archivos, directorios y comandos más avanzados.
+Como parte práctica, registramos **21 comandos**, sus funciones y sus principales opciones, que servirán de referencia para las próximas clases del módulo Linux y la Terminal.

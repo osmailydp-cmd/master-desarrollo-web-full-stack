@@ -9,7 +9,7 @@
 
 | Clase del módulo | Título | Acceso |
 |---|---|---|
-| 06 | WSL Windows Subsystem for Linux | [Ver clase](clase-06-wsl-windows-subsystem-for-linux/README.md) |
+| 06 | WSL Windows Subsystem for Linux | [Ver clase](clase-06-wsl-windows-subsystem-for-linux/clase-06.md) |
 
 ## Seguimiento
 

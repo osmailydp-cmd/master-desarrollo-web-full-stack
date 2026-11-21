@@ -251,7 +251,7 @@ En la demostración del profesor se consiguió:
 - Crear una carpeta de proyecto y un archivo Python.
 - Abrir la terminal Linux integrada directamente en el proyecto.
 
-**Nota sobre mi práctica:** intenté instalar WSL en una máquina virtual Windows 10 Pro de VirtualBox. La instalación se interrumpió debido a problemas de rendimiento y a que la opción de virtualización anidada no estaba disponible. Por ello, el procedimiento anterior documenta principalmente la demostración del profesor.
+**Nota sobre mi práctica:** intenté instalar WSL en una máquina virtual Windows 10 Pro de VirtualBox. La instalación se interrumpió debido a problemas de rendimiento ya que la opción de virtualización anidada no estaba disponible. Por ello, el procedimiento anterior documenta principalmente la demostración del profesor.
 
 ## 14. Conclusión
 

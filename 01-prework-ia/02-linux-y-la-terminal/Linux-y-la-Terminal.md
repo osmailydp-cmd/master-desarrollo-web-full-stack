@@ -11,16 +11,16 @@ Este módulo contiene **6 temas, 24 clases y una evaluación**. Las clases se ir
 
 | Tema | Clases | Acceso |
 |---|---:|---|
-| 01. Introducción Linux y la Terminal | 1 | [Abrir tema](01-introduccion-linux-y-la-terminal/README.md) |
-| 02. VirtualBox, instalación y configuración | 4 | [Abrir tema](02-virtualbox-instalacion-y-configuracion/README.md) |
-| 03. Windows Subsystem Linux (WSL) | 1 | [Abrir tema](03-windows-subsystem-linux-wsl/README.md) |
-| 04. Primeros comandos y tipos de archivos | 9 | [Abrir tema](04-primeros-comandos-y-tipos-de-archivos/README.md) |
-| 05. Gestión de usuarios y grupos | 4 | [Abrir tema](05-gestion-de-usuarios-y-grupos/README.md) |
-| 06. Utilidades avanzadas | 5 | [Abrir tema](06-utilidades-avanzadas/README.md) |
+| 01. Introducción Linux y la Terminal | 1 | [Abrir tema](01-introduccion-linux-y-la-terminal/tema-01.md) |
+| 02. VirtualBox, instalación y configuración | 4 | [Abrir tema](02-virtualbox-instalacion-y-configuracion/tema-02.md) |
+| 03. Windows Subsystem Linux (WSL) | 1 | [Abrir tema](03-windows-subsystem-linux-wsl/tema-03.md) |
+| 04. Primeros comandos y tipos de archivos | 9 | [Abrir tema](04-primeros-comandos-y-tipos-de-archivos/tema-04.md) |
+| 05. Gestión de usuarios y grupos | 4 | [Abrir tema](05-gestion-de-usuarios-y-grupos/tema-05.md) |
+| 06. Utilidades avanzadas | 5 | [Abrir tema](06-utilidades-avanzadas/tema-06.md) |
 
 ## Evaluación
 
-[Ir a la evaluación](evaluacion/README.md)
+[Ir a la evaluación](evaluacion/evaluacion.md)
 
 ## Metodología de documentación
 

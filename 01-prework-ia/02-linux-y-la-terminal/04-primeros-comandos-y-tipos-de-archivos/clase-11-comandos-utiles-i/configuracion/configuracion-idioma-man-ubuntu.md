@@ -194,7 +194,7 @@ sudo apt install manpages-es
 export MANOPT="-L en"
 
 # Añadir esta línea al final de ~/.bashrc
-# export MANOPT="-L en"
+export MANOPT="-L en"
 
 # Aplicar la configuración guardada
 source ~/.bashrc

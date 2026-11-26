@@ -12,29 +12,74 @@ También practicaremos las opciones `-l`, `-a`, `-p`, `-r` y los caracteres como
 
 ## 2. Preparar el entorno
 
-Nuestra estructura original está ubicada en:
+Crearemos una carpeta nueva llamada `Practica-Clase-11` dentro de nuestro directorio personal de Ubuntu.
 
-```text
-/home/osmaily/Practica-Clase-09/
-```
+El objetivo es reproducir la estructura original del profesor, **sin modificar la práctica de la Clase 09**.
 
-Contiene **8 directorios y 22 archivos**.
-
-Para proteger la práctica anterior, primero crearemos una copia de trabajo.
-
-Desde el directorio personal, ejecutar:
+### 2.1. Crear la carpeta de trabajo
 
 ```bash
 cd ~
-cp -r Practica-Clase-09 Practica-Clase-11
+mkdir Practica-Clase-11
 cd Practica-Clase-11
+```
+
+### 2.2. Crear los directorios
+
+```bash
+mkdir -p Princip/Apuntes/Sistemas
+mkdir -p Princip/Docs/Word
+mkdir -p Princip/Docs/Excel
+mkdir -p Princip/Programa
+```
+
+La opción `-p` crea los directorios intermedios que sean necesarios.
+
+### 2.3. Crear los archivos
+
+```bash
+touch Princip/fichero.txt
+touch Princip/fichero2.txt
+touch Princip/Docs/doc1.txt
+touch Princip/Docs/doc2.txt
+touch Princip/Apuntes/Sistemas/tema1.doc
+```
+
+### 2.4. Comprobar la estructura inicial
+
+Desde `Practica-Clase-11`, ejecutar:
+
+```bash
 tree
 ```
 
-A partir de este momento, todos los ejercicios se realizarán dentro de `Practica-Clase-11`.
+**Resultado esperado:**
 
----
+```text
+.
+└── Princip
+    ├── Apuntes
+    │   └── Sistemas
+    │       └── tema1.doc
+    ├── Docs
+    │   ├── doc1.txt
+    │   ├── doc2.txt
+    │   ├── Excel
+    │   └── Word
+    ├── fichero2.txt
+    ├── fichero.txt
+    └── Programa
 
+7 directories, 5 files
+```
+
+### 2.5. Objetivo final de la práctica
+
+Durante los siguientes ejercicios crearemos, copiaremos, moveremos, renombraremos y eliminaremos archivos y directorios.
+
+**Al terminar todos los ejercicios, debemos recuperar exactamente esta estructura inicial**, utilizando los comandos aprendidos, sin eliminar y recrear toda la carpeta.
+
+De esta manera comprobaremos que dominamos las operaciones de gestión de archivos estudiadas en la Clase 11.
 ## 3. Ejercicio 1 — Consultar manuales con `man`
 
 **Objetivo:** aprender a buscar información sobre los comandos.

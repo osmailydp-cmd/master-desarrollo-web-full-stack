@@ -167,15 +167,15 @@ Princip/
 
 **Comprobación:** utilizar `tree` y verificar dónde aparece cada fichero.
 
-## 8. Ejercicio 6 — Eliminar directorios vacíos con `rmdir`
+## 8. Ejercicio 6 — Eliminar directorios vacíos con rmdir
 
 **Objetivo:** comprender las restricciones de `rmdir`.
 
-- [ ] Crear un directorio vacío llamado `CarpetaVacia` dentro de `Princip`.
-- [ ] Eliminarlo utilizando `rmdir`.
-- [ ] Comprobar que ya no existe.
-- [ ] Eliminar el archivo `temporal.txt` dentro de `Temporal` utilizando `rm`.
-- [ ] Eliminar el directorio `Temporal` utilizando `rmdir`.
+- [x] Crear un directorio vacío llamado `CarpetaVacia` dentro de `Princip`.
+- [x] Eliminar `CarpetaVacia` utilizando `rmdir`.
+- [x] Comprobar que `CarpetaVacia` ya no existe.
+- [x] Eliminar `temporal.txt` dentro de `Temporal` utilizando `rm`.
+- [x] Eliminar `Temporal` utilizando `rmdir`.
 
 **Pregunta:** ¿Por qué debemos eliminar primero el archivo antes de borrar `Temporal` con `rmdir`?
 

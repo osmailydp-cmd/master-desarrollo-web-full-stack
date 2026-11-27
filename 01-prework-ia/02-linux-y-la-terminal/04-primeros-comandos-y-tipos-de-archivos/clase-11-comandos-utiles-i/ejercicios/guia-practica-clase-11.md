@@ -112,19 +112,20 @@ De esta manera comprobaremos que dominamos las operaciones de gestión de archiv
 
 **Comprobación:** utilizar `ls` y sus opciones para comparar los resultados.
 
-## 5. Ejercicio 3 — Navegar con `cd`
+## 5. Ejercicio 3 — Navegar con cd
 
 **Objetivo:** utilizar rutas absolutas y relativas.
 
 Partiendo de `Practica-Clase-11`:
 
-- [ ] Entrar en `Princip/Docs/Excel` utilizando una ruta relativa.
-- [ ] Regresar a `Docs` subiendo un nivel.
-- [ ] Acceder a `Apuntes/Sistemas` desde `Docs` sin utilizar una ruta absoluta.
-- [ ] Regresar a `Princip` subiendo dos niveles.
-- [ ] Acceder a `Fotos`.
-- [ ] Regresar al directorio personal mediante `cd`.
-- [ ] Volver a `Practica-Clase-11/Princip` mediante una ruta absoluta.
+- [x] Entrar en `Princip/Docs/Excel` utilizando una ruta relativa.
+- [x] Regresar a `Docs` subiendo un nivel.
+- [x] Acceder a `Apuntes/Sistemas` desde `Docs` sin utilizar una ruta absoluta.
+- [x] Regresar a `Princip` subiendo dos niveles.
+- [x] Acceder a `Fotos`.
+- [x] Regresar al directorio personal mediante `cd`.
+- [x] Volver a `Practica-Clase-11/Princip` mediante una ruta absoluta.
+- [x] Comprobar la ubicación con `pwd` después de cada desplazamiento.
 
 **Comprobación:** utilizar `pwd` después de cada desplazamiento.
 

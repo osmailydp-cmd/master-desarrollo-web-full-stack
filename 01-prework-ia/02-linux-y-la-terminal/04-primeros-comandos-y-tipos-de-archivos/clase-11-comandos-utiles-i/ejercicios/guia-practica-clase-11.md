@@ -179,17 +179,18 @@ Princip/
 
 **Pregunta:** ¿Por qué debemos eliminar primero el archivo antes de borrar `Temporal` con `rmdir`?
 
-## 9. Ejercicio 7 — Copiar archivos con `cp`
+## 9. Ejercicio 7 — Copiar archivos con cp
 
 **Objetivo:** practicar las diferentes formas de copiar archivos.
 
 Trabajando desde `Princip`:
 
-- [ ] Copiar `fichero.txt` en el mismo directorio con el nombre `copia-fichero.txt`.
-- [ ] Copiar `fichero2.txt` dentro de `Programa`, conservando su nombre.
-- [ ] Copiar `reporte.pdf` dentro de `Programa`, cambiando su nombre a `informe.pdf`.
-- [ ] Copiar `Apuntes/Sistemas/tema1.doc` dentro de `Docs`.
-- [ ] Copiar todos los archivos `.jpg` situados directamente en `Princip` hacia `Fotos`.
+- [x] Copiar `fichero.txt` en el mismo directorio como `copia-fichero.txt`.
+- [x] Copiar `fichero2.txt` dentro de `Programa`, conservando su nombre.
+- [x] Copiar `reporte.pdf` dentro de `Programa`, cambiando su nombre a `informe.pdf`.
+- [x] Copiar `Apuntes/Sistemas/tema1.doc` dentro de `Docs`.
+- [x] Copiar todos los archivos `.jpg` situados directamente en `Princip` hacia `Fotos`.
+- [x] Comprobar mediante `tree` que los archivos originales continúan existiendo.
 
 **Comprobación:** utilizar `tree` para verificar que los originales continúan existiendo.
 

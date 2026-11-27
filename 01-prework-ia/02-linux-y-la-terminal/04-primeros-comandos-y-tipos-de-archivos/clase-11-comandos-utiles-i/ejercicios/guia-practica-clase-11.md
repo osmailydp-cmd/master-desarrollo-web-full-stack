@@ -198,10 +198,11 @@ Trabajando desde `Princip`:
 
 **Objetivo:** utilizar la opción recursiva de `cp`.
 
-- [ ] Crear una copia completa de `Apuntes` con el nombre `CopiaApuntes` dentro de `Princip`.
-- [ ] Verificar que se copiaron también el subdirectorio `Sistemas` y su archivo `tema1.doc`.
-- [ ] Copiar el directorio `Practicas` completo con el nombre `RespaldoPracticas`.
-- [ ] Comparar las estructuras originales con sus copias mediante `tree`.
+- [x] Crear una copia completa de `Apuntes` llamada `CopiaApuntes` dentro de `Princip`.
+- [x] Verificar que también se copiaron `Sistemas` y `tema1.doc`.
+- [x] Crear una copia completa de `Practicas` llamada `RespaldoPracticas`.
+- [x] Comparar las estructuras originales y sus copias mediante `tree`.
+- [x] Comprobar que los directorios originales siguen existiendo.
 
 **Pregunta:** ¿Qué opción de `cp` necesitamos para copiar todos los archivos y subdirectorios?
 

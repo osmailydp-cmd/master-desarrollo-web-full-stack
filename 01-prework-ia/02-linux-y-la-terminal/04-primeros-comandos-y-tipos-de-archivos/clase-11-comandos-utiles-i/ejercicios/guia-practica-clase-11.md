@@ -154,15 +154,16 @@ Princip/
 
 *Se muestran únicamente los directorios nuevos.*
 
-## 7. Ejercicio 5 — Crear archivos con `touch`
+## 7. Ejercicio 5 — Crear archivos con touch
 
 **Objetivo:** crear archivos en diferentes ubicaciones.
 
-- [ ] Crear `ejercicio1.txt` dentro de `Practicas/Linux`.
-- [ ] Crear `ejercicio2.txt` dentro de `Practicas/Linux`.
-- [ ] Crear `script.py` dentro de `Practicas/Python/Ejercicios`.
-- [ ] Crear `temporal.txt` dentro de `Temporal`.
-- [ ] Crear `prueba11.txt` directamente en `Princip`.
+- [x] Crear `ejercicio1.txt` dentro de `Practicas/Linux`.
+- [x] Crear `ejercicio2.txt` dentro de `Practicas/Linux`.
+- [x] Crear `script.py` dentro de `Practicas/Python/Ejercicios`.
+- [x] Crear `temporal.txt` dentro de `Temporal`.
+- [x] Crear `prueba11.txt` directamente en `Princip`.
+- [x] Comprobar la estructura con `tree`.
 
 **Comprobación:** utilizar `tree` y verificar dónde aparece cada fichero.
 

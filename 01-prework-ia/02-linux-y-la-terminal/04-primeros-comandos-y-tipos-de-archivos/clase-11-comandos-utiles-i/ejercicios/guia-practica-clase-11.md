@@ -80,30 +80,35 @@ Durante los siguientes ejercicios crearemos, copiaremos, moveremos, renombraremo
 **Al terminar todos los ejercicios, debemos recuperar exactamente esta estructura inicial**, utilizando los comandos aprendidos, sin eliminar y recrear toda la carpeta.
 
 De esta manera comprobaremos que dominamos las operaciones de gestión de archivos estudiadas en la Clase 11.
-## 3. Ejercicio 1 — Consultar manuales con `man`
+## 3. Ejercicio 1 — Consultar manuales con man
 
 **Objetivo:** aprender a buscar información sobre los comandos.
 
-- [ ] Consultar el manual de `ls`.
-- [ ] Localizar las opciones `-l`, `-a` y `-i`.
-- [ ] Consultar el manual de `mkdir` y localizar la opción `-p`.
-- [ ] Consultar el manual de `cp` y localizar la opción `-r`.
-- [ ] Consultar el manual de `rm` e identificar la opción recursiva.
-- [ ] Salir del manual mediante la tecla `q`.
-- [ ] Consultar la ayuda de `cd` mediante `help cd`.
+- [x] Consultar el manual de ls.
+- [x] Localizar las opciones -l, -a y -i.
+- [x] Consultar el manual de mkdir y localizar -p.
+- [x] Consultar el manual de cp y localizar -r.
+- [x] Consultar el manual de rm e identificar la opción recursiva.
+- [x] Consultar el manual de mv.
+- [x] Salir del manual con la tecla q.
+- [x] Consultar la ayuda de cd mediante help cd.
+- [x] Comprobar por qué man cd no encuentra una página específica.
 
 **Pregunta:** ¿Por qué `help cd` puede resultar más útil que `man cd`?
 
-## 4. Ejercicio 2 — Listar archivos con `ls`
+## 4. Ejercicio 2 — Listar archivos con ls
 
 **Objetivo:** practicar diferentes opciones de visualización.
 
-- [ ] Mostrar el contenido de `Princip`.
-- [ ] Mostrar el listado detallado de sus archivos.
-- [ ] Visualizar también los archivos ocultos.
-- [ ] Mostrar los números de inodo.
-- [ ] Listar únicamente los archivos `.txt` de `Princip`.
-- [ ] Listar los archivos `.png` que se encuentran dentro de `Fotos`.
+- [x] Mostrar el contenido de Princip.
+- [x] Mostrar el listado detallado de sus archivos.
+- [x] Visualizar también los archivos ocultos.
+- [x] Mostrar los números de inodo.
+- [x] Combinar el listado detallado con los inodos.
+- [x] Listar únicamente los archivos .txt de Princip.
+- [x] Mostrar el contenido de Docs.
+- [x] Visualizar la estructura con tree.
+- [x] Listar los archivos .png dentro de Fotos.
 
 **Comprobación:** utilizar `ls` y sus opciones para comparar los resultados.
 

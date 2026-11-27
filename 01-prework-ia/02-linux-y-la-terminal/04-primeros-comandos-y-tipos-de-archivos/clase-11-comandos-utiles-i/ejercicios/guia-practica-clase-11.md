@@ -129,17 +129,17 @@ Partiendo de `Practica-Clase-11`:
 
 **Comprobación:** utilizar `pwd` después de cada desplazamiento.
 
-## 6. Ejercicio 4 — Crear directorios con `mkdir`
+## 6. Ejercicio 4 — Crear directorios con mkdir
 
 **Objetivo:** crear carpetas individuales y estructuras de varios niveles.
 
 Desde `Princip`:
 
-- [ ] Crear un directorio llamado `Practicas`.
-- [ ] Dentro de `Practicas`, crear `Linux`.
-- [ ] Crear la estructura `Practicas/Python/Ejercicios` utilizando un único comando.
-- [ ] Crear otro directorio llamado `Temporal`.
-- [ ] Visualizar el resultado utilizando `tree`.
+- [x] Crear el directorio Practicas.
+- [x] Crear Linux dentro de Practicas.
+- [x] Crear Practicas/Python/Ejercicios con un único comando.
+- [x] Crear el directorio Temporal.
+- [x] Comprobar la estructura con tree.
 
 **Resultado esperado:**
 
